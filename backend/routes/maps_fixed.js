@@ -2,22 +2,19 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 
-// Kiosk: Get Offices with Campus Names
+// Kiosk: Get Campus Maps with Campus Names
 router.get("/", (req, res) => {
   const query = `
     SELECT 
-      o.id,
-      o.name,
-      o.description,
-      o.contact,
-      o.office_hours,
-      o.campus_id,
+      m.id,
+      m.image_path,
+      m.description,
+      m.campus_id,
       c.name as campus_name,
-      c.address as campus_address,
-      o.created_at
-    FROM offices o
-    LEFT JOIN campuses c ON o.campus_id = c.id
-    ORDER BY c.name, o.name
+      m.created_at
+    FROM maps m
+    LEFT JOIN campuses c ON m.campus_id = c.id
+    ORDER BY m.created_at DESC
   `;
   
   db.query(query, (err, results) => {

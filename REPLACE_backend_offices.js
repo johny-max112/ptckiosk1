@@ -1,3 +1,4 @@
+// COPY THIS TO: backend/routes/offices.js
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
@@ -13,11 +14,10 @@ router.get("/", (req, res) => {
       o.office_hours,
       o.campus_id,
       c.name as campus_name,
-      c.address as campus_address,
       o.created_at
     FROM offices o
     LEFT JOIN campuses c ON o.campus_id = c.id
-    ORDER BY c.name, o.name
+    ORDER BY o.created_at DESC
   `;
   
   db.query(query, (err, results) => {

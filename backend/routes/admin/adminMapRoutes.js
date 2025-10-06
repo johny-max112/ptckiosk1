@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../../config/db");
 
 // Get all maps
-router.get("/", (req, res) => {
+router.get("/", require("../../middleware/auth"), (req, res) => {
   db.query("SELECT * FROM maps", (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(results);
@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 // Add new map
-router.post("/", (req, res) => {
+router.post("/", require("../../middleware/auth"), (req, res) => {
   const { campus_id = 1, image_path, description } = req.body;
   db.query(
     "INSERT INTO maps (campus_id, image_path, description, created_at) VALUES (?, ?, ?, NOW())",
@@ -24,7 +24,7 @@ router.post("/", (req, res) => {
 });
 
 // Update map
-router.put("/:id", (req, res) => {
+router.put("/:id", require("../../middleware/auth"), (req, res) => {
   const { image_path, description } = req.body;
   db.query(
     "UPDATE maps SET image_path=?, description=? WHERE id=?",
@@ -37,7 +37,7 @@ router.put("/:id", (req, res) => {
 });
 
 // Delete map
-router.delete("/:id", (req, res) => {
+router.delete("/:id", require("../../middleware/auth"), (req, res) => {
   db.query("DELETE FROM maps WHERE id=?", [req.params.id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json({ message: "Map deleted successfully" });

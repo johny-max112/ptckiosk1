@@ -15,7 +15,8 @@ const adminAboutRoutes = require("./routes/admin/adminAboutRoutes");
 const adminAcademicRoutes = require("./routes/admin/adminAcademicRoutes");
 const adminMapRoutes = require("./routes/admin/adminMapRoutes");
 const adminOfficeRoutes = require("./routes/admin/adminOfficeRoutes");
-const adminCampusRoutes = require("./routes/admin/adminCampusRoutes");  
+const adminCampusRoutes = require("./routes/admin/adminCampusRoutes");
+const adminAnnouncementRoutes = require("./routes/admin/adminAnnouncementRoutes");  
 
 const app = express();
 
@@ -38,11 +39,12 @@ app.use("/api/admin/academic", adminAcademicRoutes);
 app.use("/api/admin/maps", adminMapRoutes);
 app.use("/api/admin/offices", adminOfficeRoutes);
 app.use("/api/admin/campuses", adminCampusRoutes);
+app.use("/api/admin/announcements", adminAnnouncementRoutes);
 
 // Test route
 app.get("/", (req, res) => res.send("✅ PTC Smart Kiosk Backend running!"));
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

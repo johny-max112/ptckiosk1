@@ -4,9 +4,9 @@ const db = require("../config/db");
 
 // Kiosk: Get Academic Info
 router.get("/", (req, res) => {
-  db.query("SELECT * FROM academic_info ORDER BY last_updated DESC LIMIT 1", (err, results) => {
+  db.query("SELECT * FROM academic ORDER BY created_at DESC", (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
-    res.json(results[0]);
+    res.json(results);
   });
 });
 

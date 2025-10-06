@@ -4,7 +4,7 @@ const router = express.Router();
 const db = require("../../config/db"); // path to your db connection
 
 // GET all offices (for admin view)
-router.get("/", (req, res) => {
+router.get("/", require("../../middleware/auth"), (req, res) => {
   db.query("SELECT * FROM offices ORDER BY created_at DESC", (err, results) => {
     if (err) {
       console.error("Fetch offices error:", err);
@@ -15,7 +15,7 @@ router.get("/", (req, res) => {
 });
 
 // POST: Add new office
-router.post("/", (req, res) => {
+router.post("/", require("../../middleware/auth"), (req, res) => {
   const { name, description, contact, office_hours, campus_id } = req.body;
 
   // campus_id is required if your table has it as NOT NULL
@@ -36,7 +36,7 @@ router.post("/", (req, res) => {
 });
 
 // PUT: Update existing office
-router.put("/:id", (req, res) => {
+router.put("/:id", require("../../middleware/auth"), (req, res) => {
   const { id } = req.params;
   const { name, description, contact, office_hours, campus_id } = req.body;
 
@@ -53,7 +53,7 @@ router.put("/:id", (req, res) => {
 });
 
 // DELETE: Remove office
-router.delete("/:id", (req, res) => {
+router.delete("/:id", require("../../middleware/auth"), (req, res) => {
   const { id } = req.params;
 
   db.query("DELETE FROM offices WHERE id=?", [id], (err) => {

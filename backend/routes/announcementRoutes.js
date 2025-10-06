@@ -1,4 +1,4 @@
-// routes/announcementRoutes.js
+// REPLACE backend/routes/announcementRoutes.js with this:
 const express = require("express");
 const db = require("../config/db.js");
 
@@ -6,15 +6,23 @@ const router = express.Router();
 
 // Get all announcements (only active ones for kiosk)
 router.get("/", (req, res) => {
-  const today = new Date().toISOString().slice(0, 10);
-  db.query(
-    "SELECT * FROM announcements WHERE is_active = 1 AND start_date <= ? AND end_date >= ? ORDER BY created_at DESC",
-    [today, today],
-    (err, results) => {
-      if (err) return res.status(500).json({ error: err.message });
-      res.json(results);
-    }
-  );
+  // More flexible date filtering - show announcements that are:
+  // 1. Active (is_active = 1)
+  // 2. Either current OR recently ended (within 7 days)
+  const query = `
+    SELECT * FROM announcements 
+    WHERE is_active = 1 
+    AND (
+      (start_date <= CURDATE() AND end_date >= CURDATE()) OR
+      (end_date >= DATE_SUB(CURDATE(), INTERVAL 7 DAY))
+    )
+    ORDER BY created_at DESC
+  `;
+  
+  db.query(query, (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.json(results);
+  });
 });
 
 // Add new announcement

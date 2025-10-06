@@ -5,7 +5,7 @@ const db = require("../config/db.js"); // your DB connection
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = "your_jwt_secret_key"; // Change this in production
+const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key_change_in_production";
 
 // POST /api/admin/login
 router.post("/login", (req, res) => {
@@ -29,7 +29,7 @@ router.post("/login", (req, res) => {
       // Generate JWT token
       const token = jwt.sign(
         { id: admin.id, email: admin.email, name: admin.name },
-        JWT_SECRET,
+        process.env.JWT_SECRET,
         { expiresIn: "8h" }
       );
 
