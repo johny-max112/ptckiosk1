@@ -74,7 +74,7 @@ export default function AboutPTC() {
     <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       <div style={backgroundStyle}></div>
       <div style={cardStyle}>
-  <img src="/ptcround.png" alt="PTC Logo" style={logoStyle} />
+        <img src="/ptcround.png" alt="PTC Logo" style={logoStyle} />
         <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginTop: "60px" }}>About PTC</h2>
         <h3 style={{ color: "#388e3c", marginTop: "30px" }}>Mission</h3>
         <p style={{ color: "#495057", marginBottom: "20px" }}>{data.mission}</p>

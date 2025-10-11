@@ -11,6 +11,7 @@ export default function Announcements() {
     return () => clearInterval(interval);
   }, []);
 
+
   const fetchAnnouncements = async () => {
     try {
       setLoading(true);
@@ -108,7 +109,7 @@ export default function Announcements() {
             borderRadius: "10px",
             boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
           }}>
-            <h3 style={{ color: "#6c757d" }}>No announcements available</h3>
+            <h3 style={{ color: "6c757d" }}>No announcements available</h3>
             <p style={{ color: "#6c757d" }}>Check back later for updates!</p>
           </div>
         ) : (

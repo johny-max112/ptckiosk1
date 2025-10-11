@@ -317,13 +317,7 @@ function AdminAbout() {
           borderRadius: "10px",
           border: "1px solid #e9ecef"
         }}>
-          <h4 style={{ color: "#495057", marginBottom: "10px" }}>💡 Tips for Writing Effective Content:</h4>
-          <ul style={{ color: "#6c757d", lineHeight: "1.6", paddingLeft: "20px" }}>
-            <li><strong>Mission:</strong> Keep it concise and focused on your institution's purpose</li>
-            <li><strong>Vision:</strong> Describe your aspirations and future goals</li>
-            <li><strong>History:</strong> Include founding date, key milestones, and achievements</li>
-            <li>Use clear, professional language that represents your institution well</li>
-          </ul>
+          {/* Tips section removed as requested */}
         </div>
       </div>
     </div>
