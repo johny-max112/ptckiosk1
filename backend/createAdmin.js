@@ -7,11 +7,11 @@ const db = mysql.createConnection({
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_NAME || "ptc_kiosk1"
+  database: process.env.DB_NAME || "ptc_kiosk3"
 });
 
-const name = process.env.ADMIN_NAME || "Johntadeo Liscano"; 
-const email = process.env.ADMIN_EMAIL || "admin@ptc.edu.ph"; 
+const name = process.env.ADMIN_NAME || "Johnted"; 
+const email = process.env.ADMIN_EMAIL || "admin2@ptc.edu.ph"; 
 const password = "ptcadmin123"; 
 
 const saltRounds = 10;
