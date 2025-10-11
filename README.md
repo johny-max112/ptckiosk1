@@ -1,3 +1,5 @@
+
+Basahin mo muna Readme Chat me pag may problem
 # PTC Smart Kiosk
 
 ## Project Overview
@@ -11,9 +13,9 @@ A campus information kiosk built with Node.js (Express) and React, using MySQL f
 ## MySQL Setup (XAMPP)
 1. Start XAMPP and run MySQL.
 2. Open phpMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
-3. Create a database named `ptc_kiosk1`.
+3. Create a database named `ptc_kiosk3`.
 4. Import the provided SQL file:
-   - Go to the `ptc_kiosk1` database in phpMyAdmin.
+   - Go to the `ptc_kiosk3` database in phpMyAdmin.
    - Click `Import` and select `xampp_database_setup.sql`.
    - Run the import.
 
@@ -52,9 +54,8 @@ A campus information kiosk built with Node.js (Express) and React, using MySQL f
 3. Start the frontend React app (`npm start`).
 4. Access the kiosk at [http://localhost:3000](http://localhost:3000).
 
-## Troubleshooting
+## Troubleshooteringss
 - If you get a MySQL connection error, check that XAMPP MySQL is running and your `.env` settings match your database.
 - For missing tables/data, re-import the SQL file in phpMyAdmin.
 
-## Contact
-For help, contact the project owner or your campus IT support.
+
