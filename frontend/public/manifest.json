@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "PTC Kiosk",
+  "name": "Pateros Technological College Kiosk",
   "icons": [
     {
       "src": "favicon.ico",
@@ -19,7 +19,9 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "scope": ".",
+    "theme_color": "#2e7d32",
+    "background_color": "#ffffff"
 }

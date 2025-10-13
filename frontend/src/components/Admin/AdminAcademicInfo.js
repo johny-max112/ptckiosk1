@@ -140,7 +140,7 @@ function AdminAcademicInfo() {
       <div style={cardStyle}>
         <div style={{ textAlign: "center", marginBottom: "40px", borderBottom: "3px solid #388e3c", paddingBottom: "20px" }}>
           <h1 style={{ color: "#388e3c", margin: "0", fontSize: "2.5em", fontWeight: "bold", textShadow: "0 2px 8px #fffde7" }}>
-            📝 Manage Academic Info
+             Manage Academic Info
           </h1>
         </div>
         <div style={{ marginBottom: "20px", padding: "20px", border: "1px solid #ffc107", borderRadius: "10px", background: "#fffde7" }}>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function CampusMap() {
+  const navigate = useNavigate();
   const [maps, setMaps] = useState([]);
   const [selectedMap, setSelectedMap] = useState(null);
   const [scale, setScale] = useState(1);
@@ -11,7 +13,7 @@ export default function CampusMap() {
 
   useEffect(() => {
     const fetchMaps = () => {
-      axios.get("http://localhost:5000/api/maps")
+  axios.get("http://192.168.100.61:5000/api/maps")
         .then((res) => setMaps(res.data))
         .catch((err) => console.error(err));
     };
@@ -61,26 +63,55 @@ export default function CampusMap() {
     background: "rgba(255,255,255,0.97)",
     borderRadius: "18px",
     boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-    padding: "40px 32px 32px 32px",
-    maxWidth: "700px",
+    padding: "0px 24px 32px 24px",
+    maxWidth: "800px",
+    width: "calc(100% - 40px)",
     margin: "60px auto 0 auto",
     position: "relative",
     zIndex: 2,
-    textAlign: "center"
+    textAlign: "center",
+    boxSizing: "border-box",
+    overflowWrap: "break-word"
   };
 
-  const logoStyle = {
-    width: "90px",
-    height: "90px",
+
+  const embeddedHeaderStyle = {
+    backgroundColor: "#fdd835",
+    borderTopLeftRadius: "18px",
+    borderTopRightRadius: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "12px 24px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+    marginBottom: "20px",
+    flexWrap: "nowrap",
+    overflow: "hidden",
+    boxSizing: "border-box",
+    marginLeft: "-24px",
+    marginRight: "-24px"
+  };
+
+  const embeddedLogoStyle = {
+    width: "56px",
+    height: "56px",
     objectFit: "contain",
-    position: "absolute",
-    top: "-45px",
-    left: "50%",
-    transform: "translateX(-50%)",
-    background: "white",
-    borderRadius: "50%",
-    boxShadow: "0 2px 12px rgba(44,62,80,0.12)",
-    border: "3px solid #2e7d32"
+    marginRight: "6px",
+    flexShrink: 0,
+    marginLeft: "6px"
+  };
+
+  const embeddedTitleStyle = {
+    fontSize: "clamp(1.2em, 2vw, 1.6em)",
+    fontWeight: "bold",
+    color: "#2e7d32",
+    cursor: "pointer",
+    textAlign: "left",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "100%",
+    flex: "1 1 auto"
   };
 
   const mapCardStyle = {
@@ -169,8 +200,13 @@ export default function CampusMap() {
     <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       <div style={backgroundStyle}></div>
       <div style={cardStyle}>
-        <img src="/ptcround.png" alt="PTC Logo" style={logoStyle} />
-        <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginTop: "60px" }}>
+        <div style={embeddedHeaderStyle}>
+          <img src="/ptcround.png" alt="PTC Logo" style={embeddedLogoStyle} />
+          <span onClick={() => navigate("/")} style={embeddedTitleStyle}>
+            Pateros Technological College
+          </span>
+        </div>
+        <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginBottom: "30px" }}>
           Campus Maps
         </h2>
 
@@ -189,7 +225,7 @@ export default function CampusMap() {
               )}
               {map.image_path && (
                 <img
-                  src={`http://localhost:5000${map.image_path}`}
+                  src={`http://192.168.100.61:5000${map.image_path}`}
                   alt={map.description}
                   onClick={() => {
                     setSelectedMap(map);
@@ -230,7 +266,7 @@ export default function CampusMap() {
 
           <div style={imageContainerStyle}>
             <img
-              src={`http://localhost:5000${selectedMap.image_path}`}
+              src={`http://192.168.100.61:5000${selectedMap.image_path}`}
               alt={selectedMap.description}
               style={fullscreenImageStyle}
               draggable={false}

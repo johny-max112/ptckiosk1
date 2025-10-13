@@ -110,7 +110,7 @@ function AdminAbout() {
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "40px", borderBottom: "3px solid #388e3c", paddingBottom: "20px" }}>
           <h1 style={{ color: "#388e3c", margin: "0", fontSize: "2.5em", fontWeight: "bold", textShadow: "0 2px 8px #fffde7" }}>
-            🏫 Manage About PTC
+             Manage About PTC
           </h1>
           <p style={{ color: "#2e7d32", margin: "10px 0 0 0", fontSize: "1.1em" }}>
             Update institutional information displayed to kiosk users
@@ -161,7 +161,7 @@ function AdminAbout() {
               color: "#2c3e50",
               fontSize: "1.2em"
             }}>
-              🎯 Mission Statement
+               Mission Statement
             </label>
             <small style={{ color: "#6c757d" }}>
               {getWordCount(about.mission)} words, {getCharCount(about.mission)} characters
@@ -203,7 +203,7 @@ function AdminAbout() {
               color: "#2c3e50",
               fontSize: "1.2em"
             }}>
-              🔮 Vision Statement
+               Vision Statement
             </label>
             <small style={{ color: "#6c757d" }}>
               {getWordCount(about.vision)} words, {getCharCount(about.vision)} characters
@@ -245,7 +245,7 @@ function AdminAbout() {
               color: "#2c3e50",
               fontSize: "1.2em"
             }}>
-              📚 History & Background
+               History & Background
             </label>
             <small style={{ color: "#6c757d" }}>
               {getWordCount(about.history)} words, {getCharCount(about.history)} characters
@@ -305,7 +305,7 @@ function AdminAbout() {
               }
             }}
           >
-            {loading ? "💾 Saving..." : "💾 Save About Information"}
+            {loading ? "Saving..." : " Save About Information"}
           </button>
         </div>
 
@@ -317,7 +317,7 @@ function AdminAbout() {
           borderRadius: "10px",
           border: "1px solid #e9ecef"
         }}>
-          {/* Tips section removed as requested */}
+          
         </div>
       </div>
     </div>

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function OfficeDirectory() {
+  const navigate = useNavigate();
   const [offices, setOffices] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -14,7 +16,7 @@ export default function OfficeDirectory() {
   const fetchOffices = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/offices");
+  const res = await axios.get("http://192.168.100.61:5000/api/offices");
       setOffices(res.data);
     } catch (err) {
       console.error("Error fetching offices:", err);
@@ -57,12 +59,15 @@ export default function OfficeDirectory() {
   background: "rgba(255, 255, 255, 0.95)",
   borderRadius: "18px",
   boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-  padding: "40px 32px 32px 32px",
-  maxWidth: "700px",
+  padding: "0px 24px 32px 24px",
+  maxWidth: "800px",
+  width: "calc(100% - 40px)",
   margin: "60px auto 0 auto",
   position: "relative",
   zIndex: 2,
-  textAlign: "center"
+  textAlign: "center",
+  boxSizing: "border-box",
+  overflowWrap: "break-word"
 };
 
 
@@ -80,11 +85,69 @@ export default function OfficeDirectory() {
     border: "3px solid #2e7d32"
   };
 
+  const embeddedHeaderStyle = {
+    backgroundColor: "#fdd835",
+    borderTopLeftRadius: "18px",
+    borderTopRightRadius: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "12px 24px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+    marginBottom: "20px",
+    flexWrap: "nowrap",
+    overflow: "hidden",
+    boxSizing: "border-box",
+    marginLeft: "-24px",
+    marginRight: "-24px"
+  };
+
+  const embeddedLogoStyle = {
+    width: "56px",
+    height: "56px",
+    objectFit: "contain",
+    marginRight: "6px",
+    flexShrink: 0,
+    marginLeft: "6px"
+  };
+
+  const embeddedTitleStyle = {
+    fontSize: "clamp(1.2em, 2vw, 1.6em)",
+    fontWeight: "bold",
+    color: "#2e7d32",
+    cursor: "pointer",
+    textAlign: "left",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "100%",
+    flex: "1 1 auto"
+  };
+
   if (loading) {
     return (
       <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
         <div style={backgroundStyle}></div>
         <div style={cardStyle}>
+          <button
+            onClick={() => navigate("/")}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: "40px",
+              background: "none",
+              border: "none",
+              color: "#2e7d32",
+              fontWeight: "bold",
+              fontSize: "1.5em",
+              margin: "0 0 0 20px",
+              cursor: "pointer",
+              textAlign: "left",
+              zIndex: 10
+            }}
+          >
+            Pateros Technological College
+          </button>
           <img src="/ptcround.png" alt="PTC Logo" style={logoStyle} />
           <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginTop: "60px" }}>Office Directory</h2>
           <p>Loading office information...</p>
@@ -97,8 +160,13 @@ export default function OfficeDirectory() {
     <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       <div style={backgroundStyle}></div>
       <div style={cardStyle}>
-  <img src="/ptcround.png" alt="PTC Logo" style={logoStyle} />
-        <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginTop: "60px" }}>Office Directory</h2>
+        <div style={embeddedHeaderStyle}>
+          <img src="/ptcround.png" alt="PTC Logo" style={embeddedLogoStyle} />
+          <span onClick={() => navigate("/")} style={embeddedTitleStyle}>
+            Pateros Technological College
+          </span>
+        </div>
+        <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginBottom: "30px" }}>Office Directory</h2>
         {offices.length === 0 ? (
           <div style={{
             textAlign: "center",

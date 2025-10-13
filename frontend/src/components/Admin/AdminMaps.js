@@ -143,7 +143,7 @@ function AdminMaps() {
       <div style={cardStyle}>
         <div style={{ textAlign: "center", marginBottom: "40px", borderBottom: "3px solid #388e3c", paddingBottom: "20px" }}>
           <h1 style={{ color: "#388e3c", margin: "0", fontSize: "2.2em", fontWeight: "bold", textShadow: "0 2px 8px #fffde7" }}>
-            🗺️ Manage Campus Maps
+            Manage Campus Maps
           </h1>
         </div>
 

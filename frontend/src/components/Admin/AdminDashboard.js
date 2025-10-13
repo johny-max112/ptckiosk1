@@ -29,8 +29,10 @@ export default function AdminDashboard() {
     left: 0,
     width: "100vw",
     height: "100vh",
-    background: "url('/ptclogo.png.png') center center / cover no-repeat, #e8f5e9",
-    opacity: 0.18,
+    backgroundImage: "url('/pateros.png')", 
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    filter: "brightness(0.70) contrast(1.1)",
     zIndex: 1,
     pointerEvents: "none"
   };
@@ -107,7 +109,7 @@ export default function AdminDashboard() {
             <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#fff3cd', borderLeft: '4px solid #ffc107', transition: 'transform 0.2s', cursor: 'pointer' }}
               onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
               onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-              <h3 style={{ margin: '0 0 10px 0', color: '#856404' }}>📢 Manage Announcements</h3>
+              <h3 style={{ margin: '0 0 10px 0', color: '#856404' }}> Manage Announcements</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Create, edit, and manage campus announcements and news</p>
             </div>
           </Link>
@@ -115,7 +117,7 @@ export default function AdminDashboard() {
             <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#d1ecf1', borderLeft: '4px solid #17a2b8', transition: 'transform 0.2s', cursor: 'pointer' }}
               onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
               onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-              <h3 style={{ margin: '0 0 10px 0', color: '#0c5460' }}>📝 Manage Academic Info</h3>
+              <h3 style={{ margin: '0 0 10px 0', color: '#0c5460' }}>Manage Academic Info</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Update academic programs and course information</p>
             </div>
           </Link>
@@ -123,7 +125,7 @@ export default function AdminDashboard() {
             <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#d4edda', borderLeft: '4px solid #28a745', transition: 'transform 0.2s', cursor: 'pointer' }}
               onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
               onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-              <h3 style={{ margin: '0 0 10px 0', color: '#155724' }}>🏫 Manage About PTC</h3>
+              <h3 style={{ margin: '0 0 10px 0', color: '#155724' }}> Manage About PTC</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Edit mission, vision, and history information</p>
             </div>
           </Link>
@@ -131,7 +133,7 @@ export default function AdminDashboard() {
             <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#f8d7da', borderLeft: '4px solid #dc3545', transition: 'transform 0.2s', cursor: 'pointer' }}
               onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
               onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-              <h3 style={{ margin: '0 0 10px 0', color: '#721c24' }}>📇 Manage Office Directory</h3>
+              <h3 style={{ margin: '0 0 10px 0', color: '#721c24' }}>Manage Office Directory</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Add and update office locations and contact information</p>
             </div>
           </Link>
@@ -139,7 +141,7 @@ export default function AdminDashboard() {
             <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#e2e3f0', borderLeft: '4px solid #6f42c1', transition: 'transform 0.2s', cursor: 'pointer' }}
               onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
               onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-              <h3 style={{ margin: '0 0 10px 0', color: '#3d1a78' }}>🗺️ Manage Campus Maps</h3>
+              <h3 style={{ margin: '0 0 10px 0', color: '#3d1a78' }}>Manage Campus Maps</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Upload and manage campus maps and layouts</p>
             </div>
           </Link>

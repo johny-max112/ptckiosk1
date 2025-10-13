@@ -145,7 +145,7 @@ export default function KioskHome() {
         left: 0,
         width: "100vw",
         height: "100vh",
-        backgroundImage: "url('/pateros.png')", // Replace with your actual image
+        backgroundImage: "url('/pateros.png')", 
         backgroundSize: "cover",
         backgroundPosition: "center",
         filter: "brightness(0.85) contrast(1.1)",
@@ -162,23 +162,23 @@ export default function KioskHome() {
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
           <button style={buttonStyle} onClick={() => navigate("/announcements")}>
-            <span role="img" aria-label="Announcements" style={buttonIconStyle}>📢</span>
+            <span role="img" aria-label="Announcements" style={buttonIconStyle}></span>
             Announcements
           </button>
           <button style={buttonStyle} onClick={() => navigate("/academic")}>
-            <span role="img" aria-label="Academic Info" style={buttonIconStyle}>📝</span>
+            <span role="img" aria-label="Academic Info" style={buttonIconStyle}></span>
             Academic Info
           </button>
           <button style={buttonStyle} onClick={() => navigate("/about")}>
-            <span role="img" aria-label="About PTC" style={buttonIconStyle}>🏫</span>
+            <span role="img" aria-label="About PTC" style={buttonIconStyle}></span>
             About PTC
           </button>
           <button style={buttonStyle} onClick={() => navigate("/directory")}>
-            <span role="img" aria-label="Office Directory" style={buttonIconStyle}>📇</span>
+            <span role="img" aria-label="Office Directory" style={buttonIconStyle}></span>
             Office Directory
           </button>
           <button style={buttonStyle} onClick={() => navigate("/map")}>
-            <span role="img" aria-label="Campus Map" style={buttonIconStyle}>🗺️</span>
+            <span role="img" aria-label="Campus Map" style={buttonIconStyle}></span>
             Campus Map
           </button>
         </div>
