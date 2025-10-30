@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -6,15 +6,37 @@ export default function AboutPTC() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
 
+  const inFlightRef = useRef(false);
+  const mountedRef = useRef(true);
+  const prevRef = useRef(null);
     useEffect(() => {
-      const fetchAbout = () => {
-        axios.get("http://192.168.100.61:5000/api/about")
-          .then((res) => setData(res.data))
-          .catch((err) => console.error(err));
+      mountedRef.current = true;
+
+      const fetchAbout = async (showLoading = false) => {
+        if (inFlightRef.current) return;
+        inFlightRef.current = true;
+        if (showLoading) setData(null);
+        try {
+          const res = await axios.get("http://192.168.100.61:5000/api/about", { headers: { 'Cache-Control': 'no-cache' } });
+          if (!mountedRef.current) return;
+          const json = JSON.stringify(res.data || {});
+          if (json !== prevRef.current) {
+            setData(res.data);
+            prevRef.current = json;
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          inFlightRef.current = false;
+        }
       };
-      fetchAbout();
-      const interval = setInterval(fetchAbout, 10000);
-      return () => clearInterval(interval);
+
+      fetchAbout(true);
+      const interval = setInterval(() => fetchAbout(false), 30000);
+      return () => {
+        mountedRef.current = false;
+        clearInterval(interval);
+      };
     }, []);
 
   // Styles for background and card

@@ -11,13 +11,12 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
 reportWebVitals();
 
-// Register service worker for offline support
-if ('serviceWorker' in navigator) {
+// Register service worker for offline support ONLY in production to avoid
+// dev-time caching and double responses that can produce flicker.
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js')
       .then(registration => {

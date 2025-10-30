@@ -86,8 +86,10 @@ function AdminAbout() {
     left: 0,
     width: "100vw",
     height: "100vh",
-    background: "linear-gradient(135deg, #e8f5e9 0%, #fffde7 100%)",
-    opacity: 0.22,
+    backgroundImage: "url('/pateros.png')", 
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    filter: "brightness(0.70) contrast(1.1)",
     zIndex: 1,
     pointerEvents: "none"
   };

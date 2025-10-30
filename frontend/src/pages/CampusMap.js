@@ -11,15 +11,36 @@ export default function CampusMap() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const dragStart = useRef({ x: 0, y: 0 });
 
+  const inFlightRef = useRef(false);
+  const mountedRef = useRef(true);
+  const prevRef = useRef(null);
   useEffect(() => {
-    const fetchMaps = () => {
-  axios.get("http://192.168.100.61:5000/api/maps")
-        .then((res) => setMaps(res.data))
-        .catch((err) => console.error(err));
+    mountedRef.current = true;
+
+    const fetchMaps = async (showLoading = false) => {
+      if (inFlightRef.current) return;
+      inFlightRef.current = true;
+      try {
+        const res = await axios.get("http://192.168.100.61:5000/api/maps", { headers: { 'Cache-Control': 'no-cache' } });
+        if (!mountedRef.current) return;
+        const json = JSON.stringify(res.data || []);
+        if (json !== prevRef.current) {
+          setMaps(res.data);
+          prevRef.current = json;
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        inFlightRef.current = false;
+      }
     };
-    fetchMaps();
-    const interval = setInterval(fetchMaps, 10000);
-    return () => clearInterval(interval);
+
+    fetchMaps(true);
+    const interval = setInterval(() => fetchMaps(false), 30000);
+    return () => {
+      mountedRef.current = false;
+      clearInterval(interval);
+    };
   }, []);
 
   const handleMouseDown = (e) => {

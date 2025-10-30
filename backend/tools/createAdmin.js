@@ -1,13 +1,31 @@
-const pool = require('../config/db');
-const bcrypt = require('bcrypt');
+// createAdmin.js
+const mysql = require("mysql2");
+const bcrypt = require("bcrypt");
+require('dotenv').config();
 
-async function create() {
-  const email = process.env.ADMIN_EMAIL || 'admin@ptc.edu';
-  const name = process.env.ADMIN_NAME || 'PTC Admin';
-  const plain = process.env.ADMIN_PASSWORD || 'ChangeMe123!'; // change immediately
-  const hashed = await bcrypt.hash(plain, 10);
-  const [r] = await pool.query('INSERT INTO admins (name, email, password) VALUES (?, ?, ?)', [name, email, hashed]);
-  console.log('Created admin id:', r.insertId, 'email:', email, 'password:', plain);
-  process.exit(0);
-}
-create().catch(console.error);
+const db = mysql.createConnection({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "ptc_kiosk3"
+});
+
+const name = process.env.ADMIN_NAME || "deon"; 
+const email = process.env.ADMIN_EMAIL || "admin2@ptc.edu.ph"; 
+const password = "ptcadmin123"; 
+
+const saltRounds = 10;
+
+bcrypt.hash(password, saltRounds, (err, hash) => {
+  if (err) throw err;
+
+  db.query(
+    "INSERT INTO admins (name, email, password) VALUES (?, ?, ?)",
+    [name, email, hash],
+    (err, results) => {
+      if (err) throw err;
+      console.log("Admin account created successfully!");
+      process.exit();
+    }
+  );
+});

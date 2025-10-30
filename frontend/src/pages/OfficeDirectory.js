@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -7,23 +7,39 @@ export default function OfficeDirectory() {
   const [offices, setOffices] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const inFlightRef = useRef(false);
+  const mountedRef = useRef(true);
+  const prevRef = useRef(null);
   useEffect(() => {
-    fetchOffices();
-    const interval = setInterval(fetchOffices, 10000);
-    return () => clearInterval(interval);
-  }, []);
+    mountedRef.current = true;
 
-  const fetchOffices = async () => {
-    try {
-      setLoading(true);
-  const res = await axios.get("http://192.168.100.61:5000/api/offices");
-      setOffices(res.data);
-    } catch (err) {
-      console.error("Error fetching offices:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const fetchOffices = async (showLoading = false) => {
+      if (inFlightRef.current) return;
+      inFlightRef.current = true;
+      if (showLoading) setLoading(true);
+      try {
+        const res = await axios.get("http://192.168.100.61:5000/api/offices", { headers: { 'Cache-Control': 'no-cache' } });
+        if (!mountedRef.current) return;
+        const json = JSON.stringify(res.data || []);
+        if (json !== prevRef.current) {
+          setOffices(res.data);
+          prevRef.current = json;
+        }
+      } catch (err) {
+        console.error("Error fetching offices:", err);
+      } finally {
+        inFlightRef.current = false;
+        if (showLoading && mountedRef.current) setLoading(false);
+      }
+    };
+
+    fetchOffices(true);
+    const interval = setInterval(() => fetchOffices(false), 30000);
+    return () => {
+      mountedRef.current = false;
+      clearInterval(interval);
+    };
+  }, []);
 
   // Group offices by campus
   const officesByCampus = offices.reduce((acc, office) => {
@@ -176,7 +192,7 @@ export default function OfficeDirectory() {
             boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
           }}>
             <h3 style={{ color: "#6c757d" }}>No office information available</h3>
-            <p style={{ color: "#6c757d" }}>Please check back later or contact the administration.</p>
+            <p style={{ color: "#6c757d" }}>Please check back later or reach out tothe administration.</p>
           </div>
         ) : (
           <div>
@@ -240,7 +256,7 @@ export default function OfficeDirectory() {
                               minWidth: "80px",
                               fontSize: "0.9em"
                             }}>
-                              📞 Contact:
+                               Rooms:
                             </span>
                             <span style={{ color: "#495057", marginLeft: "10px" }}>
                               {office.contact}
@@ -255,7 +271,7 @@ export default function OfficeDirectory() {
                               minWidth: "80px",
                               fontSize: "0.9em"
                             }}>
-                              🕒 Hours:
+                               Hours:
                             </span>
                             <span style={{ color: "#495057", marginLeft: "10px" }}>
                               {office.office_hours}

@@ -27,14 +27,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static("uploads"));
 
 
-// ✅ Public Kiosk Routes
+//  Public Kiosk Routes
 app.use("/api/announcements", announcementRoutes);
 app.use("/api/about", aboutRoutes);
 app.use("/api/academic", academicRoutes);
 app.use("/api/offices", officeRoutes);
 app.use("/api/maps", mapRoutes);
 
-// ✅ Admin Routes
+//  Admin Routes
 app.use("/api/admin", adminRoutes); // login, etc.
 app.use("/api/admin/about", adminAboutRoutes);
 app.use("/api/admin/academic", adminAcademicRoutes);

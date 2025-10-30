@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const backgroundStyle = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100vw",
-  height: "100vh",
-  background: "linear-gradient(135deg, #e8f5e9 0%, #fffde7 100%)",
-  opacity: 0.22,
-  zIndex: 1,
-  pointerEvents: "none"
-};
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundImage: "url('/pateros.png')", 
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    filter: "brightness(0.70) contrast(1.1)",
+    zIndex: 1,
+    pointerEvents: "none"
+  };
 
 const cardStyle = {
   background: "linear-gradient(135deg, #fffde7 0%, #ffffff 100%)",

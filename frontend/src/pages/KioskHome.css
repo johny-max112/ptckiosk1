@@ -1,0 +1,135 @@
+
+
+.kiosk-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.85) contrast(1.1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.kiosk-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+  padding: 40px 32px 32px 32px;
+  max-width: 700px;
+  margin: 60px auto 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  border: 3px solid #ffc107;
+}
+
+.kiosk-logo {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.12);
+  border: 3px solid #2e7d32;
+}
+
+.kiosk-heading {
+  font-weight: bold;
+  color: #388e3c;
+  font-size: 2.3rem;
+  margin-top: 70px;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 8px #fffde7;
+}
+
+.kiosk-subtext {
+  font-size: 1.15rem;
+  color: #333;
+  margin-bottom: 32px;
+}
+
+.kiosk-buttons { display:flex; flex-wrap:wrap; justify-content:center; }
+
+.kiosk-btn {
+  width: 180px;
+  height: 100px;
+  font-size: 1.2rem;
+  border-radius: 14px;
+  cursor: pointer;
+  /* default gradient (original look) */
+  background: linear-gradient(135deg, #43a047 60%, #ffc107 100%);
+  color: white;
+  border: 2px solid #388e3c;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.12);
+  margin: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+/* on hover/focus/keyboard focus and when touch-pressed, change to the requested DCDC38/30761E mix */
+.kiosk-btn:hover,
+.kiosk-btn:focus,
+.kiosk-btn.touch-pressed,
+.kiosk-btn:active {
+  background: linear-gradient(135deg, #DCDC38 0%, #30761E 100%);
+  color: white;
+}
+
+.kiosk-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(44,62,80,0.18); }
+.kiosk-btn:active, .kiosk-btn:focus { transform: translateY(-1px) scale(0.995); box-shadow: 0 4px 12px rgba(44,62,80,0.14); outline: none; }
+
+.kiosk-btn .btn-icon { font-size: 2.2rem; margin-bottom: 8px; }
+
+/* Welcome overlay when kiosk is idle */
+.welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+}
+.welcome-backdrop { position:absolute; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.3); z-index:1; }
+.welcome-content { text-align: center; z-index:2; position: relative; color: white; }
+.welcome-content h1 { font-weight:700; font-size:2.8rem; margin-bottom:18px; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+.welcome-content p { font-size:1.3rem; margin-bottom:12px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+
+@media (max-width: 480px) {
+  .kiosk-btn { width: 140px; height: 84px; font-size: 1rem; }
+  .kiosk-logo { width: 90px; height: 90px; top: -45px; }
+}
+/* Date and Time inside the card */
+.datetime-container {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  text-align: right;
+  color: #2e7d32;
+  font-family: "Poppins", sans-serif;
+}
+
+.date-text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.time-text {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #388e3c;
+}
+
