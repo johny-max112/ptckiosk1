@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../utils/api";
 import "./CampusMap.css";
 
 export default function CampusMap() {
@@ -10,6 +11,7 @@ export default function CampusMap() {
   const [scale, setScale] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [loading, setLoading] = useState(true);
   const dragStart = useRef({ x: 0, y: 0 });
 
   const inFlightRef = useRef(false);
@@ -22,8 +24,9 @@ export default function CampusMap() {
     const fetchMaps = async (showLoading = false) => {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
+      if (showLoading) setLoading(true);
       try {
-        const res = await axios.get("http://192.168.100.61:5000/api/maps", {
+        const res = await axios.get(api("/api/maps"), {
           headers: { "Cache-Control": "no-cache" },
         });
         if (!mountedRef.current) return;
@@ -36,6 +39,7 @@ export default function CampusMap() {
         console.error(err);
       } finally {
         inFlightRef.current = false;
+        if (showLoading && mountedRef.current) setLoading(false);
       }
     };
 
@@ -91,7 +95,13 @@ export default function CampusMap() {
 
         
 
-        {maps.length === 0 ? (
+        {loading ? (
+          // simple skeleton placeholders for maps
+          <div className="campusmap-skeletons" style={{ display: "grid", gap: 12 }}>
+            <div style={{ height: 140, borderRadius: 8, background: "#f0f0f0" }} />
+            <div style={{ height: 140, borderRadius: 8, background: "#f0f0f0" }} />
+          </div>
+        ) : maps.length === 0 ? (
           <p>No maps available</p>
         ) : (
           maps.map((map) => (
@@ -108,7 +118,7 @@ export default function CampusMap() {
               )}
               {map.image_path && (
                 <img
-                  src={`http://192.168.100.61:5000${map.image_path}`}
+                  src={api(map.image_path)}
                   alt={map.description}
                   onClick={() => {
                     setSelectedMap(map);
@@ -178,7 +188,7 @@ export default function CampusMap() {
             }}
           >
             <img
-              src={`http://192.168.100.61:5000${selectedMap.image_path}`}
+              src={api(selectedMap.image_path)}
               alt={selectedMap.description}
               style={{
                 transform: `scale(${scale}) translate(${position.x / scale}px, ${

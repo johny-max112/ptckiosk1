@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../../utils/api";
 
 const backgroundStyle = {
     position: "fixed",
@@ -45,7 +46,7 @@ function AdminMaps() {
   }, []);
 
   const fetchMaps = () => {
-    axios.get("http://localhost:5000/api/admin/maps")
+    axios.get(api('/api/admin/maps'))
       .then(res => setMaps(res.data))
       .catch(err => console.error("Error fetching maps:", err));
   };
@@ -74,7 +75,7 @@ function AdminMaps() {
     formData.append("address", form.address);
     formData.append("image", form.image);
 
-    axios.post("http://localhost:5000/api/admin/maps", formData)
+    axios.post(api('/api/admin/maps'), formData)
       .then(() => {
         alert("Map added successfully");
         resetForm();
@@ -107,7 +108,7 @@ function AdminMaps() {
       image_path: "" // optional: keep existing image unless changed
     };
 
-    axios.put(`http://localhost:5000/api/admin/maps/${editingId}`, payload)
+    axios.put(api(`/api/admin/maps/${editingId}`), payload)
       .then(() => {
         alert("Map updated successfully");
         resetForm();
@@ -118,7 +119,7 @@ function AdminMaps() {
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this map?")) {
-      axios.delete(`http://localhost:5000/api/admin/maps/${id}`)
+      axios.delete(api(`/api/admin/maps/${id}`))
         .then(() => {
           alert("Map deleted");
           fetchMaps();
@@ -177,9 +178,9 @@ function AdminMaps() {
               <strong style={{ color: "#388e3c" }}>{map.campus_name || `Campus ${map.campus_id}`}</strong><br />
               <span style={{ color: "#6c757d", fontSize: "0.95em" }}>{map.address}</span><br />
               <p style={{ margin: "6px 0" }}>{map.description}</p>
-              {map.image_path && (
+                {map.image_path && (
                 <img
-                  src={`http://localhost:5000${map.image_path}`}
+                  src={api(map.image_path)}
                   alt={map.description}
                   style={{ maxWidth: "100%", maxHeight: "120px", borderRadius: "6px", marginTop: "6px" }}
                 />

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../utils/api";
 import "./Announcements.css";
 
 export default function Announcements() {
@@ -22,7 +23,7 @@ export default function Announcements() {
       inFlightRef.current = true;
       if (showLoading) setLoading(true);
       try {
-        const res = await axios.get("http://192.168.100.61:5000/api/announcements", {
+        const res = await axios.get(api("/api/announcements"), {
           headers: { "Cache-Control": "no-cache" },
         });
         if (!mountedRef.current) return;
@@ -83,6 +84,17 @@ export default function Announcements() {
     return () => window.removeEventListener("keydown", onKey);
   }, [modalOpen]);
 
+  const SkeletonAnnouncement = () => (
+    <div className="announcement-box skeleton">
+      <div className="skeleton-title"></div>
+      <div className="skeleton-content"></div>
+      <div className="skeleton-dates">
+        <div className="skeleton-date"></div>
+        <div className="skeleton-date"></div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="announcements-page">
       <div className="background" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/pateros.png)` }}></div>
@@ -95,18 +107,19 @@ export default function Announcements() {
           </span>
         </div>
 
-      
-
         <div className="inner-cards">
-          
           <div className="campus-card">
             <div className="campus-header">
               <h3>Campus Announcement</h3>
             </div>
-            
+
             <div className="campus-content">
               {loading ? (
-                <p>Loading announcements...</p>
+                <>
+                  <SkeletonAnnouncement />
+                  <SkeletonAnnouncement />
+                  <SkeletonAnnouncement />
+                </>
               ) : announcements.length === 0 ? (
                 <div className="no-announcements">
                   <h3>No announcements available</h3>
@@ -122,9 +135,7 @@ export default function Announcements() {
                       onClick={() => openAnnouncement(ann)}
                       onKeyDown={(e) => e.key === "Enter" && openAnnouncement(ann)}
                       className={`announcement-box ${
-                        isCurrentAnnouncement(ann.start_date, ann.end_date)
-                          ? "current"
-                          : ""
+                        isCurrentAnnouncement(ann.start_date, ann.end_date) ? "current" : ""
                       }`}
                     >
                       {isCurrentAnnouncement(ann.start_date, ann.end_date) && (
@@ -144,10 +155,8 @@ export default function Announcements() {
                   ))}
                 </div>
               )}
-
             </div>
 
-            {/* Modal for full announcement details */}
             {modalOpen && selectedAnnouncement && (
               <div className="modal-overlay" onClick={closeModal}>
                 <div
@@ -171,32 +180,6 @@ export default function Announcements() {
                 </div>
               </div>
             )}
-
-            {/* Modal for full announcement details (moved inside return) */}
-            {modalOpen && selectedAnnouncement && (
-              <div className="modal-overlay" onClick={closeModal}>
-                <div
-                  className="modal"
-                  role="dialog"
-                  aria-modal="true"
-                  aria-labelledby="modal-title"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <button className="modal-close" onClick={closeModal} aria-label="Close">×</button>
-                  <h2 id="modal-title">{selectedAnnouncement.title}</h2>
-                  <div className="modal-dates">
-                    <span>
-                      <strong>Start:</strong> {formatDate(selectedAnnouncement.start_date)}
-                    </span>
-                    <span>
-                      <strong>End:</strong> {formatDate(selectedAnnouncement.end_date)}
-                    </span>
-                  </div>
-                  <div className="modal-body">{selectedAnnouncement.content}</div>
-                </div>
-              </div>
-            )}
-
           </div>
         </div>
       </div>

@@ -209,3 +209,52 @@
   max-height: calc(80vh - 140px);
   padding-right: 6px;
 }
+
+/* Skeleton loader styles */
+.skeleton {
+  background-color: #f6f6f6;
+  border-radius: 8px;
+  padding: 12px 10px;
+  margin-bottom: 12px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-title,
+.skeleton-content,
+.skeleton-date {
+  background-color: #ddd;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-title {
+  height: 20px;
+  width: 60%;
+}
+
+.skeleton-content {
+  height: 14px;
+  width: 90%;
+}
+
+.skeleton-dates {
+  display: flex;
+  gap: 12px;
+}
+
+.skeleton-date {
+  height: 12px;
+  width: 40%;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

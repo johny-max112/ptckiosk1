@@ -1,6 +1,7 @@
 // src/components/Admin/AdminLogin.js
 import React, { useState } from "react";
 import axios from "axios";
+import api from "../../utils/api";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ export default function AdminLogin() {
     }
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL || "http://localhost:5000/api"}/admin/login`, {
+      const res = await axios.post(api('/api/admin/login'), {
         email,
         password
       });

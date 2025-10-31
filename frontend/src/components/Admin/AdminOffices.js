@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import api from "../../utils/api";
 
 function AdminOffices() {
   const [offices, setOffices] = useState([]);
@@ -48,7 +49,7 @@ function AdminOffices() {
   const fetchOffices = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/admin/offices", {
+      const res = await axios.get(api("/api/admin/offices"), {
         headers: getAuthHeaders()
       });
       setOffices(res.data);
@@ -65,7 +66,7 @@ function AdminOffices() {
 
   const fetchCampuses = useCallback(async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/campuses", {
+      const res = await axios.get(api("/api/admin/campuses"), {
         headers: getAuthHeaders()
       });
       console.log("Fetched campuses:", res.data); // Debug log
@@ -99,13 +100,13 @@ function AdminOffices() {
     try {
       setLoading(true);
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/admin/offices/${editingId}`, form, {
+        await axios.put(api(`/api/admin/offices/${editingId}`), form, {
           headers: getAuthHeaders()
         });
         alert("Office updated successfully!");
         setEditingId(null);
       } else {
-        await axios.post("http://localhost:5000/api/admin/offices", form, {
+        await axios.post(api("/api/admin/offices"), form, {
           headers: getAuthHeaders()
         });
         alert("Office added successfully!");
@@ -143,7 +144,7 @@ function AdminOffices() {
 
     try {
       setLoading(true);
-      await axios.delete(`http://localhost:5000/api/admin/offices/${id}`, {
+      await axios.delete(api(`/api/admin/offices/${id}`), {
         headers: getAuthHeaders()
       });
       alert("Office deleted successfully!");

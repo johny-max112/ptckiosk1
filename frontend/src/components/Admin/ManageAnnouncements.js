@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import api from "../../utils/api";
 // PTC color palette and card style
 const backgroundStyle = {
     position: "fixed",
@@ -49,7 +50,7 @@ function ManageAnnouncements() {
   const fetchAnnouncements = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/admin/announcements", {
+      const res = await axios.get(api("/api/admin/announcements"), {
         headers: getAuthHeaders()
       });
       setAnnouncements(res.data);
@@ -85,7 +86,7 @@ function ManageAnnouncements() {
       if (editingId) {
         // Update existing announcement
         await axios.put(
-          `http://localhost:5000/api/admin/announcements/${editingId}`, 
+          api(`/api/admin/announcements/${editingId}`), 
           form,
           { headers: getAuthHeaders() }
         );
@@ -94,7 +95,7 @@ function ManageAnnouncements() {
       } else {
         // Add new announcement
         await axios.post(
-          "http://localhost:5000/api/admin/announcements", 
+          api("/api/admin/announcements"), 
           form,
           { headers: getAuthHeaders() }
         );
@@ -135,7 +136,7 @@ function ManageAnnouncements() {
     try {
       setLoading(true);
       await axios.delete(
-        `http://localhost:5000/api/admin/announcements/${id}`,
+        api(`/api/admin/announcements/${id}`),
         { headers: getAuthHeaders() }
       );
       alert("Announcement deleted successfully!");

@@ -5,6 +5,7 @@ import axios from "axios";
 export default function AboutPTC() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const inFlightRef = useRef(false);
   const mountedRef = useRef(true);
@@ -15,7 +16,10 @@ export default function AboutPTC() {
       const fetchAbout = async (showLoading = false) => {
         if (inFlightRef.current) return;
         inFlightRef.current = true;
-        if (showLoading) setData(null);
+        if (showLoading) {
+          setData(null);
+          setLoading(true);
+        }
         try {
             
             
@@ -132,7 +136,18 @@ export default function AboutPTC() {
         <div style={cardStyle}>
           <img src="/pateros.png" alt="PTC Logo" style={logoStyle} />
           <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginTop: "60px" }}>About PTC</h2>
-          <p>Loading...</p>
+          {/* Skeleton placeholders for mission / vision / history */}
+          <div style={{ marginTop: 20, display: "grid", gap: 12, padding: "0 20px" }}>
+            <div style={{ height: 18, width: "70%", background: "#e0e0e0", borderRadius: 6 }} />
+            <div style={{ height: 14, width: "100%", background: "#f0f0f0", borderRadius: 6 }} />
+            <div style={{ height: 14, width: "100%", background: "#f0f0f0", borderRadius: 6 }} />
+            <div style={{ height: 14, width: "90%", background: "#f0f0f0", borderRadius: 6 }} />
+            <div style={{ height: 18, width: "40%", background: "#e0e0e0", borderRadius: 6, marginTop: 18 }} />
+            <div style={{ height: 14, width: "100%", background: "#f0f0f0", borderRadius: 6 }} />
+            <div style={{ height: 14, width: "100%", background: "#f0f0f0", borderRadius: 6 }} />
+            <div style={{ height: 18, width: "55%", background: "#e0e0e0", borderRadius: 6, marginTop: 18 }} />
+            <div style={{ height: 14, width: "100%", background: "#f0f0f0", borderRadius: 6 }} />
+          </div>
         </div>
       </div>
     );
