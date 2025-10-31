@@ -17,7 +17,10 @@ export default function AboutPTC() {
         inFlightRef.current = true;
         if (showLoading) setData(null);
         try {
-          const res = await axios.get("http://192.168.100.61:5000/api/about", { headers: { 'Cache-Control': 'no-cache' } });
+            
+            
+            const apiBase = process.env.REACT_APP_API_URL || '';
+            const res = await axios.get(`${apiBase}/api/about`, { headers: { 'Cache-Control': 'no-cache' } });
           if (!mountedRef.current) return;
           const json = JSON.stringify(res.data || {});
           if (json !== prevRef.current) {
