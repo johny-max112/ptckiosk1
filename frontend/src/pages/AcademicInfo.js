@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AcademicInfo.css';
 
-// Section components are rendered on their own pages; imports removed to avoid unused warnings
+
 
 export default function AcademicInfo() {
   const navigate = useNavigate();
-  // This page only shows the selection buttons; detailed content opens on its own page
+  // mga button dito sa page; 
 
   return (
     <div className="page-root">
@@ -18,7 +18,7 @@ export default function AcademicInfo() {
         </div>
 
         <div className="outer-card">
-          {/* Single attached card: header and selection are visually connected */}
+          {/* connected sa card ung header na ginto */}
           <div className="attached-card">
             <div className="academic-info-header attached">
               <h2>Academic Information</h2>

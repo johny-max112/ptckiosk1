@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./CampusMap.css";
 
 export default function CampusMap() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export default function CampusMap() {
   const inFlightRef = useRef(false);
   const mountedRef = useRef(true);
   const prevRef = useRef(null);
+
   useEffect(() => {
     mountedRef.current = true;
 
@@ -21,7 +23,9 @@ export default function CampusMap() {
       if (inFlightRef.current) return;
       inFlightRef.current = true;
       try {
-        const res = await axios.get("http://192.168.100.61:5000/api/maps", { headers: { 'Cache-Control': 'no-cache' } });
+        const res = await axios.get("http://192.168.100.61:5000/api/maps", {
+          headers: { "Cache-Control": "no-cache" },
+        });
         if (!mountedRef.current) return;
         const json = JSON.stringify(res.data || []);
         if (json !== prevRef.current) {
@@ -52,7 +56,7 @@ export default function CampusMap() {
     if (!isDragging) return;
     setPosition({
       x: e.clientX - dragStart.current.x,
-      y: e.clientY - dragStart.current.y
+      y: e.clientY - dragStart.current.y,
     });
   };
 
@@ -65,184 +69,42 @@ export default function CampusMap() {
     setPosition({ x: 0, y: 0 });
   };
 
-  // Styles
-  const backgroundStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundImage: "url('/pateros.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "brightness(0.70) contrast(1.1)",
-    zIndex: 1,
-    pointerEvents: "none"
-  };
-
-  const cardStyle = {
-    background: "rgba(255,255,255,0.97)",
-    borderRadius: "18px",
-    boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-    padding: "0px 24px 32px 24px",
-    maxWidth: "800px",
-    width: "calc(100% - 40px)",
-    margin: "60px auto 0 auto",
-    position: "relative",
-    zIndex: 2,
-    textAlign: "center",
-    boxSizing: "border-box",
-    overflowWrap: "break-word"
-  };
-
-
-  const embeddedHeaderStyle = {
-    backgroundColor: "#fdd835",
-    borderTopLeftRadius: "18px",
-    borderTopRightRadius: "18px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "12px 24px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-    marginBottom: "20px",
-    flexWrap: "nowrap",
-    overflow: "hidden",
-    boxSizing: "border-box",
-    marginLeft: "-24px",
-    marginRight: "-24px"
-  };
-
-  const embeddedLogoStyle = {
-    width: "56px",
-    height: "56px",
-    objectFit: "contain",
-    marginRight: "6px",
-    flexShrink: 0,
-    marginLeft: "6px"
-  };
-
-  const embeddedTitleStyle = {
-    fontSize: "clamp(1.2em, 2vw, 1.6em)",
-    fontWeight: "bold",
-    color: "#2e7d32",
-    cursor: "pointer",
-    textAlign: "left",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    maxWidth: "100%",
-    flex: "1 1 auto"
-  };
-
-  const mapCardStyle = {
-    backgroundColor: "#ffffff",
-    border: "1px solid #dee2e6",
-    borderRadius: "12px",
-    padding: "20px",
-    marginBottom: "30px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
-    textAlign: "left"
-  };
-
-  const overlayStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "rgba(0,0,0,0.9)",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 9999,
-    padding: "20px",
-    textAlign: "center",
-    overflow: "hidden"
-  };
-
-  const imageContainerStyle = {
-    width: "90vw",
-    height: "80vh",
-    overflow: "hidden",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: scale > 1 ? (isDragging ? "grabbing" : "grab") : "default"
-  };
-
-  const fullscreenImageStyle = {
-    transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
-    transition: isDragging ? "none" : "transform 0.3s ease",
-    borderRadius: "12px",
-    boxShadow: "0 4px 20px rgba(255,255,255,0.2)",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    userSelect: "none",
-    pointerEvents: "none"
-  };
-
-  const closeButtonStyle = {
-    position: "absolute",
-    top: "20px",
-    left: "20px",
-    backgroundColor: "#ffc107",
-    color: "#000",
-    border: "none",
-    padding: "10px 16px",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    fontSize: "1em",
-    zIndex: 10000
-  };
-
-  const zoomControlsStyle = {
-    position: "absolute",
-    top: "20px",
-    right: "20px",
-    display: "flex",
-    gap: "10px",
-    zIndex: 10000
-  };
-
-  const zoomButtonStyle = {
-    backgroundColor: "#ffffff",
-    color: "#2c3e50",
-    border: "none",
-    padding: "8px 12px",
-    borderRadius: "6px",
-    fontWeight: "bold",
-    cursor: "pointer"
-  };
-
   return (
-    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
-      <div style={backgroundStyle}></div>
-      <div style={cardStyle}>
-        <div style={embeddedHeaderStyle}>
-          <img src="/ptcround.png" alt="PTC Logo" style={embeddedLogoStyle} />
-          <span onClick={() => navigate("/")} style={embeddedTitleStyle}>
+    <div className="campusmap-root">
+      <div
+        className="campusmap-background"
+        style={{ backgroundImage: `url('/pateros.png')` }}
+      ></div>
+      <div className="campusmap-card">
+        <div className="campusmap-header">
+          <img src="/ptcround.png" alt="PTC Logo" className="campusmap-logo" />
+          <span
+            onClick={() => navigate("/")}
+            className="campusmap-title"
+            tabIndex={0}
+            role="button"
+            aria-label="Go to homepage"
+          >
             Pateros Technological College
           </span>
         </div>
-        <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginBottom: "30px" }}>
-          Campus Maps
-        </h2>
+
+        
 
         {maps.length === 0 ? (
           <p>No maps available</p>
         ) : (
           maps.map((map) => (
-            <div key={map.id} style={mapCardStyle}>
-              <h3 style={{ color: "#388e3c", marginBottom: "6px" }}>
+            <div key={map.id} className="campusmap-campuscard">
+              {/* Gradient header inside campus card */}
+              <div className="campusmap-card-gradient-header">
+                <span>Campus Map</span>
+              </div>
+              <h3 className="campusmap-campusname">
                 {map.campus_name || `Campus ${map.campus_id}`}
               </h3>
               {map.address && (
-                <p style={{ color: "#6c757d", fontSize: "0.95em", marginBottom: "12px" }}>
-                  {map.address}
-                </p>
+                <p className="campusmap-campusaddress">{map.address}</p>
               )}
               {map.image_path && (
                 <img
@@ -253,52 +115,84 @@ export default function CampusMap() {
                     setScale(1);
                     setPosition({ x: 0, y: 0 });
                   }}
-                  style={{
-                    width: "100%",
-                    maxWidth: "400px",
-                    borderRadius: "8px",
-                    boxShadow: "0 2px 10px rgba(44,62,80,0.12)",
-                    marginBottom: "12px",
-                    cursor: "pointer"
-                  }}
+                  className="campusmap-campusimg"
+                  draggable={false}
                 />
               )}
-              <p style={{ color: "#495057", lineHeight: "1.6" }}>{map.description}</p>
+              <p className="campusmap-campusdesc">{map.description}</p>
             </div>
           ))
         )}
+
+        <div className="campusmap-iframe-container">
+          <iframe
+            title="PTC Google Map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12731.606932099821!2d121.0608873657026!3d14.558018636207075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c8863fae6025%3A0xe4f1a76191156148!2sPateros%20Technological%20College!5e1!3m2!1sen!2sph!4v1761880844076!5m2!1sen!2sph"
+            width="100%"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
       </div>
 
       {selectedMap && (
         <div
-          style={overlayStyle}
+          className="campusmap-overlay"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          <button onClick={() => setSelectedMap(null)} style={closeButtonStyle}>← Back</button>
+          <button
+            onClick={() => setSelectedMap(null)}
+            className="campusmap-closebtn"
+          >
+            ← Back
+          </button>
 
-          <div style={zoomControlsStyle}>
-            <button onClick={() => setScale(prev => Math.min(prev + 0.2, 2))} style={zoomButtonStyle}>Zoom In</button>
-            <button onClick={() => setScale(prev => Math.max(prev - 0.2, 0.5))} style={zoomButtonStyle}>Zoom Out</button>
-            <button onClick={resetZoom} style={zoomButtonStyle}>Reset</button>
+          <div className="campusmap-zoomcontrols">
+            <button
+              onClick={() => setScale((prev) => Math.min(prev + 0.2, 2))}
+              className="campusmap-zoombtn"
+            >
+              Zoom In
+            </button>
+            <button
+              onClick={() => setScale((prev) => Math.max(prev - 0.2, 0.5))}
+              className="campusmap-zoombtn"
+            >
+              Zoom Out
+            </button>
+            <button onClick={resetZoom} className="campusmap-zoombtn">
+              Reset
+            </button>
           </div>
 
-          <div style={imageContainerStyle}>
+          <div
+            className="campusmap-imagecontainer"
+            style={{
+              cursor: scale > 1 ? (isDragging ? "grabbing" : "grab") : "default",
+            }}
+          >
             <img
               src={`http://192.168.100.61:5000${selectedMap.image_path}`}
               alt={selectedMap.description}
-              style={fullscreenImageStyle}
+              style={{
+                transform: `scale(${scale}) translate(${position.x / scale}px, ${
+                  position.y / scale
+                }px)`,
+                transition: isDragging ? "none" : "transform 0.3s ease",
+              }}
+              className="campusmap-fullscreenimg"
               draggable={false}
             />
           </div>
 
-          <p style={{ color: "#fff", marginTop: "12px", fontSize: "1.1em", maxWidth: "90vw" }}>
-            {selectedMap.description}
-          </p>
-
-          </div>
+          <p className="campusmap-overlaydesc">{selectedMap.description}</p>
+        </div>
       )}
     </div>
   );
