@@ -14,16 +14,16 @@
 }
 
 .kiosk-card {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.68);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(44,62,80,0.18);
-  padding: 40px 32px 32px 32px;
-  max-width: 700px;
+  width: 90vw;
+  height: 100vh;
   margin: 60px auto 0 auto;
   position: relative;
   z-index: 2;
   text-align: center;
-  border: 3px solid #ffc107;
+  border: 3px solid #fdf417; 
 }
 
 .kiosk-logo {
@@ -55,16 +55,19 @@
   margin-bottom: 32px;
 }
 
-.kiosk-buttons { display:flex; flex-wrap:wrap; justify-content:center; }
+.kiosk-buttons { 
+  display:flex; 
+  flex-wrap:wrap; 
+  justify-content:center; 
+}
 
 .kiosk-btn {
-  width: 180px;
-  height: 100px;
+  width: 310px;
+  height: 160px;
   font-size: 1.2rem;
   border-radius: 14px;
   cursor: pointer;
-  /* default gradient (original look) */
-  background: linear-gradient(135deg, #43a047 60%, #ffc107 100%);
+  background: linear-gradient(175deg, #30761E 57%, #DCDC38 100%); 
   color: white;
   border: 2px solid #388e3c;
   box-shadow: 0 2px 8px rgba(44,62,80,0.12);
@@ -76,19 +79,28 @@
   transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
-/* on hover/focus/keyboard focus and when touch-pressed, change to the requested DCDC38/30761E mix */
 .kiosk-btn:hover,
 .kiosk-btn:focus,
 .kiosk-btn.touch-pressed,
 .kiosk-btn:active {
-  background: linear-gradient(135deg, #DCDC38 0%, #30761E 100%);
+  background: linear-gradient(175deg, #DCDC38 0%, #30761E 100%);
   color: white;
 }
 
-.kiosk-btn:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(44,62,80,0.18); }
-.kiosk-btn:active, .kiosk-btn:focus { transform: translateY(-1px) scale(0.995); box-shadow: 0 4px 12px rgba(44,62,80,0.14); outline: none; }
+.kiosk-btn:hover { 
+  box-shadow: 0 8px 24px rgba(44,62,80,0.18); 
+}
 
-.kiosk-btn .btn-icon { font-size: 2.2rem; margin-bottom: 8px; }
+.kiosk-btn:active, .kiosk-btn:focus { 
+  transform: translateY(-1px) scale(0.995); 
+  box-shadow: 0 4px 12px rgba(44,62,80,0.14); 
+  outline: none; 
+}
+
+.kiosk-btn .btn-icon { 
+  font-size: 2.2rem; 
+  margin-bottom: 8px; 
+}
 
 /* Welcome overlay when kiosk is idle */
 .welcome-overlay {
@@ -103,16 +115,49 @@
   z-index: 9999;
   cursor: pointer;
 }
-.welcome-backdrop { position:absolute; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.3); z-index:1; }
-.welcome-content { text-align: center; z-index:2; position: relative; color: white; }
-.welcome-content h1 { font-weight:700; font-size:2.8rem; margin-bottom:18px; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
-.welcome-content p { font-size:1.3rem; margin-bottom:12px; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+.welcome-backdrop { 
+  position:absolute; 
+  top:0; 
+  left:0; 
+  width:100%; 
+  height:100%; 
+  background-color: rgba(0,0,0,0.3); 
+  z-index:1; 
+}
+.welcome-content { 
+  text-align: center; 
+  z-index:2; position: 
+  relative; 
+  color: white; 
+}
+
+.welcome-content h1 { 
+  font-weight:700; 
+  font-size:2.8rem; 
+  margin-bottom:18px; 
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6); 
+}
+
+.welcome-content p { 
+  font-size:1.3rem; 
+  margin-bottom:12px; 
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5); 
+}
 
 @media (max-width: 480px) {
-  .kiosk-btn { width: 140px; height: 84px; font-size: 1rem; }
-  .kiosk-logo { width: 90px; height: 90px; top: -45px; }
+  .kiosk-btn { 
+    width: 140px; 
+    height: 84px; 
+    font-size: 1rem; 
+  }
+
+  .kiosk-logo { 
+    width: 90px; 
+    height: 90px; 
+    top: -45px; 
+  }
 }
-/* Date and Time inside the card */
+
 .datetime-container {
   position: absolute;
   top: 16px;
@@ -124,11 +169,11 @@
 
 .date-text {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight:400;
 }
 
 .time-text {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
   color: #388e3c;
 }
