@@ -5,7 +5,6 @@ import axios from "axios";
 export default function AboutPTC() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const inFlightRef = useRef(false);
   const mountedRef = useRef(true);
@@ -18,7 +17,6 @@ export default function AboutPTC() {
         inFlightRef.current = true;
         if (showLoading) {
           setData(null);
-          setLoading(true);
         }
         try {
             

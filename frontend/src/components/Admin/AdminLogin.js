@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import api from "../../utils/api";
+import "./AdminLogin.css";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -43,49 +44,21 @@ export default function AdminLogin() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "100px auto", textAlign: "center", padding: "30px", border: "1px solid #ccc", borderRadius: "8px" }}>
+    <div className="admin-login-card">
       <h2>Admin Login</h2>
 
       <form onSubmit={handleLogin}>
-        <div style={{ marginBottom: "15px" }}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            style={{ width: "100%", padding: "10px", borderRadius: "4px" }}
-            required
-          />
+        <div>
+          <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} className="admin-login-input" required />
         </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            style={{ width: "100%", padding: "10px", borderRadius: "4px" }}
-            required
-          />
+        <div>
+          <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} className="admin-login-input" required />
         </div>
 
         {error && <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: loading ? "not-allowed" : "pointer"
-          }}
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
+        <button type="submit" disabled={loading} className="admin-login-btn">{loading ? "Logging in..." : "Login"}</button>
       </form>
     </div>
   );

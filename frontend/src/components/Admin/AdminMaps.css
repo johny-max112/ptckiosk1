@@ -1,0 +1,18 @@
+/* Styles for AdminMaps component */
+.admin-page-maps { position: relative; min-height: 100vh; overflow: hidden; }
+.admin-bg-maps { position: fixed; top:0; left:0; width:100vw; height:100vh; background-size:cover; background-position:center; filter: brightness(0.70) contrast(1.1); z-index:1; pointer-events:none; }
+.admin-card-maps { background: linear-gradient(135deg, #fffde7 0%, #ffffff 100%); border-radius:18px; box-shadow:0 8px 32px rgba(44,62,80,0.18); padding:40px 32px 32px 32px; max-width:700px; margin:60px auto 0 auto; position:relative; z-index:2; text-align:center; border:3px solid #ffc107; }
+.admin-form-maps .input-map { width:100%; padding:10px; margin-bottom:10px; border-radius:6px; border:1px solid #388e3c; box-sizing:border-box; }
+.map-item { background:#e8f5e9; border:1px solid #ffc107; border-radius:8px; padding:10px; margin-bottom:8px; }
+.btn-map { padding:10px 20px; border-radius:5px; border:none; cursor:pointer; }
+.btn-map.primary { background:#388e3c; color:white; }
+.btn-map.warn { background:#6c757d; color:white; }
+
+/* Back button inside admin maps card */
+.admin-card-maps .btn-map { background: transparent; border: 1px solid #2e7d32; color: #2e7d32; border-radius: 6px; }
+.admin-card-maps .btn-map:hover { background: #2e7d32; color: #fff; }
+
+/* Centered back button container */
+.admin-back-container { display: flex; justify-content: center; margin-bottom: 12px; }
+.admin-back-btn { padding: 6px 10px; border: 1px solid #2e7d32; background: transparent; color: #2e7d32; border-radius: 6px; cursor: pointer; }
+.admin-back-btn:hover { background: #2e7d32; color: #fff; }

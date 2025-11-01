@@ -1,0 +1,17 @@
+/* Styles for AdminAcademic component */
+.admin-page-academic { position: relative; padding: 24px; }
+.admin-bg-academic { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-size: cover; background-position: center; filter: brightness(0.70) contrast(1.1); z-index: 1; pointer-events: none; }
+.admin-card-academic { background: linear-gradient(135deg, #fffde7 0%, #ffffff 100%); border-radius:18px; box-shadow:0 8px 32px rgba(44,62,80,0.08); padding:24px; margin:24px; position: relative; z-index: 2; }
+.academic-sections { display:flex; gap:12px; margin-bottom:16px; }
+.academic-btn { padding:8px 14px; border-radius:6px; border:none; cursor:pointer; }
+.academic-btn.active { background:#2e7d32; color:white; }
+.academic-list-item { border:1px solid #ddd; padding:10px; border-radius:8px; margin-bottom:8px; background:#e8f5e9; }
+.input-academic { width:100%; padding:8px; margin-bottom:8px; box-sizing:border-box; }
+.control-row-academic { margin-top:8px; }
+
+/* Back button alignment for admin academic header */
+.admin-back-btn { display: inline-block; padding: 6px 10px; background: transparent; border: 1px solid #2e7d32; color: #2e7d32; border-radius: 6px; cursor: pointer; }
+.admin-back-btn:hover { background: #2e7d32; color: #fff; }
+
+/* Centered back button container */
+.admin-back-container { display: flex; justify-content: center; margin-bottom: 12px; }

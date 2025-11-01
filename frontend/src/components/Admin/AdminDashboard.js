@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import './AdminDashboard.css';
 
 export default function AdminDashboard() {
   const [adminName, setAdminName] = useState('');
@@ -22,52 +22,11 @@ export default function AdminDashboard() {
     navigate('/admin');
   };
 
-  // Styles for background and card
-  const backgroundStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundImage: "url('/pateros.png')", 
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "brightness(0.70) contrast(1.1)",
-    zIndex: 1,
-    pointerEvents: "none"
-  };
-
-  const cardStyle = {
-    background: "rgba(255,255,255,0.97)",
-    borderRadius: "18px",
-    boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-    padding: "40px 32px 32px 32px",
-    maxWidth: "1200px",
-    margin: "60px auto 0 auto",
-    position: "relative",
-    zIndex: 2,
-    textAlign: "center"
-  };
-
-  const logoStyle = {
-    width: "90px",
-    height: "90px",
-    objectFit: "contain",
-    position: "absolute",
-    top: "-45px",
-    left: "50%",
-    transform: "translateX(-50%)",
-    background: "white",
-    borderRadius: "50%",
-    boxShadow: "0 2px 12px rgba(44,62,80,0.12)",
-    border: "3px solid #2e7d32"
-  };
-
   return (
-    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
-      <div style={backgroundStyle}></div>
-      <div style={cardStyle}>
-  <img src="/ptcround.png" alt="PTC Logo" style={logoStyle} />
+    <div className="admin-page-dashboard">
+      <div className="admin-bg-dashboard" style={{ backgroundImage: "url('/pateros.png')" }}></div>
+      <div className="admin-card-dashboard">
+        <img src="/ptcround.png" alt="PTC Logo" className="admin-logo" />
         {/* Header */}
         <div style={{ 
           display: 'flex', 
@@ -98,49 +57,34 @@ export default function AdminDashboard() {
           </button>
         </div>
         {/* Management Cards */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '20px',
-          marginBottom: '30px'
-        }}>
+        <div className="admin-cards-grid">
           {/* ...existing code for management cards... */}
           <Link to="/admin/announcements" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#fff3cd', borderLeft: '4px solid #ffc107', transition: 'transform 0.2s', cursor: 'pointer' }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#fff3cd', borderLeft: '4px solid #ffc107' }}>
               <h3 style={{ margin: '0 0 10px 0', color: '#856404' }}> Manage Announcements</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Create, edit, and manage campus announcements and news</p>
             </div>
           </Link>
           <Link to="/admin/academic-info" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#d1ecf1', borderLeft: '4px solid #17a2b8', transition: 'transform 0.2s', cursor: 'pointer' }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#d1ecf1', borderLeft: '4px solid #17a2b8' }}>
               <h3 style={{ margin: '0 0 10px 0', color: '#0c5460' }}>Manage Academic Info</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Update academic programs and course information</p>
             </div>
           </Link>
           <Link to="/admin/about" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#d4edda', borderLeft: '4px solid #28a745', transition: 'transform 0.2s', cursor: 'pointer' }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#d4edda', borderLeft: '4px solid #28a745' }}>
               <h3 style={{ margin: '0 0 10px 0', color: '#155724' }}> Manage About PTC</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Edit mission, vision, and history information</p>
             </div>
           </Link>
           <Link to="/admin/offices" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#f8d7da', borderLeft: '4px solid #dc3545', transition: 'transform 0.2s', cursor: 'pointer' }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#f8d7da', borderLeft: '4px solid #dc3545' }}>
               <h3 style={{ margin: '0 0 10px 0', color: '#721c24' }}>Manage Office Directory</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Add and update office locations and contact information</p>
             </div>
           </Link>
           <Link to="/admin/maps" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ padding: '25px', border: '1px solid #dee2e6', borderRadius: '8px', backgroundColor: '#e2e3f0', borderLeft: '4px solid #6f42c1', transition: 'transform 0.2s', cursor: 'pointer' }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#e2e3f0', borderLeft: '4px solid #6f42c1' }}>
               <h3 style={{ margin: '0 0 10px 0', color: '#3d1a78' }}>Manage Campus Maps</h3>
               <p style={{ margin: '0', color: '#6c757d' }}>Upload and manage campus maps and layouts</p>
             </div>

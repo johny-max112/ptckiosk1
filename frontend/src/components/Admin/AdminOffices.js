@@ -1,8 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import api from "../../utils/api";
+import "./AdminOffices.css";
 
 function AdminOffices() {
+  const navigate = useNavigate();
   const [offices, setOffices] = useState([]);
   const [campuses, setCampuses] = useState([]);
   const [form, setForm] = useState({
@@ -12,32 +15,7 @@ function AdminOffices() {
     contact: "",
     office_hours: ""
   });
-  // PTC color palette and card style
-  const backgroundStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundImage: "url('/pateros.png')", 
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "brightness(0.70) contrast(1.1)",
-    zIndex: 1,
-    pointerEvents: "none"
-  };
-  const cardStyle = {
-    background: "linear-gradient(135deg, #fffde7 0%, #ffffff 100%)",
-    borderRadius: "18px",
-    boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-    padding: "40px 32px 32px 32px",
-    maxWidth: "900px",
-    margin: "60px auto 0 auto",
-    position: "relative",
-    zIndex: 2,
-    textAlign: "center",
-    border: "3px solid #ffc107"
-  };
+  // Styles moved to AdminOffices.css; background image applied inline in JSX
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -163,125 +141,52 @@ function AdminOffices() {
   };
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
-      <div style={backgroundStyle}></div>
-      <div style={cardStyle}>
-        <div style={{ textAlign: "center", marginBottom: "40px", borderBottom: "3px solid #388e3c", paddingBottom: "20px" }}>
-          <h1 style={{ color: "#388e3c", margin: "0", fontSize: "2.5em", fontWeight: "bold", textShadow: "0 2px 8px #fffde7" }}>
-            Manage Office Directory
-          </h1>
+    <div className="admin-page-offices">
+      <div className="admin-bg-offices" style={{ backgroundImage: "url('/pateros.png')" }}></div>
+      <div className="admin-card-offices">
+        <div className="admin-back-container">
+          <button onClick={() => navigate('/admin/dashboard')} className="btn-offices admin-back-btn">← Back to Dashboard</button>
         </div>
-        <div style={{ marginBottom: "20px", padding: "20px", border: "1px solid #ffc107", borderRadius: "10px", background: "#fffde7" }}>
-          <h3 style={{ color: "#388e3c" }}>{editingId ? "Edit Office" : "Add New Office"}</h3>
-          <div style={{ marginBottom: "10px" }}>
-            <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-              Campus: * {campuses.length === 0 && "(Loading...)"}
-            </label>
-            <select 
-              name="campus_id" 
-              value={form.campus_id} 
-              onChange={handleChange}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
-            >
+        <div className="header" style={{ textAlign: 'center', marginBottom: 12 }}>
+          <h1>Manage Office Directory</h1>
+        </div>
+
+        <div className="admin-form-offices">
+          <h3>{editingId ? "Edit Office" : "Add New Office"}</h3>
+          <div>
+            <label className="admin-label">Campus: * {campuses.length === 0 && "(Loading...)"}</label>
+            <select name="campus_id" value={form.campus_id} onChange={handleChange} className="admin-input">
               <option value="">Select Campus</option>
               {campuses.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
+                <option key={c.id} value={c.id}>{c.name}</option>
               ))}
             </select>
-            {campuses.length === 0 && (
-              <p style={{ color: "red", fontSize: "0.9em" }}>
-                No campuses found. Please add campuses to the database first.
-              </p>
-            )}
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-              Office Name: *
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              placeholder="e.g., Registrar's Office"
-              onChange={handleChange}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
-            />
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-              Description:
-            </label>
-            <input
-              type="text"
-              name="description"
-              value={form.description}
-              placeholder="Brief description of services"
-              onChange={handleChange}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
-            />
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-              Room:
-            </label>
-            <input
-              type="text"
-              name="contact"
-              value={form.contact}
-              placeholder="e.g., (123) 456-7890"
-              onChange={handleChange}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
-            />
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>
-              Office Hours:
-            </label>
-            <input
-              type="text"
-              name="office_hours"
-              value={form.office_hours}
-              placeholder="e.g., Mon-Fri 8:00 AM - 5:00 PM"
-              onChange={handleChange}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
-            />
+            {campuses.length === 0 && <p style={{ color: 'red', fontSize: '0.9em' }}>No campuses found. Please add campuses to the database first.</p>}
           </div>
           <div>
-            <button 
-              onClick={handleSave}
-              disabled={loading || campuses.length === 0}
-              style={{ 
-                padding: "10px 20px", 
-                backgroundColor: campuses.length === 0 ? "#ccc" : "#388e3c", 
-                color: "white", 
-                border: "none", 
-                borderRadius: "5px",
-                marginRight: "10px",
-                cursor: campuses.length === 0 ? "not-allowed" : "pointer",
-                fontWeight: "bold"
-              }}
-            >
+            <label className="admin-label">Office Name: *</label>
+            <input type="text" name="name" value={form.name} placeholder="e.g., Registrar's Office" onChange={handleChange} className="admin-input" />
+          </div>
+          <div>
+            <label className="admin-label">Description:</label>
+            <input type="text" name="description" value={form.description} placeholder="Brief description of services" onChange={handleChange} className="admin-input" />
+          </div>
+          <div>
+            <label className="admin-label">Room:</label>
+            <input type="text" name="contact" value={form.contact} placeholder="e.g., (123) 456-7890" onChange={handleChange} className="admin-input" />
+          </div>
+          <div>
+            <label className="admin-label">Office Hours:</label>
+            <input type="text" name="office_hours" value={form.office_hours} placeholder="e.g., Mon-Fri 8:00 AM - 5:00 PM" onChange={handleChange} className="admin-input" />
+          </div>
+          <div>
+            <button onClick={handleSave} disabled={loading || campuses.length === 0} className={`btn-offices ${campuses.length === 0 ? '' : 'btn-offices-primary'}`} style={campuses.length === 0 ? { backgroundColor: '#ccc', cursor: 'not-allowed' } : {}}>
               {loading ? "Saving..." : (editingId ? "Update Office" : "Add Office")}
             </button>
-            {editingId && (
-              <button 
-                onClick={handleCancelEdit}
-                style={{ 
-                  padding: "10px 20px", 
-                  backgroundColor: "#ffc107", 
-                  color: "#388e3c", 
-                  border: "none", 
-                  borderRadius: "5px",
-                  fontWeight: "bold"
-                }}
-              >
-                Cancel Edit
-              </button>
-            )}
+            {editingId && (<button onClick={handleCancelEdit} className="btn-offices btn-offices-warning">Cancel Edit</button>)}
           </div>
         </div>
+
         <h3 style={{ color: "#388e3c" }}>Existing Offices</h3>
         {loading && <p>Loading...</p>}
         {offices.length === 0 && !loading ? (
@@ -289,46 +194,15 @@ function AdminOffices() {
         ) : (
           <div>
             {offices.map((office) => (
-              <div key={office.id} style={{ 
-                border: "1px solid #ffc107", 
-                borderRadius: "10px", 
-                padding: "15px", 
-                marginBottom: "10px",
-                background: "#e8f5e9"
-              }}>
+              <div key={office.id} className="office-item">
                 <h4 style={{ color: "#388e3c" }}>{office.name}</h4>
                 <p><strong>Campus ID:</strong> {office.campus_id}</p>
                 {office.description && <p><strong>Description:</strong> {office.description}</p>}
                 {office.contact && <p><strong>Contact:</strong> {office.contact}</p>}
                 {office.office_hours && <p><strong>Hours:</strong> {office.office_hours}</p>}
-                <div style={{ marginTop: "10px" }}>
-                  <button 
-                    onClick={() => handleEdit(office)}
-                    style={{ 
-                      padding: "5px 15px", 
-                      backgroundColor: "#388e3c", 
-                      color: "white", 
-                      border: "none", 
-                      borderRadius: "3px",
-                      marginRight: "10px",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    onClick={() => handleDelete(office.id)}
-                    style={{ 
-                      padding: "5px 15px", 
-                      backgroundColor: "#ffc107", 
-                      color: "#388e3c", 
-                      border: "none", 
-                      borderRadius: "3px",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    Delete
-                  </button>
+                <div className="office-controls">
+                  <button onClick={() => handleEdit(office)} className="btn-offices btn-offices-primary" style={{ padding: '5px 15px', marginRight: 10 }}>Edit</button>
+                  <button onClick={() => handleDelete(office.id)} className="btn-offices btn-offices-warning" style={{ padding: '5px 15px' }}>Delete</button>
                 </div>
               </div>
             ))}

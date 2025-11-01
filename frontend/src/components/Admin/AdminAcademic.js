@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './AdminAcademic.css';
 
 const sections = [
   { key: 'requirements', label: 'Requirements & Procedure' },
@@ -28,6 +30,7 @@ API = normalizeApi(API);
 console.debug('[AdminAcademic] Using API base:', API);
 
 export default function AdminAcademic() {
+  const navigate = useNavigate();
   const [section, setSection] = useState('programs');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -96,44 +99,53 @@ export default function AdminAcademic() {
     } finally { setLoading(false); }
   };
 
-  return (
-    <div style={{ padding: 24 }}>
-      <h2 style={{ color: '#2e7d32' }}>Admin — Academic</h2>
-      <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
-        {sections.map(s => (
-          <button key={s.key} onClick={() => setSection(s.key)} style={{ padding: '8px 14px', background: section===s.key? '#2e7d32':'#e6f4ea', color: section===s.key? '#fff':'#2e7d32', border: 'none', borderRadius: 6, cursor: 'pointer' }}>{s.label}</button>
-        ))}
-      </div>
 
-      <div style={{ display: 'flex', gap: 24 }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ marginBottom: 12 }}>
-            <h3>{editingId ? 'Edit Entry' : 'Add New Entry'}</h3>
-            <input name="title" value={form.title} onChange={handleChange} placeholder="Title" style={{ width: '100%', padding: 8, marginBottom: 8 }} />
-            <textarea name="content" value={form.content} onChange={handleChange} placeholder="Content" rows={6} style={{ width: '100%', padding: 8 }} />
-            <div style={{ marginTop: 8 }}>
-              <button onClick={handleSave} disabled={loading} style={{ padding: '8px 14px', background: '#2e7d32', color: '#fff', border: 'none', borderRadius: 6 }}>{editingId? 'Update':'Add'}</button>
-              {editingId && <button onClick={() => { setEditingId(null); setForm({ title:'', content:'' }); }} style={{ marginLeft: 8, padding: '8px 14px' }}>Cancel</button>}
-            </div>
-          </div>
+  
+  return (
+    <div className="admin-page-academic">
+      <div className="admin-bg-academic" style={{ backgroundImage: "url('/pateros.png')" }}></div>
+         <div className="admin-card-academic">
+           <div className="admin-back-container">
+             <button onClick={() => navigate('/admin/dashboard')} className="academic-btn admin-back-btn">← Back to Dashboard</button>
+           </div>
+           <h2 style={{ color: '#2e7d32', margin: 0, textAlign: 'center', marginBottom: 12 }}>Admin — Academic</h2>
+        <div className="academic-sections">
+          {sections.map(s => (
+            <button key={s.key} onClick={() => setSection(s.key)} className={`academic-btn ${section===s.key? 'active':''}`} style={{ padding: '8px 14px' }}>{s.label}</button>
+          ))}
         </div>
 
-        <div style={{ flex: 1 }}>
-          <h3>Entries ({section})</h3>
-          {loading ? <p>Loading...</p> : (
-            items.length === 0 ? <p>No entries</p> : (
-              items.map(it => (
-                <div key={it.id} style={{ border: '1px solid #ddd', padding: 10, borderRadius: 8, marginBottom: 8 }}>
-                  <h4 style={{ margin: 0 }}>{it.title}</h4>
-                  <p style={{ whiteSpace: 'pre-wrap' }}>{it.content}</p>
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <button onClick={() => handleEdit(it)} style={{ padding: '6px 10px', background: '#2e7d32', color: '#fff', border: 'none', borderRadius: 4 }}>Edit</button>
-                    <button onClick={() => handleDelete(it.id)} style={{ padding: '6px 10px', background: '#ffc107', color: '#2e7d32', border: 'none', borderRadius: 4 }}>Delete</button>
+
+        <div style={{ display: 'flex', gap: 24 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ marginBottom: 12 }}>
+              <h3>{editingId ? 'Edit Entry' : 'Add New Entry'}</h3>
+              <input name="title" value={form.title} onChange={handleChange} placeholder="Title" className="input-academic" />
+              <textarea name="content" value={form.content} onChange={handleChange} placeholder="Content" rows={6} className="input-academic" />
+              <div style={{ marginTop: 8 }}>
+                <button onClick={handleSave} disabled={loading} className="academic-btn active">{editingId? 'Update':'Add'}</button>
+                {editingId && <button onClick={() => { setEditingId(null); setForm({ title:'', content:'' }); }} style={{ marginLeft: 8 }} className="academic-btn">Cancel</button>}
+              </div>
+            </div>
+          </div>
+
+          <div style={{ flex: 1 }}>
+            <h3>Entries ({section})</h3>
+            {loading ? <p>Loading...</p> : (
+              items.length === 0 ? <p>No entries</p> : (
+                items.map(it => (
+                  <div key={it.id} className="academic-list-item">
+                    <h4 style={{ margin: 0 }}>{it.title}</h4>
+                    <p style={{ whiteSpace: 'pre-wrap' }}>{it.content}</p>
+                    <div style={{ display: 'flex', gap: 8 }}>
+                      <button onClick={() => handleEdit(it)} className="academic-btn active" style={{ padding: '6px 10px' }}>Edit</button>
+                      <button onClick={() => handleDelete(it.id)} className="academic-btn" style={{ padding: '6px 10px', background: '#ffc107', color: '#2e7d32' }}>Delete</button>
+                    </div>
                   </div>
-                </div>
-              ))
-            )
-          )}
+                ))
+              )
+            )}
+          </div>
         </div>
       </div>
     </div>
