@@ -1,34 +1,11 @@
 
 import React, { useEffect, useState, useCallback } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-// PTC color palette and card style
-const backgroundStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundImage: "url('/pateros.png')", 
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "brightness(0.70) contrast(1.1)",
-    zIndex: 1,
-    pointerEvents: "none"
-  };
-const cardStyle = {
-  background: "linear-gradient(135deg, #fffde7 0%, #ffffff 100%)",
-  borderRadius: "18px",
-  boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-  padding: "40px 32px 32px 32px",
-  maxWidth: "900px",
-  margin: "60px auto 0 auto",
-  position: "relative",
-  zIndex: 2,
-  textAlign: "center",
-  border: "3px solid #ffc107"
-};
+import "./AdminAcademicInfo.css";
 
 function AdminAcademicInfo() {
+  const navigate = useNavigate();
   const [academicList, setAcademicList] = useState([]);
   const [form, setForm] = useState({ title: "", content: "" });
   const [editingId, setEditingId] = useState(null);
@@ -137,67 +114,28 @@ function AdminAcademicInfo() {
   };
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
-      <div style={backgroundStyle}></div>
-      <div style={cardStyle}>
-        <div style={{ textAlign: "center", marginBottom: "40px", borderBottom: "3px solid #388e3c", paddingBottom: "20px" }}>
+    <div className="admin-page-academicinfo">
+      <div className="admin-bg-academicinfo" style={{ backgroundImage: "url('/pateros.png')" }}></div>
+      <div className="admin-card-academicinfo">
+        <div className="admin-back-container">
+          <button onClick={() => navigate('/admin/dashboard')} className="btn-academicinfo admin-back-btn">← Back to Dashboard</button>
+        </div>
+        <div style={{ textAlign: 'center', marginBottom: 12 }}>
           <h1 style={{ color: "#388e3c", margin: "0", fontSize: "2.5em", fontWeight: "bold", textShadow: "0 2px 8px #fffde7" }}>
              Manage Academic Info
           </h1>
         </div>
-        <div style={{ marginBottom: "20px", padding: "20px", border: "1px solid #ffc107", borderRadius: "10px", background: "#fffde7" }}>
-          <h3 style={{ color: "#388e3c" }}>{editingId ? "Edit Academic Info" : "Add New Academic Info"}</h3>
-          <div style={{ marginBottom: "10px" }}>
-            <input
-              type="text"
-              name="title"
-              value={form.title}
-              placeholder="Title (e.g., Computer Science Program)"
-              onChange={handleChange}
-              style={{ width: "100%", padding: "10px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
-            />
-          </div>
-          <div style={{ marginBottom: "10px" }}>
-            <textarea
-              name="content"
-              value={form.content}
-              placeholder="Content/Description"
-              onChange={handleChange}
-              rows={6}
-              style={{ width: "100%", padding: "10px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
-            />
+        <div className="admin-form-academicinfo">
+          <h3>{editingId ? "Edit Academic Info" : "Add New Academic Info"}</h3>
+          <div>
+            <input className="input-academicinfo" type="text" name="title" value={form.title} placeholder="Title (e.g., Computer Science Program)" onChange={handleChange} />
           </div>
           <div>
-            <button 
-              onClick={handleSave}
-              disabled={loading}
-              style={{ 
-                padding: "10px 20px", 
-                backgroundColor: "#388e3c", 
-                color: "white", 
-                border: "none", 
-                borderRadius: "5px",
-                marginRight: "10px",
-                fontWeight: "bold"
-              }}
-            >
-              {loading ? "Saving..." : (editingId ? "Update" : "Add Academic Info")}
-            </button>
-            {editingId && (
-              <button 
-                onClick={handleCancelEdit}
-                style={{ 
-                  padding: "10px 20px", 
-                  backgroundColor: "#ffc107", 
-                  color: "#388e3c", 
-                  border: "none", 
-                  borderRadius: "5px",
-                  fontWeight: "bold"
-                }}
-              >
-                Cancel Edit
-              </button>
-            )}
+            <textarea className="input-academicinfo" name="content" value={form.content} placeholder="Content/Description" onChange={handleChange} rows={6} />
+          </div>
+          <div>
+            <button onClick={handleSave} disabled={loading} className="btn-academicinfo primary">{loading ? "Saving..." : (editingId ? "Update" : "Add Academic Info")}</button>
+            {editingId && (<button onClick={handleCancelEdit} className="btn-academicinfo warn">Cancel Edit</button>)}
           </div>
         </div>
         <h3 style={{ color: "#388e3c" }}>Existing Academic Information</h3>
@@ -207,43 +145,12 @@ function AdminAcademicInfo() {
         ) : (
           <div>
             {academicList.map((item) => (
-              <div key={item.id} style={{ 
-                border: "1px solid #ffc107", 
-                borderRadius: "10px", 
-                padding: "15px", 
-                marginBottom: "10px",
-                background: "#e8f5e9"
-              }}>
+              <div key={item.id} className="list-item">
                 <h4 style={{ color: "#388e3c" }}>{item.title}</h4>
                 <p>{item.content}</p>
                 <div>
-                  <button 
-                    onClick={() => handleEdit(item)}
-                    style={{ 
-                      padding: "5px 15px", 
-                      backgroundColor: "#388e3c", 
-                      color: "white", 
-                      border: "none", 
-                      borderRadius: "3px",
-                      marginRight: "10px",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    onClick={() => handleDelete(item.id)}
-                    style={{ 
-                      padding: "5px 15px", 
-                      backgroundColor: "#ffc107", 
-                      color: "#388e3c", 
-                      border: "none", 
-                      borderRadius: "3px",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    Delete
-                  </button>
+                  <button onClick={() => handleEdit(item)} className="btn-academicinfo primary" style={{ padding: '5px 15px', marginRight: 10 }}>Edit</button>
+                  <button onClick={() => handleDelete(item.id)} className="btn-academicinfo warn" style={{ padding: '5px 15px' }}>Delete</button>
                 </div>
               </div>
             ))}

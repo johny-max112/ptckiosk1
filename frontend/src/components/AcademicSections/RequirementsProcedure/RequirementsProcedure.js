@@ -32,11 +32,23 @@ export default function RequirementsProcedure() {
   const openModal = (item) => { setSelected(item); setModalOpen(true); };
   const closeModal = () => { setModalOpen(false); setSelected(null); };
 
+  const renderSkeleton = () => (
+    <div className="skeleton-wrapper">
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="skeleton-item">
+          <div className="skeleton-title skeleton"></div>
+          <div className="skeleton-text skeleton"></div>
+          <div className="skeleton-date skeleton"></div>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className="nested-card">
       <div className="nested-card-inner">
-        
-        {loading ? <p>Loading...</p> : (
+
+        {loading ? renderSkeleton() : (
           items.length === 0 ? (
             <p>No requirements available.</p>
           ) : (
@@ -51,7 +63,6 @@ export default function RequirementsProcedure() {
           )
         )}
 
-        {/* Modal for full details */}
         {modalOpen && selected && (
           <div className="modal-overlay" onClick={closeModal}>
             <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={(e) => e.stopPropagation()}>

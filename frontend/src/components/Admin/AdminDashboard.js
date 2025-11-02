@@ -23,14 +23,10 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="admin-dashboard-container">
-      <div
-  className="background"
-  style={{ backgroundImage: "url('/pateros.png')" }}
-></div>
-      <div className="dashboard-card">
-        <img src="/ptcround.png" alt="PTC Logo" className="logo" />
-
+    <div className="admin-page-dashboard">
+      <div className="admin-bg-dashboard" style={{ backgroundImage: "url('/pateros.png')" }}></div>
+      <div className="admin-card-dashboard">
+        <img src="/ptcround.png" alt="PTC Logo" className="admin-logo" />
         {/* Header */}
         <div className="dashboard-header">
           <div>
@@ -41,39 +37,36 @@ export default function AdminDashboard() {
         </div>
 
         {/* Management Cards */}
-        <div className="management-grid">
-          <Link to="/admin/announcements" className="management-link">
-            <div className="management-card announcements">
-              <h3>Manage Announcements</h3>
-              <p>Create, edit, and manage campus announcements and news</p>
+        <div className="admin-cards-grid">
+          {/* ...existing code for management cards... */}
+          <Link to="/admin/announcements" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#fff3cd', borderLeft: '4px solid #ffc107' }}>
+              <h3 style={{ margin: '0 0 10px 0', color: '#856404' }}> Manage Announcements</h3>
+              <p style={{ margin: '0', color: '#6c757d' }}>Create, edit, and manage campus announcements and news</p>
             </div>
           </Link>
-
-          <Link to="/admin/academic-info" className="management-link">
-            <div className="management-card academic">
-              <h3>Manage Academic Info</h3>
-              <p>Update academic programs and course information</p>
+          <Link to="/admin/academic-info" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#d1ecf1', borderLeft: '4px solid #17a2b8' }}>
+              <h3 style={{ margin: '0 0 10px 0', color: '#0c5460' }}>Manage Academic Info</h3>
+              <p style={{ margin: '0', color: '#6c757d' }}>Update academic programs and course information</p>
             </div>
           </Link>
-
-          <Link to="/admin/about" className="management-link">
-            <div className="management-card about">
-              <h3>Manage About PTC</h3>
-              <p>Edit mission, vision, and history information</p>
+          <Link to="/admin/about" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#d4edda', borderLeft: '4px solid #28a745' }}>
+              <h3 style={{ margin: '0 0 10px 0', color: '#155724' }}> Manage About PTC</h3>
+              <p style={{ margin: '0', color: '#6c757d' }}>Edit mission, vision, and history information</p>
             </div>
           </Link>
-
-          <Link to="/admin/offices" className="management-link">
-            <div className="management-card offices">
-              <h3>Manage Office Directory</h3>
-              <p>Add and update office locations and contact information</p>
+          <Link to="/admin/offices" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#f8d7da', borderLeft: '4px solid #dc3545' }}>
+              <h3 style={{ margin: '0 0 10px 0', color: '#721c24' }}>Manage Office Directory</h3>
+              <p style={{ margin: '0', color: '#6c757d' }}>Add and update office locations and contact information</p>
             </div>
           </Link>
-
-          <Link to="/admin/maps" className="management-link">
-            <div className="management-card maps">
-              <h3>Manage Campus Maps</h3>
-              <p>Upload and manage campus maps and layouts</p>
+          <Link to="/admin/maps" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div className="admin-card-tile" style={{ backgroundColor: '#e2e3f0', borderLeft: '4px solid #6f42c1' }}>
+              <h3 style={{ margin: '0 0 10px 0', color: '#3d1a78' }}>Manage Campus Maps</h3>
+              <p style={{ margin: '0', color: '#6c757d' }}>Upload and manage campus maps and layouts</p>
             </div>
           </Link>
         </div>

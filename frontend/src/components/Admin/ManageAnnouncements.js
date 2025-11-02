@@ -1,36 +1,12 @@
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import api from "../../utils/api";
-// PTC color palette and card style
-const backgroundStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundImage: "url('/pateros.png')", 
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "brightness(0.70) contrast(1.1)",
-    zIndex: 1,
-    pointerEvents: "none"
-  };
-  
-const cardStyle = {
-  background: "linear-gradient(135deg, #fffde7 0%, #ffffff 100%)",
-  borderRadius: "18px",
-  boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-  padding: "40px 32px 32px 32px",
-  maxWidth: "900px",
-  margin: "60px auto 0 auto",
-  position: "relative",
-  zIndex: 2,
-  textAlign: "center",
-  border: "3px solid #ffc107"
-};
+import "./ManageAnnouncements.css";
 
 function ManageAnnouncements() {
+  const navigate = useNavigate();
   const [announcements, setAnnouncements] = useState([]);
   const [form, setForm] = useState({
     title: "",
@@ -160,150 +136,107 @@ function ManageAnnouncements() {
   };
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
-      <div style={backgroundStyle}></div>
-      <div style={cardStyle}>
-        <div style={{ textAlign: "center", marginBottom: "40px", borderBottom: "3px solid #388e3c", paddingBottom: "20px" }}>
-          <h1 style={{ color: "#388e3c", margin: "0", fontSize: "2.5em", fontWeight: "bold", textShadow: "0 2px 8px #fffde7" }}>
-           Manage Announcements
-          </h1>
+    <div className="admin-manage-announcements">
+      <div className="admin-bg" style={{ backgroundImage: "url('/pateros.png')" }} />
+      <div className="admin-card">
+        <div className="admin-back-container">
+          <button onClick={() => navigate('/admin/dashboard')} className="btn admin-back-btn">← Back to Dashboard</button>
         </div>
-        <div style={{ marginBottom: "20px", padding: "20px", border: "1px solid #ffc107", borderRadius: "10px", background: "#fffde7" }}>
-          <h3 style={{ color: "#388e3c" }}>{editingId ? "Edit Announcement" : "Add New Announcement"}</h3>
-          <div style={{ marginBottom: "10px" }}>
-            <input 
-              name="title" 
-              placeholder="Announcement Title" 
-              value={form.title} 
+        <div className="header" style={{ textAlign: 'center', marginBottom: 12 }}>
+          <h1>Manage Announcements</h1>
+        </div>
+
+        <div className="admin-form">
+          <h3>{editingId ? "Edit Announcement" : "Add New Announcement"}</h3>
+          <div className="form-row">
+            <input
+              name="title"
+              placeholder="Announcement Title"
+              value={form.title}
               onChange={handleChange}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
+              className="input"
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
-            <textarea 
-              name="content" 
-              placeholder="Announcement Content" 
-              value={form.content} 
+          <div className="form-row">
+            <textarea
+              name="content"
+              placeholder="Announcement Content"
+              value={form.content}
               onChange={handleChange}
               rows={4}
-              style={{ width: "100%", padding: "8px", marginBottom: "10px", borderRadius: "6px", border: "1px solid #388e3c" }}
+              className="input"
             />
           </div>
-          <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+          <div className="flex-row">
             <div>
               <label>Start Date:</label>
-              <input 
-                type="date" 
-                name="start_date" 
-                value={form.start_date} 
+              <input
+                type="date"
+                name="start_date"
+                value={form.start_date}
                 onChange={handleChange}
-                style={{ padding: "8px", borderRadius: "6px", border: "1px solid #388e3c" }}
+                className="date-input"
               />
             </div>
             <div>
               <label>End Date:</label>
-              <input 
-                type="date" 
-                name="end_date" 
-                value={form.end_date} 
+              <input
+                type="date"
+                name="end_date"
+                value={form.end_date}
                 onChange={handleChange}
-                style={{ padding: "8px", borderRadius: "6px", border: "1px solid #388e3c" }}
+                className="date-input"
               />
             </div>
             <div>
               <label>Status:</label>
-              <select 
-                name="is_active" 
-                value={form.is_active} 
+              <select
+                name="is_active"
+                value={form.is_active}
                 onChange={handleChange}
-                style={{ padding: "8px", borderRadius: "6px", border: "1px solid #388e3c" }}
+                className="select"
               >
                 <option value={1}>Active</option>
                 <option value={0}>Inactive</option>
               </select>
             </div>
           </div>
-          <div>
-            <button 
-              onClick={handleAddOrUpdate}
-              disabled={loading}
-              style={{ 
-                padding: "10px 20px", 
-                backgroundColor: "#388e3c", 
-                color: "white", 
-                border: "none", 
-                borderRadius: "5px",
-                marginRight: "10px",
-                fontWeight: "bold"
-              }}
-            >
+          <div className="form-row">
+            <button onClick={handleAddOrUpdate} disabled={loading} className="btn btn-primary">
               {loading ? "Saving..." : (editingId ? "Update Announcement" : "Add Announcement")}
             </button>
             {editingId && (
-              <button 
-                onClick={handleCancelEdit}
-                style={{ 
-                  padding: "10px 20px", 
-                  backgroundColor: "#ffc107", 
-                  color: "#388e3c", 
-                  border: "none", 
-                  borderRadius: "5px",
-                  fontWeight: "bold"
-                }}
-              >
+              <button onClick={handleCancelEdit} className="btn btn-warning">
                 Cancel Edit
               </button>
             )}
           </div>
         </div>
+
         <h3 style={{ color: "#388e3c" }}>Existing Announcements</h3>
         {loading && <p>Loading...</p>}
         {announcements.length === 0 && !loading ? (
           <p>No announcements found.</p>
         ) : (
-          <div>
+          <div className="announcements-list">
             {announcements.map((a) => (
-              <div key={a.id} style={{ border: "1px solid #ffc107", borderRadius: "10px", padding: "15px", marginBottom: "10px", background: a.is_active ? "#e8f5e9" : "#fff3cd" }}>
-                <h4 style={{ color: "#388e3c" }}>{a.title}</h4>
+              <div key={a.id} className={`announcement ${a.is_active ? '' : 'inactive'}`}>
+                <h4>{a.title}</h4>
                 <p>{a.content}</p>
                 <p>
                   <strong>Period:</strong> {a.start_date} → {a.end_date}
                 </p>
                 <p>
-                  <strong>Status:</strong> 
-                  <span style={{ 
-                    color: a.is_active ? "#388e3c" : "#ffc107",
-                    fontWeight: "bold"
-                  }}>
+                  <strong>Status:</strong>
+                  <span className={`status ${a.is_active ? 'active' : 'inactive'}`}>
                     {a.is_active ? " Active" : " Inactive"}
                   </span>
                 </p>
-                <div>
-                  <button 
-                    onClick={() => handleEdit(a)}
-                    style={{ 
-                      padding: "5px 15px", 
-                      backgroundColor: "#388e3c", 
-                      color: "white", 
-                      border: "none", 
-                      borderRadius: "3px",
-                      marginRight: "10px",
-                      fontWeight: "bold"
-                    }}
-                  >
+                <div className="controls">
+                  <button onClick={() => handleEdit(a)} className="small-btn small-btn-primary">
                     Edit
                   </button>
-                  <button 
-                    onClick={() => handleDelete(a.id)}
-                    style={{ 
-                      padding: "5px 15px", 
-                      backgroundColor: "#ffc107", 
-                      color: "#388e3c", 
-                      border: "none", 
-                      borderRadius: "3px",
-                      fontWeight: "bold"
-                    }}
-                  >
+                  <button onClick={() => handleDelete(a.id)} className="small-btn small-btn-warning">
                     Delete
                   </button>
                 </div>

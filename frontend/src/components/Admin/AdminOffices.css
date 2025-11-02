@@ -1,0 +1,56 @@
+/* Styles for AdminOffices component */
+.admin-page-offices {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.admin-bg-offices {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* background-image set inline to reference public/ */
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.70) contrast(1.1);
+  z-index: 1;
+  pointer-events: none;
+}
+.admin-card-offices {
+  background: linear-gradient(135deg, #fffde7 0%, #ffffff 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+  padding: 40px 32px 32px 32px;
+  max-width: 900px;
+  margin: 60px auto 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  border: 3px solid #ffc107;
+}
+.admin-card-offices .header {
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 3px solid #388e3c;
+  padding-bottom: 20px;
+}
+.admin-card-offices .header h1 { color: #388e3c; margin: 0; font-size: 2.5em; font-weight: bold; text-shadow: 0 2px 8px #fffde7; }
+.admin-form-offices { margin-bottom: 20px; padding: 20px; border: 1px solid #ffc107; border-radius: 10px; background: #fffde7; text-align: left; }
+.admin-form-offices h3 { color: #388e3c; margin: 0 0 10px 0; }
+.admin-input { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #388e3c; box-sizing: border-box; }
+.admin-label { display: block; margin-bottom: 5px; font-weight: bold; }
+.btn-offices { padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+.btn-offices-primary { background-color: #388e3c; color: white; margin-right: 10px; }
+.btn-offices-warning { background-color: #ffc107; color: #388e3c; }
+.office-item { border: 1px solid #ffc107; border-radius: 10px; padding: 15px; margin-bottom: 10px; background: #e8f5e9; text-align: left; }
+.office-controls { margin-top: 10px; }
+
+/* Back button inside admin offices card */
+.admin-card-offices .btn-offices { background: transparent; border: 1px solid #2e7d32; color: #2e7d32; border-radius: 6px; }
+.admin-card-offices .btn-offices:hover { background: #2e7d32; color: #fff; }
+
+/* Centered back button container */
+.admin-back-container { display: flex; justify-content: center; margin-bottom: 12px; }
+.admin-back-btn { padding: 6px 10px; border: 1px solid #2e7d32; background: transparent; color: #2e7d32; border-radius: 6px; cursor: pointer; }
+.admin-back-btn:hover { background: #2e7d32; color: #fff; }

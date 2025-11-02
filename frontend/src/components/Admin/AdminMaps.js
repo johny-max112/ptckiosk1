@@ -1,35 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import api from "../../utils/api";
-
-const backgroundStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundImage: "url('/pateros.png')", 
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    filter: "brightness(0.70) contrast(1.1)",
-    zIndex: 1,
-    pointerEvents: "none"
-  };
-
-const cardStyle = {
-  background: "linear-gradient(135deg, #fffde7 0%, #ffffff 100%)",
-  borderRadius: "18px",
-  boxShadow: "0 8px 32px rgba(44,62,80,0.18)",
-  padding: "40px 32px 32px 32px",
-  maxWidth: "700px",
-  margin: "60px auto 0 auto",
-  position: "relative",
-  zIndex: 2,
-  textAlign: "center",
-  border: "3px solid #ffc107"
-};
-
+import "./AdminMaps.css";
 function AdminMaps() {
+  const navigate = useNavigate();
   const [maps, setMaps] = useState([]);
   const [form, setForm] = useState({
     campus_id: "",
@@ -141,32 +116,35 @@ function AdminMaps() {
   };
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
-      <div style={backgroundStyle}></div>
-      <div style={cardStyle}>
-        <div style={{ textAlign: "center", marginBottom: "40px", borderBottom: "3px solid #388e3c", paddingBottom: "20px" }}>
+    <div className="admin-page-maps">
+      <div className="admin-bg-maps" style={{ backgroundImage: "url('/pateros.png')" }}></div>
+      <div className="admin-card-maps">
+        <div className="admin-back-container">
+          <button onClick={() => navigate('/admin/dashboard')} className="btn-map admin-back-btn">← Back to Dashboard</button>
+        </div>
+        <div style={{ textAlign: 'center', marginBottom: 12 }}>
           <h1 style={{ color: "#388e3c", margin: "0", fontSize: "2.2em", fontWeight: "bold", textShadow: "0 2px 8px #fffde7" }}>
             Manage Campus Maps
           </h1>
         </div>
 
         {/* Form Section */}
-        <div style={{ marginBottom: "20px", padding: "20px", border: "1px solid #ffc107", borderRadius: "10px", background: "#fffde7" }}>
-          <input type="text" name="campus_id" value={form.campus_id} placeholder="Campus ID" onChange={handleChange} style={inputStyle} /><br />
-          <input type="text" name="campus_name" value={form.campus_name} placeholder="Campus Name" onChange={handleChange} style={inputStyle} /><br />
-          <textarea name="description" value={form.description} placeholder="Description" onChange={handleChange} rows={3} style={inputStyle} /><br />
-          <input type="text" name="address" value={form.address} placeholder="Campus Address" onChange={handleChange} style={inputStyle} /><br />
-          <input type="file" name="image" accept="image/*" onChange={handleChange} style={inputStyle} /><br />
+        <div className="admin-form-maps">
+          <input className="input-map" type="text" name="campus_id" value={form.campus_id} placeholder="Campus ID" onChange={handleChange} /><br />
+          <input className="input-map" type="text" name="campus_name" value={form.campus_name} placeholder="Campus Name" onChange={handleChange} /><br />
+          <textarea className="input-map" name="description" value={form.description} placeholder="Description" onChange={handleChange} rows={3} /><br />
+          <input className="input-map" type="text" name="address" value={form.address} placeholder="Campus Address" onChange={handleChange} /><br />
+          <input className="input-map" type="file" name="image" accept="image/*" onChange={handleChange} /><br />
           {preview && (
             <img src={preview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "120px", borderRadius: "6px", marginBottom: "10px" }} />
           )}
           {editingId ? (
             <>
-              <button onClick={handleUpdate} style={buttonStyle}>Update Map</button>
-              <button onClick={resetForm} style={{ ...buttonStyle, backgroundColor: "#6c757d", marginLeft: "10px" }}>Cancel</button>
+              <button onClick={handleUpdate} className="btn-map primary">Update Map</button>
+              <button onClick={resetForm} className="btn-map warn" style={{ marginLeft: 10 }}>Cancel</button>
             </>
           ) : (
-            <button onClick={handleSave} style={buttonStyle}>Add Map</button>
+            <button onClick={handleSave} className="btn-map primary">Add Map</button>
           )}
         </div>
 
@@ -174,7 +152,7 @@ function AdminMaps() {
         <h3 style={{ color: "#388e3c" }}>Existing Maps</h3>
         <ul style={{ textAlign: "left" }}>
           {maps.map((map) => (
-            <li key={map.id} style={mapItemStyle}>
+            <li key={map.id} className="map-item">
               <strong style={{ color: "#388e3c" }}>{map.campus_name || `Campus ${map.campus_id}`}</strong><br />
               <span style={{ color: "#6c757d", fontSize: "0.95em" }}>{map.address}</span><br />
               <p style={{ margin: "6px 0" }}>{map.description}</p>
@@ -185,9 +163,9 @@ function AdminMaps() {
                   style={{ maxWidth: "100%", maxHeight: "120px", borderRadius: "6px", marginTop: "6px" }}
                 />
               )}
-              <div style={{ marginTop: "10px" }}>
-                <button onClick={() => handleEdit(map)} style={editButtonStyle}>Edit</button>
-                <button onClick={() => handleDelete(map.id)} style={deleteButtonStyle}>Delete</button>
+                <div style={{ marginTop: "10px" }}>
+                <button onClick={() => handleEdit(map)} className="btn-map primary" style={{ marginRight: 10 }}>Edit</button>
+                <button onClick={() => handleDelete(map.id)} className="btn-map" style={{ backgroundColor: '#e74c3c', color: '#fff' }}>Delete</button>
               </div>
             </li>
           ))}
@@ -196,51 +174,4 @@ function AdminMaps() {
     </div>
   );
 }
-
-// Reusable styles
-const inputStyle = {
-  width: "100%",
-  padding: "10px",
-  marginBottom: "10px",
-  borderRadius: "6px",
-  border: "1px solid #388e3c"
-};
-
-const buttonStyle = {
-  padding: "10px 20px",
-  backgroundColor: "#388e3c",
-  color: "white",
-  border: "none",
-  borderRadius: "5px",
-  fontWeight: "bold"
-};
-
-const editButtonStyle = {
-  marginRight: "10px",
-  padding: "6px 12px",
-  backgroundColor: "#ffc107",
-  color: "#000",
-  border: "none",
-  borderRadius: "4px",
-  fontWeight: "bold"
-};
-
-const deleteButtonStyle = {
-  padding: "6px 12px",
-  backgroundColor: "#e74c3c",
-  color: "#fff",
-  border: "none",
-  borderRadius: "4px",
-  fontWeight: "bold"
-};
-
-const mapItemStyle = {
-  background: "#e8f5e9",
-  border: "1px solid #ffc107",
-  borderRadius: "8px",
-  padding: "10px",
-  marginBottom: "8px"
-};
-
-
 export default AdminMaps;
