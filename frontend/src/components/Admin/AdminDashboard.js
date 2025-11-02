@@ -28,34 +28,14 @@ export default function AdminDashboard() {
       <div className="admin-card-dashboard">
         <img src="/ptcround.png" alt="PTC Logo" className="admin-logo" />
         {/* Header */}
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          marginBottom: '30px',
-          borderBottom: '2px solid #e9ecef',
-          paddingBottom: '20px'
-        }}>
+        <div className="dashboard-header">
           <div>
-            <h1 style={{ color: '#2c3e50', margin: '0', marginTop: '60px' }}>Admin Dashboard</h1>
-            <p style={{ color: '#6c757d', margin: '5px 0 0 0' }}>
-              Welcome back, {adminName}!
-            </p>
+            <h1 className="dashboard-title">Admin Dashboard</h1>
+            <p className="welcome-text">Welcome back, {adminName}!</p>
           </div>
-          <button 
-            onClick={handleLogout}
-            style={{
-              padding: '10px 20px',
-              backgroundColor: '#dc3545',
-              color: 'white',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer'
-            }}
-          >
-            Logout
-          </button>
+          <button onClick={handleLogout} className="logout-button">Logout</button>
         </div>
+
         {/* Management Cards */}
         <div className="admin-cards-grid">
           {/* ...existing code for management cards... */}
@@ -90,10 +70,11 @@ export default function AdminDashboard() {
             </div>
           </Link>
         </div>
+
         {/* Quick Stats */}
-        <div style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px', textAlign: 'center' }}>
-          <h4 style={{ color: '#495057', marginBottom: '10px' }}>Quick Actions</h4>
-          <p style={{ color: '#6c757d', margin: '0' }}>Select any management option above to get started. All changes are saved automatically.</p>
+        <div className="quick-actions">
+          <h4>Quick Actions</h4>
+          <p>Select any management option above to get started. All changes are saved automatically.</p>
         </div>
       </div>
     </div>
