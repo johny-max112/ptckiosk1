@@ -18,18 +18,32 @@
 }
 
 .campusmap-card {
-  background: rgba(255,255,255,0.97);
+  /* 70% opacity white background and match academic/announcement layout */
+  background: rgba(255,255,255,0.7);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(44,62,80,0.18);
   padding: 0px 24px 32px 24px;
-  max-width: 900px;
-  width: calc(100% - 40px);
+  max-width: 1300px;
+  width: 100%;
   margin: 60px auto 0 auto;
   position: relative;
   z-index: 2;
   text-align: center;
   box-sizing: border-box;
   overflow-wrap: break-word;
+
+  /* allow internal scrolling when content overflows but hide scrollbars */
+  max-height: calc(100vh - 140px);
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* hide webkit scrollbar */
+.campusmap-card::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .campusmap-header {

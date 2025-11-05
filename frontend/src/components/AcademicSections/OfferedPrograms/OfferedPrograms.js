@@ -36,9 +36,9 @@ export default function OfferedPrograms() {
     <div className="skeleton-wrapper">
       {[...Array(3)].map((_, i) => (
         <div key={i} className="skeleton-item">
-          <div className="skeleton-title skeleton"></div>
-          <div className="skeleton-text skeleton"></div>
-          <div className="skeleton-date skeleton"></div>
+          <div className="academic-skeleton-title academic-skeleton"></div>
+          <div className="academic-skeleton-text academic-skeleton"></div>
+          <div className="academic-skeleton-date academic-skeleton"></div>
         </div>
       ))}
     </div>
@@ -64,12 +64,12 @@ export default function OfferedPrograms() {
         )}
 
         {modalOpen && selected && (
-          <div className="modal-overlay" onClick={closeModal}>
-            <div className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close" onClick={closeModal} aria-label="Close">×</button>
+          <div className="academic-modal-overlay" onClick={closeModal}>
+            <div className="academic-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onClick={(e) => e.stopPropagation()}>
+              <button className="academic-modal-close" onClick={closeModal} aria-label="Close">×</button>
               <h2 id="modal-title">{selected.title}</h2>
-              <div className="modal-body">{selected.content}</div>
-              {selected.created_at && <div className="modal-dates" style={{ marginTop: 12 }}><span>{new Date(selected.created_at).toLocaleDateString()}</span></div>}
+              <div className="academic-modal-body">{selected.content}</div>
+              {selected.created_at && <div className="academic-modal-dates" style={{ marginTop: 12 }}><span>{new Date(selected.created_at).toLocaleDateString()}</span></div>}
             </div>
           </div>
         )}

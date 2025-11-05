@@ -79,6 +79,7 @@ export default function CampusMap() {
         className="campusmap-background"
         style={{ backgroundImage: `url('/pateros.png')` }}
       ></div>
+
       <div className="campusmap-card">
         <div className="campusmap-header">
           <img src="/ptcround.png" alt="PTC Logo" className="campusmap-logo" />
@@ -93,58 +94,56 @@ export default function CampusMap() {
           </span>
         </div>
 
-        
-
-        {loading ? (
-          // simple skeleton placeholders for maps
-          <div className="campusmap-skeletons" style={{ display: "grid", gap: 12 }}>
-            <div style={{ height: 140, borderRadius: 8, background: "#f0f0f0" }} />
-            <div style={{ height: 140, borderRadius: 8, background: "#f0f0f0" }} />
-          </div>
-        ) : maps.length === 0 ? (
-          <p>No maps available</p>
-        ) : (
-          maps.map((map) => (
-            <div key={map.id} className="campusmap-campuscard">
-              {/* Gradient header inside campus card */}
-              <div className="campusmap-card-gradient-header">
-                <span>Campus Map</span>
-              </div>
-              <h3 className="campusmap-campusname">
-                {map.campus_name || `Campus ${map.campus_id}`}
-              </h3>
-              {map.address && (
-                <p className="campusmap-campusaddress">{map.address}</p>
-              )}
-              {map.image_path && (
-                <img
-                  src={api(map.image_path)}
-                  alt={map.description}
-                  onClick={() => {
-                    setSelectedMap(map);
-                    setScale(1);
-                    setPosition({ x: 0, y: 0 });
-                  }}
-                  className="campusmap-campusimg"
-                  draggable={false}
-                />
-              )}
-              <p className="campusmap-campusdesc">{map.description}</p>
+        <div className="campusmap-card-body">
+          {loading ? (
+            <div className="campusmap-skeletons" style={{ display: "grid", gap: 12 }}>
+              <div style={{ height: 140, borderRadius: 8, background: "#f0f0f0" }} />
+              <div style={{ height: 140, borderRadius: 8, background: "#f0f0f0" }} />
             </div>
-          ))
-        )}
+          ) : maps.length === 0 ? (
+            <p>No maps available</p>
+          ) : (
+            maps.map((map) => (
+              <div key={map.id} className="campusmap-campuscard">
+                <div className="campusmap-card-gradient-header">
+                  <span>Campus Map</span>
+                </div>
+                <h3 className="campusmap-campusname">
+                  {map.campus_name || `Campus ${map.campus_id}`}
+                </h3>
+                {map.address && <p className="campusmap-campusaddress">{map.address}</p>}
 
-        <div className="campusmap-iframe-container">
-          <iframe
-            title="PTC Google Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12731.606932099821!2d121.0608873657026!3d14.558018636207075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c8863fae6025%3A0xe4f1a76191156148!2sPateros%20Technological%20College!5e1!3m2!1sen!2sph!4v1761880844076!5m2!1sen!2sph"
-            width="100%"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+                {map.image_path && (
+                  <img
+                    src={api(map.image_path)}
+                    alt={map.description}
+                    onClick={() => {
+                      setSelectedMap(map);
+                      setScale(1);
+                      setPosition({ x: 0, y: 0 });
+                    }}
+                    className="campusmap-campusimg"
+                    draggable={false}
+                  />
+                )}
+
+                <p className="campusmap-campusdesc">{map.description}</p>
+              </div>
+            ))
+          )}
+
+          <div className="campusmap-iframe-container">
+            <iframe
+              title="PTC Google Map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12731.606932099821!2d121.0608873657026!3d14.558018636207075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c8863fae6025%3A0xe4f1a76191156148!2sPateros%20Technological%20College!5e1!3m2!1sen!2sph!4v1761880844076!5m2!1sen!2sph"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
       </div>
 
@@ -156,24 +155,15 @@ export default function CampusMap() {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
         >
-          <button
-            onClick={() => setSelectedMap(null)}
-            className="campusmap-closebtn"
-          >
+          <button onClick={() => setSelectedMap(null)} className="campusmap-closebtn">
             ← Back
           </button>
 
           <div className="campusmap-zoomcontrols">
-            <button
-              onClick={() => setScale((prev) => Math.min(prev + 0.2, 2))}
-              className="campusmap-zoombtn"
-            >
+            <button onClick={() => setScale((prev) => Math.min(prev + 0.2, 2))} className="campusmap-zoombtn">
               Zoom In
             </button>
-            <button
-              onClick={() => setScale((prev) => Math.max(prev - 0.2, 0.5))}
-              className="campusmap-zoombtn"
-            >
+            <button onClick={() => setScale((prev) => Math.max(prev - 0.2, 0.5))} className="campusmap-zoombtn">
               Zoom Out
             </button>
             <button onClick={resetZoom} className="campusmap-zoombtn">
@@ -183,17 +173,13 @@ export default function CampusMap() {
 
           <div
             className="campusmap-imagecontainer"
-            style={{
-              cursor: scale > 1 ? (isDragging ? "grabbing" : "grab") : "default",
-            }}
+            style={{ cursor: scale > 1 ? (isDragging ? "grabbing" : "grab") : "default" }}
           >
             <img
               src={api(selectedMap.image_path)}
               alt={selectedMap.description}
               style={{
-                transform: `scale(${scale}) translate(${position.x / scale}px, ${
-                  position.y / scale
-                }px)`,
+                transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
                 transition: isDragging ? "none" : "transform 0.3s ease",
               }}
               className="campusmap-fullscreenimg"

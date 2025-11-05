@@ -85,24 +85,29 @@ export default function Announcements() {
   }, [modalOpen]);
 
   const SkeletonAnnouncement = () => (
-    <div className="announcement-box skeleton">
-      <div className="skeleton-title"></div>
-      <div className="skeleton-content"></div>
-      <div className="skeleton-dates">
-        <div className="skeleton-date"></div>
-        <div className="skeleton-date"></div>
+    <div className="announcement-box announcements-skeleton">
+      <div className="announcements-skeleton-title"></div>
+      <div className="announcements-skeleton-content"></div>
+      <div className="announcements-skeleton-dates">
+        <div className="announcements-skeleton-date"></div>
+        <div className="announcements-skeleton-date"></div>
       </div>
     </div>
   );
 
   return (
     <div className="announcements-page">
-      <div className="background" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/pateros.png)` }}></div>
+  <div className="announcements-background" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/pateros.png)` }}></div>
 
-      <div className="card">
+  <div className="announcements-card">
         <div className="embedded-header">
           <img src="/ptcround.png" alt="PTC Logo" className="embedded-logo" />
-          <span onClick={() => navigate("/")} className="embedded-title">
+          <span
+            onClick={() => navigate("/")}
+            onKeyDown={(e) => e.key === 'Enter' && navigate('/')}
+            tabIndex={0}
+            className="embedded-title"
+          >
             Pateros Technological College
           </span>
         </div>
@@ -158,17 +163,17 @@ export default function Announcements() {
             </div>
 
             {modalOpen && selectedAnnouncement && (
-              <div className="modal-overlay" onClick={closeModal}>
+              <div className="announcements-modal-overlay" onClick={closeModal}>
                 <div
-                  className="modal"
+                  className="announcements-modal"
                   role="dialog"
                   aria-modal="true"
                   aria-labelledby="modal-title"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <button className="modal-close" onClick={closeModal} aria-label="Close">×</button>
+                  <button className="announcements-modal-close" onClick={closeModal} aria-label="Close">×</button>
                   <h2 id="modal-title">{selectedAnnouncement.title}</h2>
-                  <div className="modal-dates">
+                  <div className="announcements-modal-dates">
                     <span>
                       <strong>Start:</strong> {formatDate(selectedAnnouncement.start_date)}
                     </span>
@@ -176,7 +181,7 @@ export default function Announcements() {
                       <strong>End:</strong> {formatDate(selectedAnnouncement.end_date)}
                     </span>
                   </div>
-                  <div className="modal-body">{selectedAnnouncement.content}</div>
+                  <div className="announcements-modal-body">{selectedAnnouncement.content}</div>
                 </div>
               </div>
             )}

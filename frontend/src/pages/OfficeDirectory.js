@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import api from "../utils/api";
 
 export default function OfficeDirectory() {
   const navigate = useNavigate();
   const [offices, setOffices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const inFlightRef = useRef(false);
   const mountedRef = useRef(true);
@@ -18,7 +20,8 @@ export default function OfficeDirectory() {
       inFlightRef.current = true;
       if (showLoading) setLoading(true);
       try {
-        const res = await axios.get("http://192.168.100.61:5000/api/offices", { headers: { 'Cache-Control': 'no-cache' } });
+        // use the api helper so we don't hardcode local IPs here
+        const res = await axios.get(api('/api/offices'), { headers: { 'Cache-Control': 'no-cache' } });
         if (!mountedRef.current) return;
         const json = JSON.stringify(res.data || []);
         if (json !== prevRef.current) {
@@ -27,6 +30,7 @@ export default function OfficeDirectory() {
         }
       } catch (err) {
         console.error("Error fetching offices:", err);
+        if (mountedRef.current) setError(err.message || 'Failed to load office data');
       } finally {
         inFlightRef.current = false;
         if (showLoading && mountedRef.current) setLoading(false);
@@ -183,7 +187,20 @@ export default function OfficeDirectory() {
           </span>
         </div>
         <h2 style={{ fontWeight: "bold", color: "#2c3e50", fontSize: "2.1em", marginBottom: "30px" }}>Office Directory</h2>
-        {offices.length === 0 ? (
+        {error ? (
+          <div style={{
+            textAlign: "center",
+            padding: "40px 20px",
+            backgroundColor: "#fff3f3",
+            borderRadius: "10px",
+            boxShadow: "0 2px 10px rgba(0,0,0,0.06)",
+            border: "1px solid #ffbcbc"
+          }}>
+            <h3 style={{ color: "#a71d2a" }}>Unable to load office information</h3>
+            <p style={{ color: "#6c757d" }}>{error}</p>
+            <p style={{ color: "#6c757d" }}>If you're running this locally, ensure the API server is reachable and the app's API base URL is configured (see <code>REACT_APP_API_URL</code>).</p>
+          </div>
+        ) : offices.length === 0 ? (
           <div style={{
             textAlign: "center",
             padding: "60px 20px",
@@ -192,7 +209,7 @@ export default function OfficeDirectory() {
             boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
           }}>
             <h3 style={{ color: "#6c757d" }}>No office information available</h3>
-            <p style={{ color: "#6c757d" }}>Please check back later or reach out tothe administration.</p>
+            <p style={{ color: "#6c757d" }}>Please check back later or reach out to the administration.</p>
           </div>
         ) : (
           <div>

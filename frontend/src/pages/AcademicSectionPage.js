@@ -26,11 +26,16 @@ export default function AcademicSectionPage() {
 
   return (
     <div className="page-root">
-      <div className="background" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/pateros.png)` }} />
-      <div className="card">
+  <div className="academic-background" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}/pateros.png)` }} />
+  <div className="academic-card">
         <div className="embedded-header">
           <img src="/ptcround.png" alt="PTC Logo" className="embedded-logo" />
-          <span onClick={() => navigate('/')} className="embedded-title">Pateros Technological College</span>
+          <span
+            onClick={() => navigate('/')}
+            onKeyDown={(e) => e.key === 'Enter' && navigate('/')}
+            tabIndex={0}
+            className="embedded-title"
+          >Pateros Technological College</span>
         </div>
 
         <div className="outer-card">

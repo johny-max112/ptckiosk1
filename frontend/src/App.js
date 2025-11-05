@@ -8,7 +8,7 @@ import AcademicInfo from "./pages/AcademicInfo";
 import AcademicSectionPage from "./pages/AcademicSectionPage";
 import AboutPTC from "./pages/AboutPTC";
 import OfficeDirectory from "./pages/OfficeDirectory";
-import CampusMap from "./pages/CampusMap";
+import CampusMap from "./pages/CampusMapNew";
 
 // Admin pages
 import AdminLogin from "./components/Admin/AdminLogin";
