@@ -98,6 +98,7 @@
   text-align: center;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  border: 2px solid #fdf417;
 }
 
 .embedded-header {

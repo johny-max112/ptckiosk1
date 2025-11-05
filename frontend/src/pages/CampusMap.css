@@ -31,6 +31,7 @@
   text-align: center;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  border: 2px solid #fdf417;
 
   /* allow internal scrolling when content overflows but hide scrollbars */
   max-height: calc(100vh - 140px);

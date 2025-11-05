@@ -26,6 +26,16 @@
   text-align: center;
   box-sizing: border-box;
   overflow-wrap: break-word;
+  border: 2px solid #fdf417;
+}
+
+/* Keep the announcements card a fixed layout so inner areas can scroll */
+.announcements-card {
+  display: flex;
+  flex-direction: column;
+  /* keep card height from overflowing the viewport */
+  max-height: calc(100vh - 80px);
+  overflow: hidden; /* contain the internal scroll area */
 }
 
 /* Header stays visually connected to the card */
@@ -61,6 +71,13 @@
   width: 100%;
 }
 
+/* allow the inner cards area to grow/shrink inside the announcements card
+   and ensure its children can use percentage heights and overflow correctly */
+.inner-cards {
+  flex: 1 1 auto;
+  min-height: 0; /* important for flex children to allow overflow */
+}
+
 /* Each inner campus card takes full width of parent */
 .campus-card {
   background: #ffffff;
@@ -69,6 +86,14 @@
   overflow: hidden;
   text-align: center;
   width: 100%;
+}
+
+/* Make the campus card a column so header stays fixed and content scrolls */
+.campus-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto; /* fill available space inside .inner-cards */
+  min-height: 0; /* allow inner scrollable area to shrink and enable overflow */
 }
 
 
@@ -89,6 +114,17 @@
 
 .campus-content {
   padding: 16px;
+  /* make announcements list scrollable while header stays fixed */
+  overflow: auto;
+  flex: 1 1 auto;
+  /* ensure we don't show scrollbars but allow scrolling */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* hide webkit scrollbars */
+.campus-content::-webkit-scrollbar {
+  display: none;
 }
 
 .announcement-box {
@@ -107,7 +143,8 @@
 }
 
 .announcement-box.current {
-  border-left-color: #8B8446;
+  border-left: 5px solid #8B8446;
+   border-right: 5px solid #8B8446;
 }
 
 .current-badge {

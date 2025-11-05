@@ -1,0 +1,228 @@
+.office-page-root {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.office-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.70) contrast(1.1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.office-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+  padding: 0px 24px 32px 24px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 60px auto 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  border: 2px solid #fdf417;
+
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+.office-back-button {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  background: none;
+  border: none;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: 0 0 0 20px;
+  cursor: pointer;
+  text-align: left;
+  z-index: 10;
+}
+
+.office-logo {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  position: absolute;
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.12);
+  border: 3px solid #2e7d32;
+}
+
+.office-embedded-header {
+  background-color: #fdd835;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  margin-left: -24px;
+  margin-right: -24px;
+  width: calc(100% + 48px);
+  box-sizing: border-box;
+}
+
+.office-embedded-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  margin-right: 6px;
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+
+.office-embedded-title {
+  font-size: clamp(1.2em, 2vw, 1.6em);
+  font-weight: bold;
+  color: #2e7d32;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  flex: 1 1 auto;
+}
+
+.office-embedded-title:focus,
+.office-embedded-title:hover {
+  text-decoration: underline;
+  color: #1b5e20;
+  outline: none;
+}
+
+
+
+.office-inner-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
+  overflow: hidden;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.office-campus-header {
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #8B8446 0%, #F1E57A 100%);
+  color: #222;
+  font-weight: 700;
+  margin-left: -24px;
+  margin-right: -24px;
+  width: calc(100% + 48px);
+  box-sizing: border-box;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.office-campus-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.office-campus-content {
+  padding: 16px;
+  /* allow campus content to scroll when long */
+  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 0; /* allow flex children to shrink and enable overflow */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.office-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+/* container for all campus cards to allow scrolling inside the main card */
+.office-collection {
+  flex: 1 1 auto;
+  min-height: 0; /* required so overflow works inside flex */
+  overflow: auto;
+  padding: 16px 0 0 0;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.office-collection::-webkit-scrollbar,
+.office-campus-content::-webkit-scrollbar {
+  display: none;
+}
+
+.office-office-card {
+  padding: 25px;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  background-color: white;
+  border-left: 5px solid #8B8446;
+   border-right: 5px solid #8B8446;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.office-office-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.office-office-title {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 8px;
+}
+
+.office-office-desc {
+  color: #495057;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.office-office-meta {
+  display: grid;
+  gap: 10px;
+}
+
+.office-meta-label {
+  font-weight: bold;
+  color: #007bff;
+  min-width: 80px;
+  font-size: 0.9em;
+}
+
+.office-footer-box {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
