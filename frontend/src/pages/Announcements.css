@@ -14,14 +14,14 @@
 
 
 .announcements-card {
-  /* 70% opacity white background for the main announcements card */
+  
   background: rgba(255, 255, 255, 0.7);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
   padding: 0px 24px 32px 24px;
-  max-width: 1300px;              /* Changed width to 1300px */
+  max-width: 1300px;              
   width: 100%;
-  margin: 60px auto 0 auto;       /* Keeps it centered */
+  margin: 60px auto 0 auto;       
   position: relative;
   z-index: 2;
   text-align: center;
@@ -30,13 +30,13 @@
   border: 2px solid #fdf417;
 }
 
-/* Keep the announcements card a fixed layout so inner areas can scroll */
+
 .announcements-card {
   display: flex;
   flex-direction: column;
-  /* keep card height from overflowing the viewport */
+  
   max-height: calc(100vh - 80px);
-  overflow: hidden; /* contain the internal scroll area */
+  overflow: hidden; 
 }
 
 /* Header stays visually connected to the card */
@@ -72,8 +72,7 @@
   width: 100%;
 }
 
-/* allow the inner cards area to grow/shrink inside the announcements card
-   and ensure its children can use percentage heights and overflow correctly */
+
 .inner-cards {
   flex: 1 1 auto;
   min-height: 0; /* important for flex children to allow overflow */

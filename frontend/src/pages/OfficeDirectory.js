@@ -9,6 +9,7 @@ export default function OfficeDirectory() {
   const [offices, setOffices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedOffice, setSelectedOffice] = useState(null);
 
   const inFlightRef = useRef(false);
   const mountedRef = useRef(true);
@@ -63,15 +64,46 @@ export default function OfficeDirectory() {
 
   // Visual styles moved into external stylesheet OfficeDirectory.css
 
+  // Close modal on Escape
+  useEffect(() => {
+    if (!selectedOffice) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setSelectedOffice(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedOffice]);
   if (loading) {
+    // Render a skeleton UI while loading to give better visual feedback
+    const skeletonCards = Array.from({ length: 6 });
     return (
       <div className="office-page-root">
         <div className="office-background" style={{ backgroundImage: "url('/pateros.png')" }}></div>
         <div className="office-card">
           <button className="office-back-button" onClick={() => navigate("/")}>Pateros Technological College</button>
           <img src="/ptcround.png" alt="PTC Logo" className="office-logo" />
-          <h2 className="office-main-title" style={{ marginTop: "60px" }}>Office Directory</h2>
-          <p>Loading office information...</p>
+          <div className="office-embedded-header">
+            <img src="/ptcround.png" alt="PTC Logo" className="office-embedded-logo" />
+            <span className="office-embedded-title">Pateros Technological College</span>
+          </div>
+          <h2 style={{ marginTop: 8 }}>Office Directory</h2>
+
+          <div className="office-collection">
+            <div className="office-inner-card">
+              <div className="office-campus-header"><h3>Loading offices</h3></div>
+              <div className="office-campus-content">
+                <div className="office-grid">
+                  {skeletonCards.map((_, i) => (
+                    <div key={i} className="office-office-card skeleton-card" aria-hidden="true">
+                      <div className="skeleton-line skeleton-title" />
+                      <div className="skeleton-line skeleton-desc" />
+                      <div className="skeleton-line skeleton-meta" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -114,7 +146,16 @@ export default function OfficeDirectory() {
           </div>
         ) : (
           <div className="office-collection">
-            {Object.entries(officesByCampus).map(([campusName, campusOffices]) => (
+            {Object.entries(officesByCampus)
+              .sort((a, b) => {
+                // Prioritize PTC Main Campus first, then alphabetical order for the rest
+                const nameA = a[0];
+                const nameB = b[0];
+                if (nameA === 'PTC Main Campus') return -1;
+                if (nameB === 'PTC Main Campus') return 1;
+                return nameA.localeCompare(nameB);
+              })
+              .map(([campusName, campusOffices]) => (
               <div key={campusName} className="office-inner-card">
                   <div className="office-campus-header">
                     <h3>{campusName}</h3>
@@ -122,7 +163,7 @@ export default function OfficeDirectory() {
                   <div className="office-campus-content">
                     <div className="office-grid">
                     {campusOffices.map((office) => (
-                      <div key={office.id} className="office-office-card">
+                      <div key={office.id} className="office-office-card" onClick={() => setSelectedOffice(office)} style={{ cursor: 'pointer' }}>
                         <h4 className="office-office-title">{office.name}</h4>
                         {office.description && (
                           <p className="office-office-desc">{office.description}</p>
@@ -147,6 +188,31 @@ export default function OfficeDirectory() {
                   </div>
                 </div>
             ))}
+            {/* Modal for office details */}
+            {selectedOffice && (
+              <div className="office-modal-overlay" onClick={() => setSelectedOffice(null)}>
+                <div className="office-modal" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+                  <button className="office-modal-close" onClick={() => setSelectedOffice(null)} aria-label="Close">×</button>
+                  <h2 style={{ marginTop: 0 }}>{selectedOffice.name}</h2>
+                  {selectedOffice.campus_name && <p style={{ fontWeight: 700 }}>{selectedOffice.campus_name}</p>}
+                  {selectedOffice.description && <p style={{ fontStyle: 'italic' }}>{selectedOffice.description}</p>}
+                  <div style={{ marginTop: 12 }}>
+                    {selectedOffice.contact && (
+                      <p><strong>Contact / Room:</strong> {selectedOffice.contact}</p>
+                    )}
+                    {selectedOffice.office_hours && (
+                      <p><strong>Hours:</strong> {selectedOffice.office_hours}</p>
+                    )}
+                    {selectedOffice.email && (
+                      <p><strong>Email:</strong> {selectedOffice.email}</p>
+                    )}
+                    {selectedOffice.phone && (
+                      <p><strong>Phone:</strong> {selectedOffice.phone}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
         <div style={{
@@ -158,7 +224,7 @@ export default function OfficeDirectory() {
           boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
         }}>
           <p style={{ color: "#6c757d", margin: "0" }}>
-            For additional assistance, please visit any of the offices listed above during their operating hours.
+            Visit any of the offices listed above during their operating hours.
           </p>
         </div>
       </div>

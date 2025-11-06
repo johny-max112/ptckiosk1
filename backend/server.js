@@ -20,6 +20,9 @@ const adminAnnouncementRoutes = require("./routes/admin/adminAnnouncementRoutes"
 
 const app = express();
 
+const path = require('path');
+const fs = require('fs');
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -44,7 +47,18 @@ app.use("/api/admin/campuses", adminCampusRoutes);
 app.use("/api/admin/announcements", adminAnnouncementRoutes);
 
 // Test route
-app.get("/", (req, res) => res.send("✅ PTC Smart Kiosk Backend running!"));
+app.get("/", (req, res) => res.send(" PTC Smart Kiosk Backend running!"));
+
+
+const frontendBuildPath = path.join(__dirname, '..', 'frontend', 'build');
+if (fs.existsSync(frontendBuildPath)) {
+  app.use(express.static(frontendBuildPath));
+  
+  app.get(/.*/, (req, res) => {
+    if (req.path.startsWith('/api')) return res.status(404).end();
+    res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

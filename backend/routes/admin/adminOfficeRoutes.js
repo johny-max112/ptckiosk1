@@ -16,7 +16,8 @@ router.get("/", require("../../middleware/auth"), (req, res) => {
 
 // POST: Add new office
 router.post("/", require("../../middleware/auth"), (req, res) => {
-  const { name, description, contact, office_hours, campus_id } = req.body;
+  // removed `contact` - DB schema no longer contains this column
+  const { name, description, office_hours, campus_id } = req.body;
 
   // campus_id is required if your table has it as NOT NULL
   if (!name || !campus_id) {
@@ -24,26 +25,27 @@ router.post("/", require("../../middleware/auth"), (req, res) => {
   }
 
   const query =
-    "INSERT INTO offices (name, description, contact, office_hours, campus_id, created_at) VALUES (?, ?, ?, ?, ?, NOW())";
+    "INSERT INTO offices (name, description, office_hours, campus_id, created_at) VALUES (?, ?, ?, ?, NOW())";
 
-  db.query(query, [name, description, contact, office_hours, campus_id], (err, result) => {
+  db.query(query, [name, description, office_hours, campus_id], (err, result) => {
     if (err) {
       console.error("Save office error:", err);
       return res.status(500).json({ error: err.message });
     }
-    res.json({ id: result.insertId, name, description, contact, office_hours, campus_id });
+    res.json({ id: result.insertId, name, description, office_hours, campus_id });
   });
 });
 
 // PUT: Update existing office
 router.put("/:id", require("../../middleware/auth"), (req, res) => {
   const { id } = req.params;
-  const { name, description, contact, office_hours, campus_id } = req.body;
+  // removed `contact` - DB schema no longer contains this column
+  const { name, description, office_hours, campus_id } = req.body;
 
   const query =
-    "UPDATE offices SET name=?, description=?, contact=?, office_hours=?, campus_id=? WHERE id=?";
+    "UPDATE offices SET name=?, description=?, office_hours=?, campus_id=? WHERE id=?";
 
-  db.query(query, [name, description, contact, office_hours, campus_id, id], (err) => {
+  db.query(query, [name, description, office_hours, campus_id, id], (err) => {
     if (err) {
       console.error("Update office error:", err);
       return res.status(500).json({ error: err.message });

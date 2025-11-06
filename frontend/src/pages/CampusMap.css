@@ -18,7 +18,7 @@
 }
 
 .campusmap-card {
-  /* 70% opacity white background and match academic/announcement layout */
+  
   background: rgba(255,255,255,0.7);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(44,62,80,0.18);
@@ -97,7 +97,7 @@
   letter-spacing: 1px;
 }
 
-/* Description ites */
+/* Description ites brodii*/
 .campusmap-gradient-desc {
   color: #333;
   font-size: 1.08rem;

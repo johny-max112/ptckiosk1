@@ -11,7 +11,6 @@ export default function KioskHome() {
 
   const [currentTime, setCurrentTime] = React.useState(new Date());
 
-  // Update time every second
   React.useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
@@ -25,25 +24,19 @@ export default function KioskHome() {
     }
   };
 
-  // Auto-reset after 1 minute of inactivity
   React.useEffect(() => {
     let timeout;
-
     const resetToWelcome = () => {
       setTouched(false);
       localStorage.removeItem("kioskTouched");
     };
-
     const resetTimer = () => {
       clearTimeout(timeout);
       timeout = setTimeout(resetToWelcome, 1 * 60 * 1000);
     };
-
     const events = ["click", "touchstart", "mousemove", "keydown"];
     events.forEach(event => window.addEventListener(event, resetTimer));
-
     resetTimer();
-
     return () => {
       clearTimeout(timeout);
       events.forEach(event => window.removeEventListener(event, resetTimer));
@@ -92,6 +85,25 @@ export default function KioskHome() {
     );
   }
 
+  // Helper for navigation with styling effect
+  const pressNavigate = (path) => ({
+    onTouchStart: (e) => e.currentTarget.classList.add("touch-pressed"),
+    onTouchCancel: (e) => e.currentTarget.classList.remove("touch-pressed"),
+    onTouchEnd: (e) => {
+      e.currentTarget.classList.remove("touch-pressed");
+      setTimeout(() => navigate(path), 80);
+    },
+    onMouseDown: (e) => e.currentTarget.classList.add("touch-pressed"),
+    onMouseLeave: (e) => e.currentTarget.classList.remove("touch-pressed"),
+    onMouseUp: (e) => {
+      e.currentTarget.classList.remove("touch-pressed");
+      setTimeout(() => navigate(path), 80);
+    },
+    onKeyDown: (e) => {
+      if (e.key === "Enter") navigate(path);
+    },
+  });
+
   return (
     <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       <div
@@ -100,7 +112,7 @@ export default function KioskHome() {
       />
 
       <div className="kiosk-card">
-        {/* Date and Time inside the card */}
+        {/* dito and date and time sa card */}
         <div className="datetime-container">
           <div className="date-text">{formattedDate}</div>
           <div className="time-text">{formattedTime}</div>
@@ -113,45 +125,25 @@ export default function KioskHome() {
         </p>
 
         <div className="kiosk-buttons">
-          {(() => {
-            const pressNavigate = (path) => ({
-              onTouchStart: (e) => e.currentTarget.classList.add("touch-pressed"),
-              onTouchCancel: (e) => e.currentTarget.classList.remove("touch-pressed"),
-              onTouchEnd: (e) => {
-                e.currentTarget.classList.remove("touch-pressed");
-                setTimeout(() => navigate(path), 80);
-              },
-              onMouseDown: (e) => e.currentTarget.classList.add("touch-pressed"),
-              onMouseLeave: (e) => e.currentTarget.classList.remove("touch-pressed"),
-              onMouseUp: (e) => {
-                e.currentTarget.classList.remove("touch-pressed");
-                setTimeout(() => navigate(path), 80);
-              },
-              onKeyDown: (e) => {
-                if (e.key === "Enter") navigate(path);
-              },
-            });
+          <button className="kiosk-btn btn btn-success" {...pressNavigate("/announcements")}>
+            Announcements
+          </button>
+          <button className="kiosk-btn btn btn-success" {...pressNavigate("/academic")}>
+            Academic Info
+          </button>
+          <button className="kiosk-btn btn btn-success" {...pressNavigate("/about")}>
+            About PTC
+          </button>
+        </div>
 
-            return (
-              <>
-                <button className="kiosk-btn btn btn-success" {...pressNavigate("/announcements")}>
-                  Announcements
-                </button>
-                <button className="kiosk-btn btn btn-success" {...pressNavigate("/academic")}>
-                  Academic Info
-                </button>
-                <button className="kiosk-btn btn btn-success" {...pressNavigate("/about")}>
-                  About PTC
-                </button>
-                <button className="kiosk-btn btn btn-success" {...pressNavigate("/directory")}>
-                  Office Directory
-                </button>
-                <button className="kiosk-btn btn btn-success" {...pressNavigate("/map")}>
-                  Campus Map
-                </button>
-              </>
-            );
-          })()}
+        {/* Office Directory and Campus Map sila ay magkatabi */}
+        <div className="kiosk-feature-row">
+          <button className="kiosk-btn btn btn-success" {...pressNavigate("/directory")}>
+            Office Directory
+          </button>
+          <button className="kiosk-btn btn btn-success" {...pressNavigate("/map")}>
+            Campus Map
+          </button>
         </div>
       </div>
     </div>

@@ -9,7 +9,6 @@ router.get("/", (req, res) => {
       o.id,
       o.name,
       o.description,
-      o.contact,
       o.office_hours,
       o.campus_id,
       c.name as campus_name,
@@ -22,6 +21,9 @@ router.get("/", (req, res) => {
   
   db.query(query, (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
+    console.log(`[GET /api/offices] returned ${Array.isArray(results) ? results.length : 0} rows`);
+    // small sample log (avoid logging full result in production)
+    if (Array.isArray(results) && results.length > 0) console.log("Sample office:", results[0]);
     res.json(results);
   });
 });

@@ -12,10 +12,10 @@
 }
 
 .kiosk-card {
-
   max-width: 1200px;
-  margin: 60px auto;
-  padding: 40px 32px 60px 32px; /* Added bottom padding */
+  width: 90vw;
+  margin: 60px auto 0;
+  padding: 40px 32px 60px 32px; 
   background: rgba(255, 255, 255, 0.68);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(44,62,80,0.18);
@@ -23,18 +23,7 @@
   z-index: 2;
   text-align: center;
   border: 3px solid #fdf417;
-
-  background: rgba(255, 255, 255, 0.68);
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(44,62,80,0.18);
-  width: 90vw;
-  height: 120vh;
-  margin: 80px auto 0 auto;
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  border: 3px solid #fdf417; 
-
+  min-height: 60vh; 
 }
 
 .kiosk-logo {
@@ -55,7 +44,7 @@
   font-weight: 600;
   color: #388e3c;
   font-size: 2.3rem;
-  margin-top: 90px;
+  margin-top: 40px;
   margin-bottom: 1px;
   text-shadow: 0 2px 8px #fffde7;
 }
@@ -66,23 +55,26 @@
   margin-top: 10px;
   margin-bottom: 15px;
 }
-
-<<<<<<< HEAD
+/*dito ay mga button sa kiosk pwedeng i adjust size etc*/
 .kiosk-buttons {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-=======
-.kiosk-buttons { 
-  display: flex; 
-  flex-wrap: wrap; 
-  justify-content: center; 
->>>>>>> cf5ff3d7e47da1e39b1bc9c82466f8950dcaba37
+  gap:40px;
+}
+
+/* row toh ng office directory at maps para nasa baba sila dalawa */
+.kiosk-feature-row {
+  display: flex;
+  justify-content: center;
+  gap:40px;
+  margin-top: 18px;
+  margin-bottom: 10px;
 }
 
 .kiosk-btn {
-  width: 260px;
-  height: 160px;
+  width: 240px;
+  height: 140px;
   font-family: sans-serif;
   font-weight: lighter;
   font-size: 1.2rem;
@@ -90,14 +82,9 @@
   cursor: pointer;
   background: linear-gradient(175deg, #30761E 57%, #DCDC38 100%);
   color: white;
-<<<<<<< HEAD
   border: none;
   box-shadow: 10px 8px 18px rgba(0, 0, 0, 0.53);
-=======
-  border: none; /* removed border */
-  box-shadow: 10px 8px 18px rgba(0, 0, 0, 0.53); 
->>>>>>> cf5ff3d7e47da1e39b1bc9c82466f8950dcaba37
-  margin: 30px 20px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,7 +97,6 @@
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
 }
 
-<<<<<<< HEAD
 .kiosk-btn:active,
 .kiosk-btn:focus {
   box-shadow: 10px 8px 18px rgba(0, 0, 0, 0.53);
@@ -120,17 +106,48 @@
 .kiosk-btn .btn-icon {
   font-size: 2.2rem;
   margin-bottom: 8px;
-=======
-.kiosk-btn:active, 
-.kiosk-btn:focus {
-  box-shadow: 10px 8px 18px rgba(0, 0, 0, 0.53); 
-  outline: none;
 }
 
-.kiosk-btn .btn-icon { 
-  font-size: 2.2rem; 
-  margin-bottom: 8px; 
->>>>>>> cf5ff3d7e47da1e39b1bc9c82466f8950dcaba37
+.datetime-container {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  text-align: right;
+  color: #2e7d32;
+  font-family: "Poppins", sans-serif;
+}
+
+.date-text {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.time-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #84820a;
+}
+
+@media (max-width: 480px) {
+  .kiosk-btn {
+    width: 140px;
+    height: 84px;
+    font-size: 1rem;
+  }
+  .kiosk-logo {
+    width: 90px;
+    height: 90px;
+    top: -45px;
+  }
+  .kiosk-buttons,
+  .kiosk-feature-row {
+    gap: 10px;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .kiosk-card {
+    padding: 32px 6px 40px 6px;
+  }
 }
 
 .welcome-overlay {
@@ -146,7 +163,7 @@
   cursor: pointer;
 }
 
-<<<<<<< HEAD
+
 .welcome-backdrop {
   position: absolute;
   top: 0;
@@ -188,15 +205,39 @@
     width: 90px;
     height: 90px;
     top: -45px;
-=======
-.welcome-backdrop { 
-  position: absolute; 
-  top: 0; 
-  left: 0; 
-  width: 100%; 
-  height: 100%; 
-  background-color: rgba(0, 0, 0, 0.3); 
-  z-index: 1; 
+  }
+  .kiosk-buttons,
+  .kiosk-feature-row {
+    gap: 10px;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .kiosk-card {
+    padding: 32px 6px 40px 6px;
+  }
+}
+
+.welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.welcome-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;  
 }
 
 .welcome-content { 
@@ -217,39 +258,4 @@
   font-size: 1.3rem; 
   margin-bottom: 12px; 
   text-shadow: 0 1px 4px rgba(0,0,0,0.5); 
-}
-
-@media (max-width: 480px) {
-  .kiosk-btn { 
-    width: 140px; 
-    height: 84px; 
-    font-size: 1rem; 
-  }
-
-  .kiosk-logo { 
-    width: 90px; 
-    height: 90px; 
-    top: -45px; 
->>>>>>> cf5ff3d7e47da1e39b1bc9c82466f8950dcaba37
-  }
-}
-
-.datetime-container {
-  position: absolute;
-  top: 16px;
-  right: 20px;
-  text-align: right;
-  color: #2e7d32;
-  font-family: "Poppins", sans-serif;
-}
-
-.date-text {
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.time-text {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #84820a;
 }
