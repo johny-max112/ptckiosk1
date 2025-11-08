@@ -1,7 +1,7 @@
 /* Styles for AdminDashboard component */
 .admin-page-dashboard { position: relative; min-height: 100vh; overflow: hidden; }
 .admin-bg-dashboard { position: fixed; top:0; left:0; width:100vw; height:100vh; background-size:cover; background-position:center; filter: brightness(0.70) contrast(1.1); z-index:1; pointer-events:none; }
-.admin-card-dashboard { background: rgba(255,255,255,0.97); border-radius:18px; box-shadow:0 8px 32px rgba(44,62,80,0.18); padding:40px 32px 32px 32px; max-width:1200px; margin:60px auto 0 auto; position:relative; z-index:2; text-align:center; }
+.admin-card-dashboard { background: rgba(255,255,255,0.97); border-radius:18px; box-shadow:0 8px 32px rgba(44,62,80,0.18); padding:40px 32px 32px 32px; max-width:1200px; margin:60px auto 0 auto; position:relative; z-index:2; text-align:center;  border: 3px solid #ffc107; }
 .admin-logo { width:90px; height:90px; object-fit:contain; position:absolute; top:-45px; left:50%; transform:translateX(-50%); background:white; border-radius:50%; box-shadow:0 2px 12px rgba(44,62,80,0.12); border:3px solid #2e7d32; }
 .admin-cards-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px; margin-bottom:30px; }
 .admin-card-tile { padding:25px; border:1px solid #dee2e6; border-radius:8px; transition: transform 0.2s; cursor:pointer; }

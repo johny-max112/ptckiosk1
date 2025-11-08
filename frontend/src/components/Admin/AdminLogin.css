@@ -1,4 +1,4 @@
 /* Styles for AdminLogin component */
-.admin-login-card { max-width: 400px; margin: 100px auto; text-align: center; padding: 30px; border: 1px solid #ccc; border-radius: 8px; }
+.admin-login-card { max-width: 400px; margin: 100px auto; text-align: center; padding: 30px; border: 1px solid #ccc; border-radius: 8px; border: 3px solid #fdf417; }
 .admin-login-input { width: 100%; padding: 10px; border-radius: 4px; margin-bottom: 15px; box-sizing: border-box; }
 .admin-login-btn { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }

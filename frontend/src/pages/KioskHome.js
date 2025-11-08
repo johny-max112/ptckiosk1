@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import './KioskHome.css';
+import { FaFacebook, FaGlobe } from "react-icons/fa";
+import { QRCodeCanvas } from "qrcode.react";
 
 export default function KioskHome() {
   const navigate = useNavigate();
@@ -10,6 +12,7 @@ export default function KioskHome() {
   });
 
   const [currentTime, setCurrentTime] = React.useState(new Date());
+  const [qrValue, setQrValue] = React.useState(null);
 
   React.useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -57,6 +60,24 @@ export default function KioskHome() {
     hour12: true,
   });
 
+  const pressNavigate = (path) => ({
+    onTouchStart: (e) => e.currentTarget.classList.add("touch-pressed"),
+    onTouchCancel: (e) => e.currentTarget.classList.remove("touch-pressed"),
+    onTouchEnd: (e) => {
+      e.currentTarget.classList.remove("touch-pressed");
+      setTimeout(() => navigate(path), 80);
+    },
+    onMouseDown: (e) => e.currentTarget.classList.add("touch-pressed"),
+    onMouseLeave: (e) => e.currentTarget.classList.remove("touch-pressed"),
+    onMouseUp: (e) => {
+      e.currentTarget.classList.remove("touch-pressed");
+      setTimeout(() => navigate(path), 80);
+    },
+    onKeyDown: (e) => {
+      if (e.key === "Enter") navigate(path);
+    },
+  });
+
   if (!touched) {
     return (
       <div
@@ -85,25 +106,6 @@ export default function KioskHome() {
     );
   }
 
-  // Helper for navigation with styling effect
-  const pressNavigate = (path) => ({
-    onTouchStart: (e) => e.currentTarget.classList.add("touch-pressed"),
-    onTouchCancel: (e) => e.currentTarget.classList.remove("touch-pressed"),
-    onTouchEnd: (e) => {
-      e.currentTarget.classList.remove("touch-pressed");
-      setTimeout(() => navigate(path), 80);
-    },
-    onMouseDown: (e) => e.currentTarget.classList.add("touch-pressed"),
-    onMouseLeave: (e) => e.currentTarget.classList.remove("touch-pressed"),
-    onMouseUp: (e) => {
-      e.currentTarget.classList.remove("touch-pressed");
-      setTimeout(() => navigate(path), 80);
-    },
-    onKeyDown: (e) => {
-      if (e.key === "Enter") navigate(path);
-    },
-  });
-
   return (
     <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       <div
@@ -112,7 +114,6 @@ export default function KioskHome() {
       />
 
       <div className="kiosk-card">
-        {/* dito and date and time sa card */}
         <div className="datetime-container">
           <div className="date-text">{formattedDate}</div>
           <div className="time-text">{formattedTime}</div>
@@ -136,7 +137,6 @@ export default function KioskHome() {
           </button>
         </div>
 
-        {/* Office Directory and Campus Map sila ay magkatabi */}
         <div className="kiosk-feature-row">
           <button className="kiosk-btn btn btn-success" {...pressNavigate("/directory")}>
             Office Directory
@@ -146,6 +146,31 @@ export default function KioskHome() {
           </button>
         </div>
       </div>
+
+      {/* Social Icons Row - outside the card */}
+      <div className="kiosk-social-row">
+        <FaFacebook
+          className="social-icon"
+          onClick={() => setQrValue("https://www.facebook.com/ptc1993")}
+          title="Facebook Page"
+        />
+        <FaGlobe
+          className="social-icon"
+          onClick={() => setQrValue("https://paterostechnologicalcollege.edu.ph/")}
+          title="Official Website"
+        />
+      </div>
+
+      {/* QR Code Modal */}
+      {qrValue && (
+  <div className="qr-modal-overlay" onClick={() => setQrValue(null)}>
+    <div className="qr-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="qr-close" onClick={() => setQrValue(null)}>×</div>
+      <QRCodeCanvas value={qrValue} size={200} />
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

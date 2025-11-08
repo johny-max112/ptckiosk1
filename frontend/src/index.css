@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Disable text selection for kiosk UX */
+.no-select, body.no-select {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important; /* iOS: prevent callout on long press */
+}
+
+/* Prevent image dragging cursor hints */
+img[draggable="false"] {
+  -webkit-user-drag: none;
+}

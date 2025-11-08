@@ -18,10 +18,12 @@ import AdminAbout from "./components/Admin/AdminAbout";
 import AdminAcademic from "./components/Admin/AdminAcademic";
 import AdminOffices from "./components/Admin/AdminOffices"; 
 import AdminMaps from "./components/Admin/AdminMaps";
+import DisableCopy from "./components/DisableCopy";
 
 function App() {
   return (
     <Router>
+      <DisableCopy />
       <Routes>
         {/* Kiosk User Interface */}
         <Route path="/" element={<KioskHome />} />
