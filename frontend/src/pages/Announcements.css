@@ -131,7 +131,7 @@
   border-left: 4px solid transparent;
   padding: 12px 10px;
   margin-bottom: 12px;
-  background: #fffdf8;
+  background: #ebdfc0; /*pwede palitan color dun sa info */
   border-radius: 8px;
 }
 
@@ -187,16 +187,26 @@
   padding: 20px;
 }
 .announcements-modal {
+
+.announcements-modal-image { /* style ito ng image sa modal */
+  width: 100%;
+  max-height: 360px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 12px;
+}
   position: relative;
   background: #ffffff;
   border-radius: 12px;
-  max-width: 900px;
+  
+  max-width: min(1200px, 95vw);
   width: 100%;
   box-shadow: 0 16px 50px rgba(10,20,30,0.25);
-  padding: 26px 28px;
+  padding: 28px 36px;
   box-sizing: border-box;
   text-align: left;
-  max-height: 80vh;
+
+  max-height: 90vh;
   overflow: hidden;
 }
 .announcements-modal-close {
@@ -212,7 +222,7 @@
 }
 .announcements-modal h2 {
   margin: 0 0 12px 0;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   line-height: 1.25;
 }
 .announcements-modal h2, #modal-title {
@@ -227,15 +237,38 @@
 }
 .announcements-modal-body {
   white-space: pre-wrap;
-  color: #222;
+  color: #3a3838;
   font-size: 1.05rem;
   line-height: 1.6;
   overflow: auto;
-  max-height: calc(80vh - 140px);
-  padding-right: 6px;
+  font-weight: bold;
+  
+  max-height: calc(90vh - 180px);
+  padding-right: 8px;
 }
 
-/* Skeleton loader styles */
+/* inudjust dito ang modal pinalaki ung screen pag click  */
+.announcements-modal.fullscreen {
+  width: 98vw;
+  height: 96vh;
+  max-width: 98vw;
+  max-height: 96vh;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+/* make small screens slightly smaller and more comfortable */
+@media (max-width: 480px) {
+  .announcements-modal {
+    padding: 18px;
+    max-width: 98vw;
+    max-height: 94vh;
+  }
+  .announcements-modal h2 { font-size: 1.25rem; }
+  .announcements-modal-body { max-height: calc(94vh - 140px); }
+}
+
+/* Skeleton style parng fb lite lng*/
 .announcements-skeleton {
   background-color: #f6f6f6;
   border-radius: 8px;

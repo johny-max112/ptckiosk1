@@ -181,7 +181,16 @@ export default function Announcements() {
                       <strong>End:</strong> {formatDate(selectedAnnouncement.end_date)}
                     </span>
                   </div>
-                  <div className="announcements-modal-body">{selectedAnnouncement.content}</div>
+                  <div className="announcements-modal-body">
+                    {selectedAnnouncement.image_path && (
+                      <img
+                        src={api(selectedAnnouncement.image_path)}
+                        alt={selectedAnnouncement.title}
+                        className="announcements-modal-image"
+                      />
+                    )}
+                    {selectedAnnouncement.content}
+                  </div>
                 </div>
               </div>
             )}

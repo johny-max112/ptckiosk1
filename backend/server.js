@@ -27,6 +27,11 @@ const fs = require('fs');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// connected to dun sa uploads folder
+const uploadsPath = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsPath)) {
+  try { fs.mkdirSync(uploadsPath); } catch (err) { console.error('Failed to create uploads dir:', err); }
+}
 app.use("/uploads", express.static("uploads"));
 
 

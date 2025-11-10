@@ -15,6 +15,8 @@ function ManageAnnouncements() {
     end_date: "",
     is_active: 1,
   });
+  const [file, setFile] = useState(null);
+  const [existingImage, setExistingImage] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -51,6 +53,11 @@ function ManageAnnouncements() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    const f = e.target.files && e.target.files[0];
+    setFile(f || null);
+  };
+
   const handleAddOrUpdate = async () => {
     const { title, content, start_date, end_date } = form;
     if (!title || !content || !start_date || !end_date) {
@@ -61,24 +68,37 @@ function ManageAnnouncements() {
       setLoading(true);
       if (editingId) {
         // Update existing announcement
-        await axios.put(
-          api(`/api/admin/announcements/${editingId}`), 
-          form,
-          { headers: getAuthHeaders() }
-        );
+        // if file is present, send multipart/form-data
+        if (file) {
+          const fd = new FormData();
+          Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+          fd.append('image', file);
+          await axios.put(api(`/api/admin/announcements/${editingId}`), fd, {
+            headers: { ...getAuthHeaders(), 'Content-Type': 'multipart/form-data' }
+          });
+        } else {
+          await axios.put(api(`/api/admin/announcements/${editingId}`), form, { headers: getAuthHeaders() });
+        }
         alert("Announcement updated successfully!");
         setEditingId(null);
       } else {
         // Add new announcement
-        await axios.post(
-          api("/api/admin/announcements"), 
-          form,
-          { headers: getAuthHeaders() }
-        );
+        if (file) {
+          const fd = new FormData();
+          Object.entries(form).forEach(([k, v]) => fd.append(k, v));
+          fd.append('image', file);
+          await axios.post(api("/api/admin/announcements"), fd, {
+            headers: { ...getAuthHeaders(), 'Content-Type': 'multipart/form-data' }
+          });
+        } else {
+          await axios.post(api("/api/admin/announcements"), form, { headers: getAuthHeaders() });
+        }
         alert("Announcement added successfully!");
       }
 
       setForm({ title: "", content: "", start_date: "", end_date: "", is_active: 1 });
+      setFile(null);
+      setExistingImage(null);
       fetchAnnouncements();
     } catch (error) {
       console.error("Error saving announcement:", error);
@@ -101,6 +121,7 @@ function ManageAnnouncements() {
       end_date: announcement.end_date?.split('T')[0] || announcement.end_date,
       is_active: announcement.is_active,
     });
+    setExistingImage(announcement.image_path || null);
     setEditingId(announcement.id);
   };
 
@@ -201,6 +222,17 @@ function ManageAnnouncements() {
               </select>
             </div>
           </div>
+          <div className="form-row">
+            <label style={{ display: 'block', marginBottom: 8 }}>Optional Image (will be shown in kiosk modal)</label>
+            {existingImage && !file && (
+              <div style={{ marginBottom: 8 }}>
+                <img src={api(existingImage)} alt="existing" style={{ maxWidth: 240, maxHeight: 140, display: 'block', marginBottom: 6 }} />
+                <small>Uploading a new image will replace the existing one.</small>
+              </div>
+            )}
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+          </div>
+
           <div className="form-row">
             <button onClick={handleAddOrUpdate} disabled={loading} className="btn btn-primary">
               {loading ? "Saving..." : (editingId ? "Update Announcement" : "Add Announcement")}

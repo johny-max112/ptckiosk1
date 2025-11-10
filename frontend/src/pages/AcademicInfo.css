@@ -59,13 +59,55 @@
 .program-footer { margin-top:8px; color:#666; font-size:0.9rem }
 
 .academic-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:9999; padding:20px }
-.academic-modal { background:#fff; border-radius:12px; max-width:900px; width:100%; padding:26px 28px; box-shadow:0 16px 50px rgba(10,20,30,0.25); text-align:left; max-height:80vh; overflow:hidden }
-.academic-modal-close { position:absolute; top:12px; right:16px; background:transparent; border:none; font-size:1.8rem; cursor:pointer }
+.academic-modal {
+  background:#fff;
+  border-radius:12px;
+  /* larger modal for kiosk displays: up to 1200px but constrained by viewport */
+  max-width: min(1200px, 95vw);
+  width:100%;
+  padding:28px 36px;
+  box-shadow:0 16px 50px rgba(10,20,30,0.25);
+  text-align:left;
+  
+  max-height: 90vh;
+  overflow:hidden;
+  position: relative;
+}
+.academic-modal-close {
+  position:absolute; top:12px; right:16px; background:transparent; border:none; font-size:1.8rem; cursor:pointer
+}
 .academic-modal-dates { color:#666; font-size:0.98rem; display:flex; gap:14px; margin-bottom:14px }
 .academic-modal h2, #modal-title {
-  color: #2e7d32; /*dito ung pag click mo ng info is color green ung title pag pop up ng page */
+  color: #2e7d32; /* title color for popup */
+  font-size: 1.6rem;
 }
-.academic-modal-body { white-space: pre-wrap; color:#222; font-size:1.05rem; line-height:1.6; overflow:auto; max-height: calc(80vh - 140px); padding-right:6px }
+.academic-modal-body {
+  white-space: pre-wrap;
+  color:#313030;
+  font-size:1.2rem;
+  font-weight: bold;
+  line-height:1.6;
+  overflow:auto;
+  /* leave room for modal header/title and close controls */
+  max-height: calc(90vh - 180px);
+  padding-right:8px;
+}
+
+/* fullscreen modifier - useful for kiosk to expand the modal */
+.academic-modal.fullscreen {
+  width: 98vw;
+  height: 96vh;
+  max-width: 98vw;
+  max-height: 96vh;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+@media (max-width: 480px) {
+  .academic-modal { padding: 16px; max-width: 98vw; max-height: 94vh; }
+  .academic-modal h2 { font-size: 1.25rem; }
+  .academic-modal-body { max-height: calc(94vh - 140px); }
+}
 
 @media (max-width: 480px) {
   .program-box { padding:10px }
@@ -200,7 +242,7 @@
   .program-list { grid-template-columns: 1fr 1fr; }
 }
 
-/* New nested card layout and header buttons for AcademicInfo */
+/* headers to nung 3 selection okii */
 .academic-headers {
   display:flex;
   gap:12px;

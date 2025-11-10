@@ -104,6 +104,8 @@ CREATE TABLE `announcements` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+ALTER TABLE announcements ADD COLUMN image_path VARCHAR(255) DEFAULT NULL AFTER content;
+
 --
 -- Dumping data for table `announcements`
 --
