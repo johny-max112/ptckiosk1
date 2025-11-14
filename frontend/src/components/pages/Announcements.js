@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import api from "../utils/api";
+import api from "../../utils/api";
 import "./Announcements.css";
 
 export default function Announcements() {
@@ -10,10 +10,12 @@ export default function Announcements() {
   const [loading, setLoading] = useState(true);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  
 
   const inFlightRef = useRef(false);
   const mountedRef = useRef(true);
   const prevRef = useRef(null);
+   const touchLockRef = useRef(true)
 
   useEffect(() => {
     mountedRef.current = true;
@@ -48,6 +50,14 @@ export default function Announcements() {
     };
   }, []);
 
+   useEffect(() => {
+    // 🔓 Unlock touch after short delay
+    const timer = setTimeout(() => {
+      touchLockRef.current = false;
+    }, 300);
+    return () => clearTimeout(timer);
+  }, []);
+
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -65,7 +75,10 @@ export default function Announcements() {
     return today >= start && today <= end;
   };
 
+  
+
   const openAnnouncement = (ann) => {
+    if (touchLockRef.current) return; // 🛑 Prevents accidental tap
     setSelectedAnnouncement(ann);
     setModalOpen(true);
   };

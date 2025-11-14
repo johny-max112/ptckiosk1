@@ -1,20 +1,22 @@
-const express = require("express");
+const express = require("express"); // Import ng Express at pag-setup ng router
 const router = express.Router();
-const db = require("../../config/db");
+const db = require("../../config/db"); // Import to ng database connection
 
-// Get about info
+// Get  request dito para kunin ung about info
 router.get("/", require("../../middleware/auth"), (req, res) => {
+
   db.query("SELECT * FROM about WHERE id=1", (err, results) => {
+    // pag mar error sa code ito lalabas error 500
     if (err) return res.status(500).json({ error: err.message });
     if (results.length === 0) {
-      // Return default structure if no data exists
+      // pag walang laman ung table walang value lalavas empty yarn
       return res.json({ id: 1, mission: "", vision: "", history: "" });
     }
     res.json(results[0]);
   });
 });
 
-// Admin: Update About PTC
+
 router.put("/", require("../../middleware/auth"), (req, res) => {
   const { mission, vision, history } = req.body;
   db.query(
@@ -27,7 +29,7 @@ router.put("/", require("../../middleware/auth"), (req, res) => {
   );
 });
 
-// Create about record if it doesn't exist
+
 router.post("/", require("../../middleware/auth"), (req, res) => {
   const { mission, vision, history } = req.body;
   db.query(

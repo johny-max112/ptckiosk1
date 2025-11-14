@@ -2,13 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Kiosk pages
-import KioskHome from "./pages/KioskHome";
-import Announcements from "./pages/Announcements";
-import AcademicInfo from "./pages/AcademicInfo";
-import AcademicSectionPage from "./pages/AcademicSectionPage";
-import AboutPTC from "./pages/AboutPTC";
-import OfficeDirectory from "./pages/OfficeDirectory";
-import CampusMap from "./pages/CampusMapNew";
+import KioskHome from "./components/pages/KioskHome";
+import Announcements from "./components/pages/Announcements";
+import AcademicInfo from "./components/pages/AcademicInfo";
+import AcademicSectionPage from "./components/pages/AcademicSectionPage";
+import AboutPTC from "./components/pages/AboutPTC";
+import OfficeDirectory from "./components/pages/OfficeDirectory";
+import CampusMap from "./components/pages/CampusMapNew";
 
 // Admin pages
 import AdminLogin from "./components/Admin/AdminLogin";

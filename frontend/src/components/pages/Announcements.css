@@ -27,7 +27,7 @@
   text-align: center;
   box-sizing: border-box;
   overflow-wrap: break-word;
-  border: 2px solid #fdf417;
+  padding: 2px solid #fdf417;
 }
 
 
@@ -38,6 +38,10 @@
   max-height: calc(100vh - 80px);
   overflow: hidden; 
 }
+.announcement-info {
+  pointer-events: none;
+}
+
 
 /* Header stays visually connected to the card */
 .embedded-header {

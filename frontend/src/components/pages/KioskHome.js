@@ -154,11 +154,13 @@ export default function KioskHome() {
           onClick={() => setQrValue("https://www.facebook.com/ptc1993")}
           title="Facebook Page"
         />
+        <p classname="social-caption"> Click to Scan QR code Official Fb Page </p>
         <FaGlobe
           className="social-icon"
           onClick={() => setQrValue("https://paterostechnologicalcollege.edu.ph/")}
           title="Official Website"
         />
+        <p classname="social-caption"> Click to Scan QR code Official website </p>
       </div>
 
       {/* QR Code Modal */}

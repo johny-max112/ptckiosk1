@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../../../pages/AcademicInfo.css';
+import '../../pages/AcademicInfo.css';
 
 function truncate(text, length = 140) {
   if (!text) return '';

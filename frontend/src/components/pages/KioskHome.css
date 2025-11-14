@@ -1,3 +1,4 @@
+/* Background ng buong kiosk screen ung ptc bldg*/
 .kiosk-bg {
   position: fixed;
   top: 0;
@@ -11,11 +12,12 @@
   pointer-events: none;
 }
 
+/* Main card to container para sa content with border and radius basta may styling */
 .kiosk-card {
   max-width: 1200px;
   width: 90vw;
   margin: 60px auto 0;
-  padding: 40px 32px 60px 32px; 
+  padding: 40px 32px 60px 32px;
   background: rgba(255, 255, 255, 0.68);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(44,62,80,0.18);
@@ -23,9 +25,10 @@
   z-index: 2;
   text-align: center;
   border: 3px solid #fdf417;
-  min-height: 60vh; 
+  min-height: 60vh;
 }
 
+/* Logo sa taas ng card */
 .kiosk-logo {
   width: 120px;
   height: 120px;
@@ -40,6 +43,7 @@
   border: 3px solid #2e7d32;
 }
 
+/* Title ng kiosk ung ptc sa yellow header */
 .kiosk-heading {
   font-weight: 600;
   color: #388e3c;
@@ -49,6 +53,7 @@
   text-shadow: 0 2px 8px #fffde7;
 }
 
+/* Subtitle to ung sa  description */
 .kiosk-subtext {
   font-size: 1.15rem;
   color: #333;
@@ -56,7 +61,7 @@
   margin-bottom: 15px;
 }
 
-/* Buttons section */
+/* Section para sa mga buttons */
 .kiosk-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -64,7 +69,7 @@
   gap: 40px;
 }
 
-/* Row for Office Directory and Maps */
+/* Row para sa Office Directory at Maps para magkatabi sila dun sa baba */
 .kiosk-feature-row {
   display: flex;
   justify-content: center;
@@ -73,6 +78,7 @@
   margin-bottom: 10px;
 }
 
+/* Style to ng  buttons ung limang features*/
 .kiosk-btn {
   width: 240px;
   height: 140px;
@@ -93,22 +99,22 @@
   transition: background 0.15s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
+/* Hover effect ng button astig tlaga pag tumapat hand or cursor prng magic*/
 .kiosk-btn:hover {
   background: linear-gradient(175deg, #DCDC38 0%, #30761E 100%);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
 }
 
+/* Active at focus state ng button */
 .kiosk-btn:active,
 .kiosk-btn:focus {
   box-shadow: 10px 8px 18px rgba(0, 0, 0, 0.53);
   outline: none;
 }
 
-.kiosk-btn .btn-icon {
-  font-size: 2.2rem;
-  margin-bottom: 8px;
-}
 
+
+/* Date and time display sa top right ko nilagay*/
 .datetime-container {
   position: absolute;
   top: 16px;
@@ -129,7 +135,7 @@
   color: #84820a;
 }
 
-/* Welcome Overlay */
+/* style toh ng Welcome screen overlay */
 .welcome-overlay {
   position: fixed;
   top: 0;
@@ -143,6 +149,7 @@
   cursor: pointer;
 }
 
+/* Dim background ng welcome screen */
 .welcome-backdrop {
   position: absolute;
   top: 0;
@@ -153,6 +160,7 @@
   z-index: 1;
 }
 
+/* Content ng welcome screen */
 .welcome-content {
   text-align: center;
   z-index: 2;
@@ -173,7 +181,17 @@
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Mobile Responsiveness */
+/* Para sa tablet ni Kylie - same layout as desktop */
+@media (min-width: 768px) and (max-width: 1280px) {
+  .kiosk-card {
+    max-width: 1024px;
+    width: 100%;
+    margin-top: 40px;
+    padding: 32px 24px 48px 24px;
+  }
+}
+
+/* Mobile layout adjustments */
 @media (max-width: 480px) {
   .kiosk-btn {
     width: 140px;
@@ -199,8 +217,7 @@
   }
 }
 
-
-/* Social Icons Row */
+/* Row para sa social media icons pati sa site */
 .kiosk-social-row {
   display: flex;
   justify-content: center;
@@ -211,6 +228,7 @@
   z-index: 2;
 }
 
+/* Style ng bawat social icon */
 .social-icon {
   font-size: 2.2rem;
   color: #000000;
@@ -223,8 +241,7 @@
   color: #eeeeee;
 }
 
-
-/* QR Code Modal */
+/* QR Code modal overlay */
 .qr-modal-overlay {
   position: fixed;
   top: 0;
@@ -238,6 +255,7 @@
   z-index: 9999;
 }
 
+/* QR modal content box */
 .qr-modal {
   background: white;
   padding: 20px;
@@ -246,17 +264,19 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
+/* Button sa loob ng QR modal */
 .qr-modal button {
   margin-top: 12px;
   padding: 6px 12px;
   font-size: 1rem;
-  background-color: #021b06;
+  background-color: #fafdfb;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
 
+/* Close icon ng QR modal */
 .qr-close {
   position: absolute;
   top: 8px;
@@ -266,4 +286,19 @@
   color: #2e7d32;
   cursor: pointer;
   z-index: 10;
+}
+
+/* style nung sa qr caption*/
+.social-icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+  text-align: center;
+}
+
+.social-caption {
+  font-size: 10rem;
+  color: #333;
+  margin-top: 6px;
 }

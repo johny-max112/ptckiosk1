@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import RequirementsProcedure from '../components/AcademicSections/RequirementsProcedure/RequirementsProcedure';
-import OfferedPrograms from '../components/AcademicSections/OfferedPrograms/OfferedPrograms';
-import Scholarship from '../components/AcademicSections/Scholarship/Scholarship';
+import RequirementsProcedure from '../AcademicSections/RequirementsProcedure/RequirementsProcedure';
+import OfferedPrograms from '../AcademicSections/OfferedPrograms/OfferedPrograms';
+import Scholarship from '../AcademicSections/Scholarship/Scholarship';
 import './AcademicInfo.css';
 
 const sectionTitleMap = {
