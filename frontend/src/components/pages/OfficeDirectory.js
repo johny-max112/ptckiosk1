@@ -6,6 +6,7 @@ import "./OfficeDirectory.css";
 
 export default function OfficeDirectory() {
   const navigate = useNavigate();
+  const [selectedCampus, setSelectedCampus] = useState(null);
   const [offices, setOffices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,15 +24,31 @@ export default function OfficeDirectory() {
       if (showLoading) setLoading(true);
       try {
         // use the api helper so we don't hardcode local IPs here
-        const res = await axios.get(api('/api/offices'), { headers: { 'Cache-Control': 'no-cache' } });
+        const url = api('/api/offices');
+        console.debug('[OfficeDirectory] fetching', url);
+        const res = await axios.get(url, { headers: { 'Cache-Control': 'no-cache' } });
+        console.debug('[OfficeDirectory] fetch response status', res.status);
         if (!mountedRef.current) return;
         const json = JSON.stringify(res.data || []);
         if (json !== prevRef.current) {
           setOffices(res.data);
           prevRef.current = json;
+          console.debug('[OfficeDirectory] setOffices length', (res.data || []).length, 'sample', (res.data || [])[0]);
         }
       } catch (err) {
-        console.error("Error fetching offices:", err);
+        // improve debugging output so we can see request URL and backend status
+        try {
+          const info = {
+            message: err.message,
+            code: err.code,
+            url: err.config && err.config.url,
+            status: err.response && err.response.status,
+            responseData: err.response && err.response.data,
+          };
+          console.error('[OfficeDirectory] Error fetching offices:', info, err);
+        } catch (e) {
+          console.error('[OfficeDirectory] Error fetching offices (failed to build debug info):', err);
+        }
         if (mountedRef.current) setError(err.message || 'Failed to load office data');
       } finally {
         inFlightRef.current = false;
@@ -61,6 +78,12 @@ export default function OfficeDirectory() {
     acc[campusName].push(office);
     return acc;
   }, {});
+
+  // Build a campus list with ids (use first office found per campus)
+  const campuses = Object.entries(officesByCampus).map(([name, items]) => ({
+    id: items[0]?.campus_id || null,
+    name
+  }));
 
   // Visual styles moved into external stylesheet OfficeDirectory.css
 
@@ -146,48 +169,46 @@ export default function OfficeDirectory() {
           </div>
         ) : (
           <div className="office-collection">
-            {Object.entries(officesByCampus)
-              .sort((a, b) => {
-                // Prioritize PTC Main Campus first, then alphabetical order for the rest
-                const nameA = a[0];
-                const nameB = b[0];
-                if (nameA === 'PTC Main Campus') return -1;
-                if (nameB === 'PTC Main Campus') return 1;
-                return nameA.localeCompare(nameB);
-              })
-              .map(([campusName, campusOffices]) => (
-              <div key={campusName} className="office-inner-card">
-                  <div className="office-campus-header">
-                    <h3>{campusName}</h3>
+            {/* If no campus selected, show selection cards */}
+              {!selectedCampus ? (
+              <div className="office-selection-wrapper">
+                {campuses.map(c => (
+                  <div key={c.id || c.name} className="office-selection-inner attached">
+                    <button className="office-select-btn" onClick={() => setSelectedCampus(c)}>{c.name}</button>
                   </div>
-                  <div className="office-campus-content">
-                    <div className="office-grid">
-                    {campusOffices.map((office) => (
-                      <div key={office.id} className="office-office-card" onClick={() => setSelectedOffice(office)} style={{ cursor: 'pointer' }}>
-                        <h4 className="office-office-title">{office.name}</h4>
-                        {office.description && (
-                          <p className="office-office-desc">{office.description}</p>
+                ))}
+              </div>
+            ) : (
+              (() => {
+                const campusOffices = offices.filter(o => String(o.campus_id) === String(selectedCampus.id));
+                return (
+                  <div className="office-inner-card">
+                    <div className="office-campus-header office-campus-header--green">
+                      <button className="office-campus-back" onClick={() => setSelectedCampus(null)} aria-label="Back to campuses"> ←</button>
+                      <h3 className="office-campus-title">{selectedCampus.name}</h3>
+                    </div>
+                    <div className="office-campus-content">
+                      <div className="office-grid">
+                        {campusOffices.length === 0 ? (
+                          <div style={{ padding: 16 }}>No offices listed for this campus.</div>
+                        ) : (
+                          campusOffices.map(office => (
+                            <div key={office.id} className="office-office-card" onClick={() => setSelectedOffice(office)} style={{ cursor: 'pointer' }}>
+                              <h4 className="office-office-title">{office.name}</h4>
+                              {office.description && <p className="office-office-desc">{office.description}</p>}
+                              <div className="office-office-meta">
+                                {office.room && (<div style={{ display: 'flex', alignItems: 'center' }}><span className="office-meta-label">Room:</span><span style={{ color: '#495057', marginLeft: 10 }}>{office.room}</span></div>)}
+                                {office.office_hours && (<div style={{ display: 'flex', alignItems: 'center' }}><span className="office-meta-label">Hours:</span><span style={{ color: '#495057', marginLeft: 10 }}>{office.office_hours}</span></div>)}
+                              </div>
+                            </div>
+                          ))
                         )}
-                        <div className="office-office-meta">
-                          {office.contact && (
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                              <span className="office-meta-label">Rooms:</span>
-                              <span style={{ color: "#495057", marginLeft: "10px" }}>{office.contact}</span>
-                            </div>
-                          )}
-                          {office.office_hours && (
-                            <div style={{ display: "flex", alignItems: "center" }}>
-                              <span className="office-meta-label">Hours:</span>
-                              <span style={{ color: "#495057", marginLeft: "10px" }}>{office.office_hours}</span>
-                            </div>
-                          )}
-                        </div>
                       </div>
-                    ))}
                     </div>
                   </div>
-                </div>
-            ))}
+                );
+              })()
+            )}
             {/* Modal for office details */}
             {selectedOffice && (
               <div className="office-modal-overlay" onClick={() => setSelectedOffice(null)}>
@@ -215,18 +236,7 @@ export default function OfficeDirectory() {
             )}
           </div>
         )}
-        <div style={{
-          textAlign: "center",
-          marginTop: "40px",
-          padding: "20px",
-          backgroundColor: "white",
-          borderRadius: "10px",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
-        }}>
-          <p style={{ color: "#6c757d", margin: "0" }}>
-            Visit any of the offices listed above during their operating hours.
-          </p>
-        </div>
+        
       </div>
     </div>
   );

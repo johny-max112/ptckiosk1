@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
       o.id,
       o.name,
       o.description,
+      o.room,
       o.office_hours,
       o.campus_id,
       c.name as campus_name,
@@ -20,11 +21,14 @@ router.get("/", (req, res) => {
   `;
   
   db.query(query, (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    console.log(`[GET /api/offices] returned ${Array.isArray(results) ? results.length : 0} rows`);
-    // small sample log (avoid logging full result in production)
-    if (Array.isArray(results) && results.length > 0) console.log("Sample office:", results[0]);
-    res.json(results);
+    if (err) {
+      console.error('[GET /api/offices] Query error:', err && err.stack ? err.stack : err);
+      return res.status(500).json({ error: err.message || 'Database query failed' });
+    }
+    const count = Array.isArray(results) ? results.length : 0;
+    console.log(`[GET /api/offices] returned ${count} rows`);
+    if (count > 0) console.debug('[GET /api/offices] sample row', results[0]);
+    res.json(results || []);
   });
 });
 

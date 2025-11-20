@@ -26,9 +26,12 @@ export default function CampusMap() {
       inFlightRef.current = true;
       if (showLoading) setLoading(true);
       try {
-        const res = await axios.get(api("/api/maps"), {
+        const url = api("/api/maps");
+        console.debug('[CampusMap] fetching', url);
+        const res = await axios.get(url, {
           headers: { "Cache-Control": "no-cache" },
         });
+        console.debug('[CampusMap] fetch response status', res.status);
         if (!mountedRef.current) return;
         const json = JSON.stringify(res.data || []);
         if (json !== prevRef.current) {
@@ -36,7 +39,18 @@ export default function CampusMap() {
           prevRef.current = json;
         }
       } catch (err) {
-        console.error(err);
+        try {
+          const info = {
+            message: err.message,
+            code: err.code,
+            url: err.config && err.config.url,
+            status: err.response && err.response.status,
+            responseData: err.response && err.response.data,
+          };
+          console.error('[CampusMap] Error fetching maps:', info, err);
+        } catch (e) {
+          console.error('[CampusMap] Error fetching maps (failed to build debug info):', err);
+        }
       } finally {
         inFlightRef.current = false;
         if (showLoading && mountedRef.current) setLoading(false);

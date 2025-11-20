@@ -12,7 +12,7 @@ function AdminOffices() {
     campus_id: "",
     name: "",
     description: "",
-    contact: "",
+    room: "",
     office_hours: ""
   });
   // Styles moved to AdminOffices.css; background image applied inline in JSX
@@ -89,7 +89,7 @@ function AdminOffices() {
         });
         alert("Office added successfully!");
       }
-      setForm({ campus_id: "", name: "", description: "", contact: "", office_hours: "" });
+      setForm({ campus_id: "", name: "", description: "", room: "", office_hours: "" });
       fetchOffices();
     } catch (error) {
       console.error("Error saving office:", error);
@@ -109,7 +109,7 @@ function AdminOffices() {
       campus_id: office.campus_id,
       name: office.name,
       description: office.description || "",
-      contact: office.contact || "",
+      room: office.room || office.contact || "",
       office_hours: office.office_hours || "",
     });
     setEditingId(office.id);
@@ -173,7 +173,7 @@ function AdminOffices() {
           </div>
           <div>
             <label className="admin-label">Room:</label>
-            <input type="text" name="contact" value={form.contact} placeholder="e.g., (123) 456-7890" onChange={handleChange} className="admin-input" />
+            <input type="text" name="room" value={form.room} placeholder="e.g., 2nd floor, Room 201" onChange={handleChange} className="admin-input" />
           </div>
           <div>
             <label className="admin-label">Office Hours:</label>
@@ -193,12 +193,12 @@ function AdminOffices() {
           <p>No offices found.</p>
         ) : (
           <div>
-            {offices.map((office) => (
+                {offices.map((office) => (
               <div key={office.id} className="office-item">
                 <h4 style={{ color: "#388e3c" }}>{office.name}</h4>
                 <p><strong>Campus ID:</strong> {office.campus_id}</p>
                 {office.description && <p><strong>Description:</strong> {office.description}</p>}
-                {office.contact && <p><strong>Contact:</strong> {office.contact}</p>}
+                    {office.room && <p><strong>Room:</strong> {office.room}</p>}
                 {office.office_hours && <p><strong>Hours:</strong> {office.office_hours}</p>}
                 <div className="office-controls">
                   <button onClick={() => handleEdit(office)} className="btn-offices btn-offices-primary" style={{ padding: '5px 15px', marginRight: 10 }}>Edit</button>

@@ -6,9 +6,17 @@ const db = require("../config/db");
 
 // Kiosk: Get Campus Maps
 router.get("/", (req, res) => {
-  db.query("SELECT * FROM maps ORDER BY created_at DESC", (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(results);
+  const sql = "SELECT id, campus_id, campus_name, image_path, embed_html, description, address, created_at FROM maps ORDER BY created_at DESC";
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('[GET /api/maps] Query error:', err && err.stack ? err.stack : err);
+      // return an empty array so kiosk UI can render gracefully; client will still see error in console/logs
+      return res.status(500).json({ error: err.message || 'Database query failed' });
+    }
+    const count = Array.isArray(results) ? results.length : 0;
+    console.log(`[GET /api/maps] returned ${count} rows`);
+    if (count > 0) console.debug('[GET /api/maps] sample row', results[0]);
+    res.json(results || []);
   });
 });
 

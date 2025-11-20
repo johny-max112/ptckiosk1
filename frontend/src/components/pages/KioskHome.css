@@ -43,7 +43,7 @@
   border: 3px solid #2e7d32;
 }
 
-/* Title ng kiosk ung ptc sa yellow header */
+/* Title ng kiosk ung ptc welcome */
 .kiosk-heading {
   font-weight: 600;
   color: #388e3c;
@@ -58,7 +58,7 @@
   font-size: 1.15rem;
   color: #333;
   margin-top: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 15px;  
 }
 
 /* Section para sa mga buttons */

@@ -338,6 +338,31 @@
   .select-btn { font-size: 1.25rem; padding: 22px 24px }
 }
 
+/* Make the selection buttons act as the full card (remove nested white card) */
+.selection-inner.attached .outer-card {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.selection-inner.attached .inner-card {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.selection-inner.attached .select-btn {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
+  padding: 20px 22px;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(30,90,30,0.12);
+}
+
+@media (min-width: 720px) {
+  .selection-inner.attached .select-btn { font-size: 1.25rem; padding: 22px 24px }
+}
+
 @media (max-width: 680px) {
   .academic-headers { flex-direction: column; gap: 8px; padding: 0 12px }
 }

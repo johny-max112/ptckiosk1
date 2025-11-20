@@ -21,15 +21,15 @@ router.get("/", (req, res) => {
 
 // POST new map with image upload (no auth for testing)
 router.post("/", upload.single("image"), (req, res) => {
-  const { campus_id = 1, campus_name = "", description = "", address = "" } = req.body;
+  const { campus_id = 1, campus_name = "", description = "", address = "", embed_html = null } = req.body;
   const image_path = req.file ? `/uploads/${req.file.filename}` : "";
   console.log("Incoming form data:", req.body);
 console.log("Uploaded file:", req.file);
 
 
   db.query(
-    "INSERT INTO maps (campus_id, campus_name, image_path, description, address, created_at) VALUES (?, ?, ?, ?, ?, NOW())",
-    [campus_id, campus_name, image_path, description, address],
+    "INSERT INTO maps (campus_id, campus_name, image_path, embed_html, description, address, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())",
+    [campus_id, campus_name, image_path, embed_html, description, address],
     (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ id: result.insertId, message: "Map added successfully" });
@@ -39,11 +39,11 @@ console.log("Uploaded file:", req.file);
 
 // PUT update map (no auth for testing)
 router.put("/:id", (req, res) => {
-  const { campus_name = "", image_path = "", description = "", address = "" } = req.body;
+  const { campus_name = "", image_path = "", embed_html = null, description = "", address = "" } = req.body;
 
   db.query(
-    "UPDATE maps SET campus_name=?, image_path=?, description=?, address=? WHERE id=?",
-    [campus_name, image_path, description, address, req.params.id],
+    "UPDATE maps SET campus_name=?, image_path=?, embed_html=?, description=?, address=? WHERE id=?",
+    [campus_name, image_path, embed_html, description, address, req.params.id],
     (err) => {
       if (err) return res.status(500).json({ error: err.message });
       res.json({ message: "Map updated successfully" });

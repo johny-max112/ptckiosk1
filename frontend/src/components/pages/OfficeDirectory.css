@@ -144,6 +144,46 @@
   font-size: 1.05rem;
 }
 
+/* Green campus header variant and back button positioning */
+.office-campus-header--green {
+  background: linear-gradient(90deg,#39a02b,#2e7d32);
+  color: #fff;
+  position: relative;
+  margin-left: -24px;
+  margin-right: -24px;
+  width: calc(100% + 48px);
+  box-sizing: border-box;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 12px 16px;
+}
+.office-campus-header--green .office-campus-title { margin: 0; color: #fff; font-size: 1.05rem; font-weight: 800; text-align: center }
+.office-campus-back {
+  position: absolute;
+  left: 30px; 
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent; 
+  border: none;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 7px 8px; /* small comfortable hit area but not a circle */
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+  z-index: 5;
+}
+
+@media (max-width: 480px) {
+  .office-campus-back { font-size: 1.1rem; left: 10px; padding: 4px 6px }
+}
+
 .office-campus-content {
   padding: 16px;
   /* campus content scrolling sheesh */
@@ -286,7 +326,7 @@
 /* subtle shimmer animation */
 @keyframes skeleton-shimmer {
   0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  100% { transform: 5tvtg translateX(100%); }
 }
 .skeleton-line::after {
   content: '';
@@ -299,3 +339,430 @@
 
 
 .skeleton-card .skeleton-line { position: relative; }
+
+/* Academic-like nested card + selection styles (copied from AcademicInfo.css) */
+.office-nested-card {
+  background: transparent;
+  padding: 12px 0;
+}
+.office-nested-card-inner { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.office-nested-item { background: #FFF8D6; border-radius: 10px; padding: 20px; box-shadow: 0 8px 26px rgba(40,50,30,0.08); border: 1px solid rgba(0,0,0,0.03); text-align:center }
+.office-nested-item h4 { margin-top: 8px; color:#2c3e50 }
+.office-nested-item p { color:#3b3b3b; line-height:1.6 }
+.office-item-footer { color:#6c757d; font-size:0.9rem; text-align:right }
+
+.office-selection-inner.attached {
+  display: block;
+  width: 100%;
+  max-width: none;
+  margin: 8px 0;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+.office-selection-inner.attached:hover { transform: none; }
+
+.office-selection-title { font-weight:800; font-size:1.05rem; color:#2c3e50 }
+
+.office-select-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg,#39a02b,#2e7d32);
+  color: #fff;
+  border: none;
+  padding: 18px 20px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(30,90,30,0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.office-select-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(30,90,30,0.12) }
+
+@media (min-width: 720px) {
+  .office-select-btn { font-size: 1.25rem; padding: 22px 24px }
+}
+
+/* wrapper for office selection cards (naming convention) */
+.office-selection-wrapper { display:flex; flex-direction:column; gap:12px; padding:8px; align-items: stretch }
+
+/* --- Copied academic styles (adapted) to ensure Office Directory matches Academic look --- */
+
+/* page background */
+.office-page-root .office-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.70) contrast(1.05);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.office-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+  padding: 0px 24px 32px 24px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 60px auto 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.office-embedded-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  margin-bottom: 20px;
+  margin-left: -24px;
+  margin-right: -24px;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  background-color: #fdd835;
+}
+
+.office-embedded-logo { width: 56px; height:56px; object-fit:contain; margin-right:8px }
+.office-embedded-title { font-weight:700; color:#2e7d32 }
+
+.section-title { margin: 8px 0 18px 0; }
+
+.program-card { border-radius: 12px; overflow: hidden; text-align: left; }
+.program-header { padding: 12px 16px; background: linear-gradient(90deg, #8B8446 0%, #F1E57A 100%); color: #222; font-weight:700 }
+.program-header h3 { margin:0 }
+.program-content { padding: 16px }
+
+.program-list { display:flex; flex-direction:column; gap:12px }
+.program-box { background: #fffdf8; padding:12px; border-radius:8px; border-left:4px solid transparent }
+.program-box.current { border-left-color: #8B8446 }
+.program-box:hover { box-shadow: 0 6px 18px rgba(44,62,80,0.06); cursor: pointer }
+.program-box h3 { margin:0 0 6px 0 }
+.program-box p { margin:0; color:#333 }
+.program-footer { margin-top:8px; color:#666; font-size:0.9rem }
+
+.office-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; z-index:9999; padding:20px }
+.office-modal {
+  background:#fff;
+  border-radius:12px;
+  max-width: min(1200px, 95vw);
+  width:100%;
+  padding:28px 36px;
+  box-shadow:0 16px 50px rgba(10,20,30,0.25);
+  text-align:left;
+  max-height: 90vh;
+  overflow:hidden;
+  position: relative;
+}
+.office-modal-close {
+  position:absolute; top:12px; right:16px; background:transparent; border:none; font-size:1.8rem; cursor:pointer
+}
+.office-modal-dates { color:#666; font-size:0.98rem; display:flex; gap:14px; margin-bottom:14px }
+.office-modal h2, #modal-title {
+  color: #2e7d32;
+  font-size: 1.6rem;
+  text-align: center;
+}
+.office-modal-body {
+  white-space: pre-wrap;
+  color:#313030;
+  font-size:1.2rem;
+  font-weight: bold;
+  line-height:1.6;
+  overflow:auto;
+  max-height: calc(90vh - 180px);
+  padding-right:8px;
+}
+
+.office-modal.fullscreen {
+  width: 98vw;
+  height: 96vh;
+  max-width: 98vw;
+  max-height: 96vh;
+  border-radius: 8px;
+  padding: 18px;
+}
+
+@media (max-width: 480px) {
+  .office-modal { padding: 16px; max-width: 98vw; max-height: 94vh; }
+  .office-modal h2 { font-size: 1.25rem; }
+  .office-modal-body { max-height: calc(94vh - 140px); }
+}
+
+@media (max-width: 480px) {
+  .program-box { padding:10px }
+}
+
+.office-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.70) contrast(1.1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.office-card {
+
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+  padding: 0px 24px 32px 24px;
+  max-width: 1300px;
+  width: 100%;
+  margin: 60px auto 0 auto;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  border: 2px solid #fdf417;
+}
+
+.office-embedded-header {
+  background-color: #fdd835;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  margin-left: -24px;
+  margin-right: -24px;
+}
+
+.office-embedded-logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  margin-right: 6px;
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+
+.office-embedded-title {
+  font-size: clamp(1.2em, 2vw, 1.6em);
+  font-weight: bold;
+  color: #2e7d32;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  flex: 1 1 auto;
+}
+
+.office-embedded-title:focus,
+.office-embedded-title:hover {
+  text-decoration: underline;
+  color: #1b5e20;
+  outline: none;
+}
+
+.section-title {
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1.6rem;
+  margin: 24px 0 16px 0;
+}
+
+.program-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(44, 62, 80, 0.08);
+  overflow: hidden;
+  text-align: center;
+}
+.program-header {
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #8B8446 0%, #F1E57A 100%);
+  color: #222;
+  font-weight: 700;
+}
+.program-header h3 { margin: 0; font-size: 1.05rem; }
+.program-content { padding: 16px; }
+
+.program-list {
+  display: grid;
+  gap: 20px;
+}
+
+.program-box {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-left: 5px solid #8b8446;
+  padding: 22px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(44,62,80,0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  text-align: left;
+}
+.program-box:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(44,62,80,0.12); }
+
+.program-box h3 { color:#2c3e50; margin-bottom: 12px; font-size: 1.25rem; }
+.program-box p { color:#495057; line-height:1.7; font-size:1rem; margin-bottom: 12px; }
+
+.program-footer {
+  text-align: right;
+  color: #6c757d;
+  font-size: 0.9rem;
+  border-top: 1px solid #e9ecef;
+  padding-top: 12px;
+}
+
+@media (min-width: 900px) {
+  .program-list { grid-template-columns: 1fr 1fr; }
+}
+
+/* headers to nung 3 selection okii */
+.office-headers {
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin: 12px 0 18px 0;
+}
+
+.green-btn {
+  background: linear-gradient(180deg,#2e7d32,#1b5e20);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+.green-btn.active { box-shadow: 0 8px 22px rgba(30,90,30,0.18); transform: translateY(-2px); }
+
+.outer-card {
+  background: transparent;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 8px 30px rgba(30,60,30,0.06);
+}
+.inner-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.02);
+}
+
+.office-nested-card-inner h3 { margin-top:0; color:#2e7d32 }
+.office-nested-item { margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed #eee }
+.office-nested-item h4 { margin: 4px 0 6px 0 }
+.office-item-footer { color:#6c757d; font-size:0.9rem; text-align:right }
+
+.attached-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(44,62,80,0.06);
+}
+.office-info-header.attached {
+  padding: 12px 18px;
+  background: linear-gradient(90deg, #8B8446 0%, #F1E57A 100%);
+  color: #222;
+  font-weight: 800;
+  text-align: center;
+  border-radius: 12px 12px 0 0;
+}
+.office-info-header.attached h2 { margin:0; font-size:1.25rem }
+
+.back-btn {
+  position: absolute;
+  left: 26px;
+  top: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: rgba(0,0,0,0.75);
+  padding: 6px 8px;
+}
+.office-info-header.attached { position: relative; }
+
+
+.office-nested-card-inner { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.office-nested-item { background: #FFF8D6; border-radius: 10px; padding: 20px; box-shadow: 0 8px 26px rgba(40,50,30,0.08); border: 1px solid rgba(0,0,0,0.03); text-align:center }
+.office-nested-item h4 { margin-top: 8px; color:#2c3e50 }
+.office-nested-item p { color:#3b3b3b; line-height:1.6 }
+
+.selection-inner.attached { display:flex; flex-direction:column; gap:14px; padding: 18px 20px 22px 20px; }
+.select-btn {
+  background: linear-gradient(90deg,#39a02b,#2e7d32);
+  color: #fff;
+  border: none;
+  padding: 18px 20px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  text-align: center;
+}
+.select-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(30,90,30,0.12) }
+
+@media (min-width: 720px) {
+  .select-btn { font-size: 1.25rem; padding: 22px 24px }
+}
+
+@media (max-width: 680px) {
+  .office-headers { flex-direction: column; gap: 8px; padding: 0 12px }
+}
+
+.skeleton-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeleton-item {
+  background: #f0f0f0;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.office-skeleton {
+  background: linear-gradient(90deg, #eee, #ddd, #eee);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.office-skeleton-title {
+  width: 60%;
+  height: 20px;
+  margin-bottom: 8px;
+}
+
+.office-skeleton-text {
+  width: 100%;
+  height: 14px;
+  margin-bottom: 6px;
+}
+
+.office-skeleton-date {
+  width: 40%;
+  height: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* End copied academic styles (adapted) */
