@@ -148,6 +148,7 @@ export default function KioskHome() {
       </div>
 
       {/* Social Icons Row - outside the card */}
+     
       <div className="kiosk-social-row">
         <FaFacebook
           className="social-icon"
@@ -163,7 +164,8 @@ export default function KioskHome() {
         <p classname="social-caption"> Click to Scan QR code Official website </p>
       </div>
 
-      {/* QR Code Modal */}
+      {/* QR Code Modal disable temporarily */}
+      
       {qrValue && (
   <div className="qr-modal-overlay" onClick={() => setQrValue(null)}>
     <div className="qr-modal" onClick={(e) => e.stopPropagation()}>

@@ -80,7 +80,19 @@ export default function AdminAcademic() {
     } finally { setLoading(false); }
   };
 
-  const handleEdit = (it) => { setForm({ title: it.title, content: it.content }); setEditingId(it.id); };
+  const handleEdit = (it) => {
+    setForm({ title: it.title, content: it.content });
+    setEditingId(it.id);
+    // pag nag edit ng forms sa from the bottom and click mag scroll auto sa top ng inputs
+    setTimeout(() => {
+      const el = document.querySelector('.admin-card-academic');
+      if (el && el.scrollIntoView) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 50);
+  };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this entry?')) return;

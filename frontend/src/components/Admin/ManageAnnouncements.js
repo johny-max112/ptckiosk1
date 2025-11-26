@@ -123,6 +123,15 @@ function ManageAnnouncements() {
     });
     setExistingImage(announcement.image_path || null);
     setEditingId(announcement.id);
+    // pag nag edit ng forms sa from the bottom and click mag scroll auto sa top ng inputs
+    setTimeout(() => {
+      const el = document.querySelector('.admin-form');
+      if (el && el.scrollIntoView) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 50);
   };
 
   const handleDelete = async (id) => {

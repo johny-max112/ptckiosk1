@@ -219,7 +219,10 @@ export default function OfficeDirectory() {
                   {selectedOffice.description && <p style={{ fontStyle: 'italic' }}>{selectedOffice.description}</p>}
                   <div style={{ marginTop: 12 }}>
                     {selectedOffice.contact && (
-                      <p><strong>Contact / Room:</strong> {selectedOffice.contact}</p>
+                      <p><strong>Contact:</strong> {selectedOffice.contact}</p>
+                    )}
+                    {selectedOffice.room && (
+                      <p><strong>Room:</strong> {selectedOffice.room}</p>
                     )}
                     {selectedOffice.office_hours && (
                       <p><strong>Hours:</strong> {selectedOffice.office_hours}</p>

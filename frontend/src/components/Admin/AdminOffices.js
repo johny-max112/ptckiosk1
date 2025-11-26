@@ -113,6 +113,15 @@ function AdminOffices() {
       office_hours: office.office_hours || "",
     });
     setEditingId(office.id);
+    // pag nag edit ng forms sa from the bottom and click mag scroll auto sa top ng inputs
+    setTimeout(() => {
+      const el = document.querySelector('.admin-form-offices');
+      if (el && el.scrollIntoView) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 50);
   };
 
   const handleDelete = async (id) => {
