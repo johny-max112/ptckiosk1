@@ -157,7 +157,7 @@ export default function Announcements() {
                       }`}
                     >
                       {isCurrentAnnouncement(ann.start_date, ann.end_date) && (
-                        <div className="current-badge">CURRENT</div>
+                        <div className="current-badge">TAP INFO.</div>
                       )}
                       <h3>{ann.title}</h3>
                       <p>{ann.content}</p>

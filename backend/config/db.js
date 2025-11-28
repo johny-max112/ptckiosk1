@@ -55,34 +55,46 @@ pool.query(
   }
 );
 
-// Ensure optional `embed_html` column exists in `maps` table so kiosk embed
-// iframe functionality does not fail on older schemas.
-pool.query(
-  "SELECT COUNT(*) AS cnt FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'maps' AND COLUMN_NAME = 'embed_html'",
-  [dbName],
-  (err, results) => {
-    if (err) {
-      console.error('Failed to check maps.embed_html column existence:', err && err.stack ? err.stack : err);
-      return;
-    }
-    try {
-      const cnt = (results && results[0] && results[0].cnt) || 0;
-      if (Number(cnt) === 0) {
-        console.log('`embed_html` column not found in `maps` — attempting to add column.');
-        pool.query("ALTER TABLE maps ADD COLUMN embed_html TEXT DEFAULT NULL", (alterErr) => {
-          if (alterErr) {
-            console.error('Failed to add `embed_html` column to `maps`:', alterErr && alterErr.stack ? alterErr.stack : alterErr);
-          } else {
-            console.log('Added `embed_html` column to `maps` table.');
-          }
-        });
-      } else {
-        console.log('`embed_html` column already present in `maps`.');
+// Ensure new embed/link columns exist in `maps` table so kiosk embed
+// functionality does not fail on older schemas. Add columns if missing.
+const mapColumnsToEnsure = [
+  { name: 'embed_map_link', type: "VARCHAR(1024) DEFAULT NULL" },
+  { name: 'embed_streetview_link', type: "VARCHAR(1024) DEFAULT NULL" },
+  { name: 'description_map', type: "VARCHAR(255) DEFAULT NULL" },
+  { name: 'description_streetview', type: "VARCHAR(255) DEFAULT NULL" },
+];
+
+mapColumnsToEnsure.forEach(col => {
+  pool.query(
+    "SELECT COUNT(*) AS cnt FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = 'maps' AND COLUMN_NAME = ?",
+    [dbName, col.name],
+    (err, results) => {
+      if (err) {
+        console.error(`Failed to check maps.${col.name} column existence:`, err && err.stack ? err.stack : err);
+        return;
       }
-    } catch (e) {
-      console.error('Error while ensuring `embed_html` column exists:', e && e.stack ? e.stack : e);
+      try {
+        const cnt = (results && results[0] && results[0].cnt) || 0;
+        if (Number(cnt) === 0) {
+          console.log(`
+            \
+            \
+            ${col.name} column not found in maps — attempting to add column.`);
+          pool.query(`ALTER TABLE maps ADD COLUMN ${col.name} ${col.type}`, (alterErr) => {
+            if (alterErr) {
+              console.error(`Failed to add ${col.name} column to maps:`, alterErr && alterErr.stack ? alterErr.stack : alterErr);
+            } else {
+              console.log(`Added ${col.name} column to maps table.`);
+            }
+          });
+        } else {
+          console.log(`${col.name} column already present in maps.`);
+        }
+      } catch (e) {
+        console.error(`Error while ensuring maps.${col.name} column exists:`, e && e.stack ? e.stack : e);
+      }
     }
-  }
-);
+  );
+});
 
 module.exports = pool;

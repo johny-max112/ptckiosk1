@@ -102,7 +102,7 @@ export default function AboutPTC() {
                 <div className="inner-card-content">
                   {sec.key === 'inner' && (
                     <>
-                      {data.inner_image && <img src={data.inner_image} alt="inner" className="inner-image" />}
+                      {data.history_image && <img src={data.history_image} alt="inner" className="inner-image" />}
                       <h3 className="about-section-title">About PTC</h3>
                       <p className="about-text">{data.history}</p>
                     </>

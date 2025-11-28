@@ -90,6 +90,7 @@
   overflow: hidden;
   text-align: center;
   width: 100%;
+  position: relative;
 }
 
 /* Make the campus card a column so header stays fixed and content scrolls */
@@ -319,4 +320,41 @@
   100% {
     opacity: 1;
   }
+}
+
+/*Nag babounce na Hint scroll para sa navigation if scrobbale ang isang card*/
+.scroll-hint {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #2e7d32;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  cursor: default;
+  user-select: none;
+  z-index: 5;
+  animation: bounce-right 1.4s ease-in-out infinite;
+}
+
+.scroll-hint .scroll-arrow {
+  display: inline-block;
+  transform: translateX(0);
+}
+
+@keyframes bounce-right {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+  100% { transform: translateX(0); }
+}
+
+/* Hide on touch devices to avoid covering interaction */
+@media (pointer: coarse) {
+  .scroll-hint { display: none; }
 }

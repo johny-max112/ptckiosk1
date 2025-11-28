@@ -10,14 +10,22 @@ function AdminAbout() {
   const [saveStatus, setSaveStatus] = useState("");
 
   // file states for admin uploads
-  const [innerImageFile, setInnerImageFile] = useState(null);
-  const [innerImagePreview, setInnerImagePreview] = useState(null);
+  const [historyImageFile, setHistoryImageFile] = useState(null);
+  const [historyImagePreview, setHistoryImagePreview] = useState(null);
+  const [initialHistoryImage, setInitialHistoryImage] = useState(null);
+  const [historyImageRemoved, setHistoryImageRemoved] = useState(false);
   const [presidentImageFile, setPresidentImageFile] = useState(null);
   const [presidentImagePreview, setPresidentImagePreview] = useState(null);
+  const [initialPresidentImage, setInitialPresidentImage] = useState(null);
+  const [presidentImageRemoved, setPresidentImageRemoved] = useState(false);
   const [missionImageFile, setMissionImageFile] = useState(null);
   const [missionImagePreview, setMissionImagePreview] = useState(null);
+  const [initialMissionImage, setInitialMissionImage] = useState(null);
+  const [missionImageRemoved, setMissionImageRemoved] = useState(false);
   const [visionImageFile, setVisionImageFile] = useState(null);
   const [visionImagePreview, setVisionImagePreview] = useState(null);
+  const [initialVisionImage, setInitialVisionImage] = useState(null);
+  const [visionImageRemoved, setVisionImageRemoved] = useState(false);
 
   const [presidentName, setPresidentName] = useState("");
   const [presidentTitle, setPresidentTitle] = useState("");
@@ -59,10 +67,14 @@ function AdminAbout() {
         setCoreValues(d.core_values || "");
         setHymnLeft(d.hymn_left || "");
         setHymnRight(d.hymn_right || "");
-        setInnerImagePreview(d.inner_image || null);
+        setHistoryImagePreview(d.history_image || null);
+        setInitialHistoryImage(d.history_image || null);
         setPresidentImagePreview(d.president_image || null);
+        setInitialPresidentImage(d.president_image || null);
         setMissionImagePreview(d.mission_image || null);
+        setInitialMissionImage(d.mission_image || null);
         setVisionImagePreview(d.vision_image || null);
+        setInitialVisionImage(d.vision_image || null);
         setFormerAdmins((d.former_admins && Array.isArray(d.former_admins)) ? d.former_admins.map(f => ({ ...f })) : []);
       }
     } catch (error) {
@@ -117,14 +129,27 @@ function AdminAbout() {
       // former admins metadata
       fd.append('former_admins', JSON.stringify(formerAdmins.map(f => ({ name: f.name, position: f.position, year: f.year, image: f.image || null }))));
 
-      if (innerImageFile) fd.append('inner_image', innerImageFile);
+      // send existing image paths so backend does not clear them when no new file uploaded
+      // Only send when the preview is an actual stored path (not a blob/object URL created by the browser)
+      const isStoredPath = (p) => typeof p === 'string' && (p.startsWith('/uploads') || p.startsWith('http'));
+      if (isStoredPath(historyImagePreview)) fd.append('existing_history_image', historyImagePreview);
+      if (historyImageRemoved) fd.append('remove_history_image', '1');
+      if (isStoredPath(presidentImagePreview)) fd.append('existing_president_image', presidentImagePreview);
+      if (presidentImageRemoved) fd.append('remove_president_image', '1');
+      if (isStoredPath(missionImagePreview)) fd.append('existing_mission_image', missionImagePreview);
+      if (missionImageRemoved) fd.append('remove_mission_image', '1');
+      if (isStoredPath(visionImagePreview)) fd.append('existing_vision_image', visionImagePreview);
+      if (visionImageRemoved) fd.append('remove_vision_image', '1');
+
+      if (historyImageFile) fd.append('history_image', historyImageFile);
       if (presidentImageFile) fd.append('president_image', presidentImageFile);
       if (missionImageFile) fd.append('mission_image', missionImageFile);
       if (visionImageFile) fd.append('vision_image', visionImageFile);
 
-      // append former admin files in same order
-      formerAdmins.forEach((f) => {
+      // append former admin files in same order; include removal flags per index
+      formerAdmins.forEach((f, idx) => {
         if (f.file) fd.append('former_admin_images', f.file);
+        if (f._removed === true) fd.append(`remove_former_admin_${idx}`, '1');
       });
 
       const res = await axios.post(`${apiBase}/api/admin/about`, fd, { headers: { ...getAuthHeaders(), 'Content-Type': 'multipart/form-data' } });
@@ -137,7 +162,7 @@ function AdminAbout() {
         setCoreValues(d.core_values || "");
         setHymnLeft(d.hymn_left || "");
         setHymnRight(d.hymn_right || "");
-        setInnerImagePreview(d.inner_image || null);
+        setHistoryImagePreview(d.history_image || null);
         setPresidentImagePreview(d.president_image || null);
         setMissionImagePreview(d.mission_image || null);
         setVisionImagePreview(d.vision_image || null);
@@ -230,9 +255,16 @@ function AdminAbout() {
             onBlur={(e) => (e.target.style.borderColor = "#e9ecef")}
           />
           <div style={{ marginTop: 8 }}>
-            <label style={{ display: 'block' }}>Inner Card Image (recommended W:690 H:720)</label>
-            <input type="file" accept="image/*" onChange={(e) => handleFile(e, setInnerImageFile, setInnerImagePreview)} />
-            {innerImagePreview && <img src={innerImagePreview} alt="inner-preview" style={{ maxWidth: 320, marginTop: 8, borderRadius: 8 }} />}
+            <label style={{ display: 'block' }}>Mission Image (recommended W:420 H:144)</label>
+            <input type="file" accept="image/*" onChange={(e) => { setMissionImageRemoved(false); handleFile(e, setMissionImageFile, setMissionImagePreview); }} />
+            {missionImagePreview && (
+              <div style={{ marginTop: 8 }}>
+                <img src={missionImagePreview} alt="mission-preview" style={{ width: 420, height: 144, objectFit: 'cover', borderRadius: 6 }} />
+                <div>
+                  <button type="button" className="btn-about" style={{ marginTop: 8 }} onClick={() => { setMissionImageFile(null); setMissionImagePreview(null); setMissionImageRemoved(true); }}>Remove Image</button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -259,8 +291,15 @@ function AdminAbout() {
           />
           <div style={{ marginTop: 8 }}>
             <label style={{ display: 'block' }}>Vision Image (recommended W:420 H:144)</label>
-            <input type="file" accept="image/*" onChange={(e) => handleFile(e, setVisionImageFile, setVisionImagePreview)} />
-            {visionImagePreview && <img src={visionImagePreview} alt="vision-preview" style={{ width: 420, height: 144, objectFit: 'cover', marginTop: 8, borderRadius: 6 }} />}
+            <input type="file" accept="image/*" onChange={(e) => { setVisionImageRemoved(false); handleFile(e, setVisionImageFile, setVisionImagePreview); }} />
+            {visionImagePreview && (
+              <div style={{ marginTop: 8 }}>
+                <img src={visionImagePreview} alt="vision-preview" style={{ width: 420, height: 144, objectFit: 'cover', borderRadius: 6 }} />
+                <div>
+                  <button type="button" className="btn-about" style={{ marginTop: 8 }} onClick={() => { setVisionImageFile(null); setVisionImagePreview(null); setVisionImageRemoved(true); }}>Remove Image</button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -290,10 +329,20 @@ function AdminAbout() {
             <input className="input-about" placeholder="President Name" value={presidentName} onChange={(e) => setPresidentName(e.target.value)} />
             <input className="input-about" placeholder="Title (e.g., The President)" value={presidentTitle} onChange={(e) => setPresidentTitle(e.target.value)} />
             <label style={{ display: 'block', marginTop: 8 }}>President Image (W370 x H430 recommended)</label>
-            <input type="file" accept="image/*" onChange={(e) => { handleFile(e, setPresidentImageFile, setPresidentImagePreview); }} />
+            <input type="file" accept="image/*" onChange={(e) => { setPresidentImageRemoved(false); handleFile(e, setPresidentImageFile, setPresidentImagePreview); }} />
             {(presidentImagePreview || (about && about.president_image)) && (
-              <img src={presidentImagePreview || about.president_image} alt="president" style={{ width: 185, height: 215, objectFit: 'cover', borderRadius: 8, marginTop: 8 }} />
+              <div style={{ marginTop: 8 }}>
+                <img src={presidentImagePreview || about.president_image} alt="president" style={{ width: 185, height: 215, objectFit: 'cover', borderRadius: 8 }} />
+                <div>
+                  <button type="button" className="btn-about" style={{ marginTop: 8 }} onClick={() => { setPresidentImageFile(null); setPresidentImagePreview(null); setPresidentImageRemoved(true); }}>Remove Image</button>
+                </div>
+              </div>
             )}
+            <div style={{ marginTop: 12 }}>
+              <label style={{ display: 'block' }}>History Image / Inner Card (recommended W:690 H:720)</label>
+              <input type="file" accept="image/*" onChange={(e) => handleFile(e, setHistoryImageFile, setHistoryImagePreview)} />
+              {historyImagePreview && <img src={historyImagePreview} alt="history-preview" style={{ maxWidth: 320, marginTop: 8, borderRadius: 8 }} />}
+            </div>
           </div>
         </div>
 
@@ -309,10 +358,20 @@ function AdminAbout() {
                 <div style={{ marginTop: 6 }}>
                   <input type="file" accept="image/*" onChange={(e) => {
                     const file = e.target.files && e.target.files[0];
-                    if (file) updateFormerAdmin(idx, { file, preview: URL.createObjectURL(file) });
+                    if (file) updateFormerAdmin(idx, { file, preview: URL.createObjectURL(file), _removed: false });
                   }} />
-                  {f.preview && <img src={f.preview} alt={f.name || `former-${idx+1}`} style={{ width: 165, height: 110, objectFit: 'cover', marginLeft: 8 }} />}
-                  {!f.preview && f.image && <img src={f.image} alt={f.name || `former-${idx+1}`} style={{ width: 165, height: 110, objectFit: 'cover', marginLeft: 8 }} />}
+                  {f.preview && (
+                    <div style={{ display: 'inline-block', marginLeft: 8 }}>
+                      <img src={f.preview} alt={f.name || `former-${idx+1}`} style={{ width: 165, height: 110, objectFit: 'cover' }} />
+                      <div><button type="button" className="btn-about" onClick={() => updateFormerAdmin(idx, { file: null, preview: null, image: null, _removed: true })}>Remove Image</button></div>
+                    </div>
+                  )}
+                  {!f.preview && f.image && (
+                    <div style={{ display: 'inline-block', marginLeft: 8 }}>
+                      <img src={f.image} alt={f.name || `former-${idx+1}`} style={{ width: 165, height: 110, objectFit: 'cover' }} />
+                      <div><button type="button" className="btn-about" onClick={() => updateFormerAdmin(idx, { file: null, preview: null, image: null, _removed: true })}>Remove Image</button></div>
+                    </div>
+                  )}
                 </div>
                 <div style={{ marginTop: 6 }}>
                   <button onClick={() => removeFormerAdmin(idx)} className="btn-about">Remove</button>
@@ -325,12 +384,7 @@ function AdminAbout() {
           </div>
         </div>
 
-        {/* Images for mission/vision and core values/hymn */}
-        <div style={{ marginTop: 12 }}>
-          <label style={{ fontWeight: 700 }}>Mission Image (W420 x H144 recommended)</label>
-          <input type="file" accept="image/*" onChange={(e) => handleFile(e, setMissionImageFile, setMissionImagePreview)} />
-          {missionImagePreview && <img src={missionImagePreview} alt="mission-preview" style={{ width: 420, height: 144, objectFit: 'cover', display: 'block', marginTop: 8 }} />}
-        </div>
+        {/* Images for core values/hymn (mission image moved into Mission section) */}
 
         <div style={{ marginTop: 12 }}>
           <label style={{ fontWeight: 700 }}>Core Values</label>
