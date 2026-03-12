@@ -1,5 +1,10 @@
 
-Basahin mo muna Readme Chat me pag may problem
+<img width="1366" height="768" alt="Screenshot (94)" src="https://github.com/user-attachments/assets/45db99f3-f810-4384-bb39-e1887f5313c5" />
+
+<img width="1366" height="768" alt="Screenshot (55)" src="https://github.com/user-attachments/assets/8c0cf9d3-9e65-4577-affe-5972d7ec5485" />
+
+
+
 # PTC Smart Kiosk
 
 ## Project Overview
